@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import "./App.css";
 
-const CONTACT_URL = "https://www.facebook.com/";
+const CONTACT_URL = "https://m.me/pixostation";
 
 const memoryVariants = {
   lite: [
