@@ -2572,3 +2572,85 @@ chân trang */
     grid-template-columns: 1fr;
   }
 }
+
+/* POKÉMON TCG: lọc theo loại và ô giới thiệu ở mục Tất cả */
+.subtype-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 4px 0 18px;
+}
+
+.subtype-filters button {
+  padding: 7px 12px;
+  border: 1px solid #dfe3dc;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.subtype-filters button.active {
+  border-color: var(--green-dark);
+  background: var(--green-dark);
+  color: #fff;
+}
+
+/* Ô ghép 4 ảnh trong khung ảnh sản phẩm */
+.product-image.pokemon-collage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 2px;
+  place-items: stretch;
+}
+
+.product-image.pokemon-collage img {
+  position: static;
+  padding: 0;
+  object-fit: cover;
+  mix-blend-mode: normal;
+}
+
+/* Giá và nút "Xem chi tiết" luôn nằm sát đáy thẻ, thẳng hàng giữa các thẻ */
+.product-grid > .product-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-grid > .product-card > .product-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.product-grid > .product-card .price-block {
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+/* Thẻ Máy bán chạy / Có thể bạn cũng thích: nút luôn sát đáy, tên tối đa 2 dòng */
+.bestseller-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.bestseller-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.bestseller-info h3 {
+  display: -webkit-box;
+  min-height: 2.6em;
+  overflow: hidden;
+  line-height: 1.3;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.bestseller-info .primary-button {
+  margin-top: auto;
+}

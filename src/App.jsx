@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import "./App.css";
+import { pokemonPerks, pokemonProducts, pokemonTypes } from "./pokemonProducts";
 
 const CONTACT_URL = "https://m.me/pixostation";
 const ZALO_URL = "https://zalo.me/0917616498";
@@ -160,7 +161,6 @@ const otherProducts = [
   { id: 11, name: "Túi đựng máy chơi game", category: "accessory", badge: "BẢO VỆ MÁY", price: 250000, image: "/products/carrying-case.jpg", description: "Túi đựng máy và phụ kiện khi di chuyển." },
   { id: 12, name: "Ốp bảo vệ Nintendo Switch", category: "accessory", badge: "PHỤ KIỆN", price: 150000, image: "/products/switch-case.jpg", description: "Nhiều mẫu ốp tùy theo model máy." },
   { id: 13, name: "Tay cầm chơi game", category: "accessory", badge: "CHƠI CÙNG BẠN", price: 590000, image: "/products/controller.jpg", description: "Tay cầm bổ sung cho những buổi chơi game." },
-  { id: 14, name: "Pokémon TCG", category: "pokemon", badge: "TRADING CARD GAME", price: 150000, image: "/products/pokemon-tcg.jpg", description: "Booster pack, hộp bài, lá bài đơn và phụ kiện." },
   {
     id: 15,
     name: "Riftbound Booster Box",
@@ -201,6 +201,9 @@ const otherProducts = [
     ],
   },
 ];
+
+// Danh mục Pokémon TCG (dữ liệu ở src/pokemonProducts.js)
+otherProducts.push(...pokemonProducts.map((product) => ({ ...product, perks: pokemonPerks })));
 
 const categories = [
   { id: "all", label: "Tất cả" },
@@ -599,7 +602,7 @@ function OtherProductCard({ product, onSelect }) {
 
         <div className="price-block">
           <strong className="sale-price">
-            {money(product.price)}{product.unit && <small> / {product.unit}</small>}
+            {money(product.price + (edition ? edition.surcharge : 0))}{product.unit && <small> / {product.unit}</small>}
           </strong>
           {!product.confirmedPrice && <span className="saving-label">Giá tham khảo</span>}
         </div>
@@ -647,7 +650,7 @@ function ProductDetail({
   const variant = hasVariants ? product.variants[variantIndex] : null;
   const edition = product.editions ? product.editions[editionIndex] : null;
   const surcharge = edition ? edition.surcharge : 0;
-  const price = variant ? variant.price + surcharge : product.price;
+  const price = (variant ? variant.price : product.price) + surcharge;
   const original = variant ? variant.original + surcharge : null;
 
   // Các ảnh của phiên bản đang chọn: ảnh máy trước, ảnh hộp (gallery) sau
@@ -848,7 +851,7 @@ function ProductDetail({
               <div className="bestseller-info">
                 <h3>{item.name}</h3>
                 <p>
-                  {item.variants || item.editions ? "Từ " : ""}
+                  {item.variants || item.editions?.some((edition) => edition.surcharge) ? "Từ " : ""}
                   <strong>{money(startingPrice(item))}</strong>
                   {item.unit && ` / ${item.unit}`}
                 </p>
@@ -899,6 +902,10 @@ function App() {
   const [category, setCategory] = useState("all");
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("featured");
+  const [pokemonType, setPokemonType] = useState("all");
+
+  // Ở mục "Tất cả" (không tìm kiếm) chỉ hiện ô giới thiệu Pokémon thay vì cả 64 sản phẩm
+  const collapsePokemon = category === "all" && !search.trim();
   const [selected, setSelected] = useState(selectionFromLocation);
 
   // Nút Quay lại / Tiến tới của trình duyệt
@@ -935,6 +942,10 @@ function App() {
   const visibleOthers = useMemo(() => {
     return otherProducts
       .filter((product) => category === "all" || product.category === category)
+      .filter((product) => !(collapsePokemon && product.category === "pokemon"))
+      .filter((product) =>
+        category !== "pokemon" || pokemonType === "all" || product.type === pokemonType
+      )
       .filter((product) =>
         product.name.toLowerCase().includes(search.trim().toLowerCase())
       )
@@ -943,7 +954,7 @@ function App() {
         if (sort === "high") return b.price - a.price;
         return a.id - b.id;
       });
-  }, [category, search, sort]);
+  }, [category, search, sort, pokemonType, collapsePokemon]);
 
   const goHome = () => {
     closeProduct();
@@ -1119,6 +1130,20 @@ function App() {
                 </div>
               </div>
 
+              {category === "pokemon" && (
+                <div className="subtype-filters">
+                  {["all", ...pokemonTypes].map((type) => (
+                    <button
+                      key={type}
+                      className={pokemonType === type ? "active" : ""}
+                      onClick={() => setPokemonType(type)}
+                    >
+                      {type === "all" ? "Tất cả Pokémon" : type}
+                    </button>
+                  ))}
+                </div>
+              )}
+
               <div className="result-line">
                 <span>{visibleConsoles.length + visibleOthers.length} SẢN PHẨM</span>
               </div>
@@ -1131,6 +1156,42 @@ function App() {
                   {visibleOthers.map((product) => (
                     <OtherProductCard key={product.id} product={product} onSelect={openProduct} />
                   ))}
+                  {collapsePokemon && (
+                    // Cùng khung với thẻ sản phẩm thường, chỉ thay ảnh bằng ô ghép 4 ảnh
+                    <article className="product-card">
+                      <button className="product-image-button" onClick={() => setCategory("pokemon")}>
+                        <div className="product-image pokemon-collage">
+                          {pokemonProducts.slice(4, 8).map((item) => (
+                            <img key={item.id} src={item.image} alt="" loading="lazy" />
+                          ))}
+                          <span className="product-badge">POKÉMON TCG</span>
+                        </div>
+                      </button>
+
+                      <div className="product-info">
+                        <div className="product-condition">
+                          <span>POKEMON</span>
+                          <span className="availability">● {pokemonProducts.length} sản phẩm</span>
+                        </div>
+
+                        <button className="product-title" onClick={() => setCategory("pokemon")}>
+                          Pokémon TCG
+                        </button>
+
+                        <p>Booster Box, Elite Trainer Box, Booster Bundle, Pack, Tin, Collection và phụ kiện.</p>
+
+                        <div className="price-block">
+                          <strong className="sale-price">
+                            <small>Từ </small>{money(Math.min(...pokemonProducts.map((item) => item.price)))}
+                          </strong>
+                        </div>
+
+                        <button className="product-link" onClick={() => setCategory("pokemon")}>
+                          Xem tất cả <span>↗</span>
+                        </button>
+                      </div>
+                    </article>
+                  )}
                 </div>
               ) : (
                 <div className="empty-state">
@@ -1146,7 +1207,7 @@ function App() {
               )}
 
               <p className="disclaimer">
-                Giá băng game, phụ kiện và Pokémon TCG hiện là giá tham khảo. Vui lòng
+                Giá băng game và phụ kiện hiện là giá tham khảo. Vui lòng
                 liên hệ Pixo để nhận báo giá chính xác.
               </p>
             </section>
