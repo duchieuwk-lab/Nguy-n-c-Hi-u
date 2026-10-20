@@ -1,7 +1,8 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 
 const CONTACT_URL = "https://m.me/pixostation";
+const ZALO_URL = "https://zalo.me/0917616498";
 
 const consoles = [
   {
@@ -36,13 +37,13 @@ const consoles = [
     badge: "ĐA NĂNG",
     description: "Chơi game cầm tay hoặc kết nối TV với dock tương thích.",
     editions: [
-      { name: "Neon Red / Neon Blue", surcharge: 100000, type: "neon", image: "/products/switch-v2-neon-red-neon-blue.jpg" },
+      { name: "Neon Red / Neon Blue", surcharge: 100000, type: "neon", image: "/products/switch-v2-neon-red-neon-blue.jpg", gallery: ["/products/switch-v2-neon-red-neon-blue-box.jpg"] },
       { name: "Gray Joy-Con", surcharge: 0, type: "base", image: "/products/switch-v2-gray-joy-con.jpg" },
       { name: "Dragon Quest XI S Loto Edition", surcharge: 500000, type: "limited", image: "/products/switch-v2-dragon-quest-xi-s-loto.jpg" },
       { name: "Disney Tsum Tsum Festival Edition", surcharge: 500000, type: "limited", image: "/products/switch-v2-disney-tsum-tsum-festival.jpg" },
-      { name: "Animal Crossing: New Horizons Edition", surcharge: 500000, type: "limited", image: "/products/switch-v2-animal-crossing-new-horizons.jpg" },
+      { name: "Animal Crossing: New Horizons Edition", surcharge: 500000, type: "limited", image: "/products/switch-v2-animal-crossing-new-horizons.jpg", gallery: ["/products/switch-v2-animal-crossing-new-horizons-box.jpg"] },
       { name: "Fortnite Wildcat Edition", surcharge: 500000, type: "limited", image: "/products/switch-v2-fortnite-wildcat.jpg" },
-      { name: "Mario Red & Blue Edition", surcharge: 500000, type: "limited", image: "/products/switch-v2-mario-red-blue.jpg" },
+      { name: "Mario Red & Blue Edition", surcharge: 500000, type: "limited", image: "/products/switch-v2-mario-red-blue.jpg", gallery: ["/products/switch-v2-mario-red-blue-box.jpg"] },
       { name: "Monster Hunter Rise Edition", surcharge: 500000, type: "limited", image: "/products/switch-v2-monster-hunter-rise.jpg" },
       { name: "Fortnite Fleet Force Edition", surcharge: 500000, type: "limited", image: "/products/switch-v2-fortnite-fleet-force.jpg" },
     ],
@@ -119,15 +120,136 @@ const events = [
   { tag: "RIFTBOUND", title: "Pixo Nexus Night", description: "Theo dõi lịch giao lưu và các giải đấu tại Pixo Station." },
 ];
 
+const aboutValues = [
+  { kicker: "01 / TƯ VẤN THẬT", title: "Không vẽ thêm nhu cầu", description: "Lite đủ chơi thì tụi mình nói Lite. Không ép bạn lên OLED chỉ vì nó đắt hơn." },
+  { kicker: "02 / ĐỒNG HÀNH", title: "Bán xong, Pixo vẫn ở đây", description: "Máy lỗi nút, chai pin hay trục trặc phần mềm, cứ mang qua. Tụi mình kiểm tra và nói rõ phương án." },
+  { kicker: "03 / CỘNG ĐỒNG", title: "Nhiều hơn một cửa hàng", description: "Nơi để gặp người chơi cùng, đổi bài, giao lưu TCG và tìm đồng đội cho trận tiếp theo." },
+];
+
+// Banner đầu trang. Thêm banner mới: bỏ ảnh vào public/banners rồi thêm 1 dòng vào đây.
+// link: bấm vào banner sẽ mở link này (để trống thì banner không bấm được).
+const banners = [
+  {
+    image: "/banners/sinh-nhat-pixo.jpg",
+    alt: "Sinh nhật Pixo: Mua 1 tặng 1 Nintendo Switch, check-in rinh OLED miễn phí",
+    link: CONTACT_URL,
+  },
+];
+
+const BANNER_INTERVAL = 5000;
+
+function BannerSlider() {
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [touchStartX, setTouchStartX] = useState(null);
+  const count = banners.length;
+
+  const go = (step) => setIndex((current) => (current + step + count) % count);
+
+  // Tự chuyển banner sau mỗi 5 giây, dừng khi rê chuột vào
+  useEffect(() => {
+    if (count < 2 || paused) return;
+    const timer = window.setInterval(
+      () => setIndex((current) => (current + 1) % count),
+      BANNER_INTERVAL
+    );
+    return () => window.clearInterval(timer);
+  }, [count, paused, index]);
+
+  if (count === 0) return null;
+
+  return (
+    <section
+      className="banner-slider"
+      aria-label="Chương trình nổi bật"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onTouchStart={(event) => setTouchStartX(event.touches[0].clientX)}
+      onTouchEnd={(event) => {
+        if (touchStartX === null) return;
+        const distance = event.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(distance) > 40) go(distance < 0 ? 1 : -1);
+        setTouchStartX(null);
+      }}
+    >
+      <div className="banner-track" style={{ transform: `translateX(-${index * 100}%)` }}>
+        {banners.map((banner, i) => {
+          const image = (
+            <img
+              src={banner.image}
+              alt={banner.alt}
+              loading={i === 0 ? "eager" : "lazy"}
+              draggable="false"
+            />
+          );
+          return (
+            <div className="banner-slide" key={banner.image} aria-hidden={i !== index}>
+              {banner.link ? (
+                <a href={banner.link} target="_blank" rel="noreferrer" tabIndex={i === index ? 0 : -1}>
+                  {image}
+                </a>
+              ) : image}
+            </div>
+          );
+        })}
+      </div>
+
+      {count > 1 && (
+        <>
+          <button className="banner-arrow banner-prev" onClick={() => go(-1)} aria-label="Banner trước">‹</button>
+          <button className="banner-arrow banner-next" onClick={() => go(1)} aria-label="Banner tiếp theo">›</button>
+          <div className="banner-dots">
+            {banners.map((banner, i) => (
+              <button
+                key={banner.image}
+                className={i === index ? "active" : ""}
+                onClick={() => setIndex(i)}
+                aria-label={`Xem banner ${i + 1}`}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </section>
+  );
+}
+
 function money(value) {
   return new Intl.NumberFormat("vi-VN").format(value) + "₫";
 }
 
-function Header({ onHome, onShop }) {
+const navSections = [
+  { id: "tcg", label: "TCG & cộng đồng" },
+  { id: "services", label: "Dịch vụ" },
+  { id: "about", label: "Về Pixo" },
+  { id: "policies", label: "Chính sách" },
+];
+
+function Header({ onHome, onSection }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // Bấm một mục thì đóng menu điện thoại rồi mới chuyển trang/cuộn
+  const navigate = (action) => {
+    setMenuOpen(false);
+    action();
+  };
+
+  const links = (
+    <>
+      <button onClick={() => navigate(onHome)}>Trang chủ</button>
+      <button onClick={() => navigate(() => onSection("products"))}>Sản phẩm</button>
+      {navSections.map((section) => (
+        <button key={section.id} onClick={() => navigate(() => onSection(section.id))}>
+          {section.label}
+        </button>
+      ))}
+    </>
+  );
+
   return (
     <header className="site-header">
       <div className="header-inner">
-        <button className="brand" onClick={onHome}>
+        <button className="brand" onClick={() => navigate(onHome)}>
           <span className="brand-symbol">P</span>
           <span>
             <strong>PIXO<span>STATION</span></strong>
@@ -135,18 +257,23 @@ function Header({ onHome, onShop }) {
           </span>
         </button>
 
-        <nav className="main-nav">
-          <button onClick={onHome}>Trang chủ</button>
-          <button onClick={onShop}>Sản phẩm</button>
-          <a href="#tcg">TCG & cộng đồng</a>
-          <a href="#services">Dịch vụ</a>
-          <a href="#policies">Chính sách</a>
-        </nav>
+        <nav className="main-nav">{links}</nav>
 
         <a className="header-cta" href={CONTACT_URL} target="_blank" rel="noreferrer">
           Liên hệ ↗
         </a>
+
+        <button
+          className="menu-toggle"
+          onClick={() => setMenuOpen((open) => !open)}
+          aria-expanded={menuOpen}
+          aria-label={menuOpen ? "Đóng menu" : "Mở menu"}
+        >
+          {menuOpen ? "✕" : "☰"}
+        </button>
       </div>
+
+      {menuOpen && <nav className="mobile-menu">{links}</nav>}
     </header>
   );
 }
@@ -312,6 +439,11 @@ function ProductDetail({
   const price = variant ? variant.price + surcharge : product.price;
   const original = variant ? variant.original + surcharge : null;
 
+  // Các ảnh của phiên bản đang chọn: ảnh máy trước, ảnh hộp (gallery) sau
+  const [photoIndex, setPhotoIndex] = useState(0);
+  const photos = edition?.image ? [edition.image, ...(edition.gallery ?? [])] : [];
+  const shownEdition = photos.length ? { ...edition, image: photos[photoIndex] } : edition;
+
   return (
     <main className="detail-page page-width">
       <button className="back-button" onClick={onBack}>
@@ -319,7 +451,28 @@ function ProductDetail({
       </button>
 
       <div className="detail-grid">
-        <ProductImage key={editionIndex} product={product} edition={edition} />
+        <div className="detail-media">
+          <ProductImage
+            key={`${editionIndex}-${photoIndex}`}
+            product={product}
+            edition={shownEdition}
+          />
+
+          {photos.length > 1 && (
+            <div className="detail-thumbs">
+              {photos.map((photo, index) => (
+                <button
+                  key={photo}
+                  className={index === photoIndex ? "active" : ""}
+                  onClick={() => setPhotoIndex(index)}
+                  aria-label={`Xem ảnh ${index + 1}`}
+                >
+                  <img src={photo} alt="" />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
 
         <div className="detail-copy">
           <span className="eyebrow">PIXO STATION / PRODUCT</span>
@@ -335,7 +488,10 @@ function ProductDetail({
                 id="detail-edition"
                 className="variant-select"
                 value={editionIndex}
-                onChange={(event) => setEditionIndex(Number(event.target.value))}
+                onChange={(event) => {
+                  setEditionIndex(Number(event.target.value));
+                  setPhotoIndex(0);
+                }}
               >
                 {product.editions.map((item, index) => (
                   <option key={item.name} value={index}>
@@ -457,12 +613,15 @@ function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const goShop = () => {
+  // Đóng trang chi tiết (nếu đang mở) rồi cuộn tới mục cần xem
+  const goSection = (id) => {
     setSelected(null);
     window.setTimeout(() => {
-      document.getElementById("products")?.scrollIntoView({ behavior: "smooth" });
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     }, 50);
   };
+
+  const goShop = () => goSection("products");
 
   const openProduct = (product, variantIndex = 0, editionIndex = 0) => {
     setSelected({ product, variantIndex, editionIndex });
@@ -471,7 +630,27 @@ function App() {
 
   return (
     <>
-      <Header onHome={goHome} onShop={goShop} />
+      <Header onHome={goHome} onSection={goSection} />
+
+      <div className="floating-contact">
+        <a
+          className="floating-zalo"
+          href={ZALO_URL}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Nhắn tin cho Pixo Station qua Zalo"
+        >
+          Zalo
+        </a>
+        <a
+          href={CONTACT_URL}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Nhắn tin cho Pixo Station qua Messenger"
+        >
+          💬 Nhắn Pixo
+        </a>
+      </div>
 
       {selected ? (
         <ProductDetail
@@ -484,6 +663,8 @@ function App() {
       ) : (
         <>
           <main>
+            <BannerSlider />
+
             <section className="hero">
               <div className="hero-grid-bg" />
 
@@ -775,6 +956,46 @@ function App() {
               </div>
             </section>
 
+            {/* VỀ PIXO */}
+            <section className="about-section" id="about">
+              <div className="page-width">
+                <div className="about-story">
+                  <div className="section-intro">
+                    <span className="eyebrow">ABOUT PIXO</span>
+                    <h2>Từ game thủ,<br /><span>cho game thủ.</span></h2>
+                  </div>
+                  <div className="about-copy">
+                    <p>
+                      Pixo Station bắt đầu từ một điều rất đơn giản: tụi mình mê
+                      game, và muốn ai mua máy cũng được tư vấn như đang hỏi một
+                      người bạn chơi game lâu năm, chứ không phải nghe một bài
+                      chào hàng.
+                    </p>
+                    <p>
+                      Ở Pixo, bạn không chỉ mua một chiếc máy. Bạn có người tư vấn
+                      đúng nhu cầu, người hỗ trợ khi máy "dở chứng", và một cộng
+                      đồng để rủ nhau đánh Pokémon TCG, Riftbound hay đơn giản là
+                      ngồi tám chuyện game.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="policy-grid">
+                  {aboutValues.map((value) => (
+                    <article className="policy-card" key={value.kicker}>
+                      <span className="policy-kicker">{value.kicker}</span>
+                      <h3>{value.title}</h3>
+                      <p>{value.description}</p>
+                    </article>
+                  ))}
+                </div>
+
+                <a className="policy-contact" href={CONTACT_URL} target="_blank" rel="noreferrer">
+                  Ghé chơi hoặc nhắn Pixo một câu ↗
+                </a>
+              </div>
+            </section>
+
             {/* CHÍNH SÁCH BÁN HÀNG */}
             <section className="policies-section" id="policies">
               <div className="page-width policies-inner">
@@ -862,6 +1083,7 @@ function App() {
               </button>
               <p>Gaming · TCG · Community · Tech Service</p>
               <a href={CONTACT_URL} target="_blank" rel="noreferrer">Facebook ↗</a>
+              <a href={ZALO_URL} target="_blank" rel="noreferrer">Zalo 0917 616 498 ↗</a>
             </div>
             <div className="page-width footer-bottom">
               <span>© 2026 PIXO STATION</span>
