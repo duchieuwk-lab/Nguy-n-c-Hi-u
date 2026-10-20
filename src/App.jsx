@@ -11,16 +11,16 @@ const consoles = [
     badge: "NHỎ GỌN",
     description: "Máy chơi game cầm tay nhỏ gọn, phù hợp mang theo mỗi ngày.",
     editions: [
-      { name: "Gray (Xám)", surcharge: 0, type: "base" },
-      { name: "Yellow (Vàng)", surcharge: 0, type: "base" },
-      { name: "Turquoise (Xanh ngọc)", surcharge: 0, type: "base" },
-      { name: "Coral (Hồng san hô)", surcharge: 0, type: "base" },
-      { name: "Blue (Xanh dương)", surcharge: 0, type: "base" },
-      { name: "Pokémon Zacian & Zamazenta Edition", surcharge: 500000, type: "limited" },
-      { name: "Pokémon Dialga & Palkia Edition", surcharge: 500000, type: "limited" },
-      { name: "Animal Crossing Isabelle’s Aloha Edition", surcharge: 500000, type: "limited" },
-      { name: "Animal Crossing Timmy & Tommy’s Aloha Edition", surcharge: 500000, type: "limited" },
-      { name: "The Legend of Zelda: Hyrule Edition", surcharge: 500000, type: "limited" },
+      { name: "Gray (Xám)", surcharge: 0, type: "base", image: "/products/switch-lite-gray.jpg" },
+      { name: "Yellow (Vàng)", surcharge: 0, type: "base", image: "/products/switch-lite-yellow.jpg" },
+      { name: "Turquoise (Xanh ngọc)", surcharge: 0, type: "base", image: "/products/switch-lite-turquoise.jpg" },
+      { name: "Coral (Hồng san hô)", surcharge: 0, type: "base", image: "/products/switch-lite-coral.jpg" },
+      { name: "Blue (Xanh dương)", surcharge: 0, type: "base", image: "/products/switch-lite-blue.jpg" },
+      { name: "Pokémon Zacian & Zamazenta Edition", surcharge: 500000, type: "limited", image: "/products/switch-lite-pokemon-zacian-zamazenta.jpg" },
+      { name: "Pokémon Dialga & Palkia Edition", surcharge: 500000, type: "limited", image: "/products/switch-lite-pokemon-dialga-palkia.jpg" },
+      { name: "Animal Crossing Isabelle’s Aloha Edition", surcharge: 500000, type: "limited", image: "/products/switch-lite-animal-crossing-isabelles-aloha.jpg" },
+      { name: "Animal Crossing Timmy & Tommy’s Aloha Edition", surcharge: 500000, type: "limited", image: "/products/switch-lite-animal-crossing-timmy-tommys-aloha.jpg" },
+      { name: "The Legend of Zelda: Hyrule Edition", surcharge: 500000, type: "limited", image: "/products/switch-lite-the-legend-of-zelda-hyrule.jpg" },
     ],
     variants: [
       { name: "Zin", original: 3450000, price: 3300000 },
@@ -36,15 +36,15 @@ const consoles = [
     badge: "ĐA NĂNG",
     description: "Chơi game cầm tay hoặc kết nối TV với dock tương thích.",
     editions: [
-      { name: "Neon Red / Neon Blue", surcharge: 100000, type: "neon" },
-      { name: "Gray Joy-Con", surcharge: 0, type: "base" },
-      { name: "Dragon Quest XI S Loto Edition", surcharge: 500000, type: "limited" },
-      { name: "Disney Tsum Tsum Festival Edition", surcharge: 500000, type: "limited" },
-      { name: "Animal Crossing: New Horizons Edition", surcharge: 500000, type: "limited" },
-      { name: "Fortnite Wildcat Edition", surcharge: 500000, type: "limited" },
-      { name: "Mario Red & Blue Edition", surcharge: 500000, type: "limited" },
-      { name: "Monster Hunter Rise Edition", surcharge: 500000, type: "limited" },
-      { name: "Fortnite Fleet Force Edition", surcharge: 500000, type: "limited" },
+      { name: "Neon Red / Neon Blue", surcharge: 100000, type: "neon", image: "/products/switch-v2-neon-red-neon-blue.jpg" },
+      { name: "Gray Joy-Con", surcharge: 0, type: "base", image: "/products/switch-v2-gray-joy-con.jpg" },
+      { name: "Dragon Quest XI S Loto Edition", surcharge: 500000, type: "limited", image: "/products/switch-v2-dragon-quest-xi-s-loto.jpg" },
+      { name: "Disney Tsum Tsum Festival Edition", surcharge: 500000, type: "limited", image: "/products/switch-v2-disney-tsum-tsum-festival.jpg" },
+      { name: "Animal Crossing: New Horizons Edition", surcharge: 500000, type: "limited", image: "/products/switch-v2-animal-crossing-new-horizons.jpg" },
+      { name: "Fortnite Wildcat Edition", surcharge: 500000, type: "limited", image: "/products/switch-v2-fortnite-wildcat.jpg" },
+      { name: "Mario Red & Blue Edition", surcharge: 500000, type: "limited", image: "/products/switch-v2-mario-red-blue.jpg" },
+      { name: "Monster Hunter Rise Edition", surcharge: 500000, type: "limited", image: "/products/switch-v2-monster-hunter-rise.jpg" },
+      { name: "Fortnite Fleet Force Edition", surcharge: 500000, type: "limited", image: "/products/switch-v2-fortnite-fleet-force.jpg" },
     ],
     variants: [
       { name: "Zin", original: 5100000, price: 4850000 },
@@ -60,13 +60,13 @@ const consoles = [
     badge: "PHỔ BIẾN",
     description: "Màn hình OLED 7 inch cho màu sắc nổi bật khi chơi game.",
     editions: [
-      { name: "White Base", surcharge: 0, type: "base" },
-      { name: "Neon Red / Neon Blue", surcharge: 100000, type: "neon" },
-      { name: "Secret Edition", surcharge: 100000, type: "neon" },
-      { name: "Splatoon Limited Edition", surcharge: 500000, type: "limited" },
-      { name: "Zelda Limited Edition", surcharge: 500000, type: "limited" },
-      { name: "Pokémon Limited Edition", surcharge: 500000, type: "limited" },
-      { name: "Mario Limited Edition", surcharge: 500000, type: "limited" },
+      { name: "White Base", surcharge: 0, type: "base", image: "/products/switch-oled-white-base.jpg" },
+      { name: "Neon Red / Neon Blue", surcharge: 100000, type: "neon", image: "/products/switch-oled-neon-red-neon-blue.jpg" },
+      { name: "Secret Edition", surcharge: 100000, type: "neon", image: "/products/switch-oled-secret.jpg" },
+      { name: "Splatoon Limited Edition", surcharge: 500000, type: "limited", image: "/products/switch-oled-splatoon.jpg" },
+      { name: "Zelda Limited Edition", surcharge: 500000, type: "limited", image: "/products/switch-oled-zelda.jpg" },
+      { name: "Pokémon Limited Edition", surcharge: 500000, type: "limited", image: "/products/switch-oled-pokemon.jpg" },
+      { name: "Mario Limited Edition", surcharge: 500000, type: "limited", image: "/products/switch-oled-mario.jpg" },
     ],
     variants: [
       { name: "Zin", original: 6400000, price: 6050000 },
@@ -151,17 +151,20 @@ function Header({ onHome, onShop }) {
   );
 }
 
-function ProductImage({ product }) {
-  const [failed, setFailed] = useState(false);
+// Ảnh hiển thị: ảnh theo màu/phiên bản → ảnh chung của sản phẩm → khung "Ảnh sẽ cập nhật"
+function ProductImage({ product, edition }) {
+  const sources = [edition?.image, product.image].filter(Boolean);
+  const [failedCount, setFailedCount] = useState(0);
+  const src = sources[failedCount];
 
   return (
     <div className="product-image">
-      {!failed ? (
+      {src ? (
         <img
-          src={product.image}
-          alt={product.name}
+          src={src}
+          alt={edition ? `${product.name} - ${edition.name}` : product.name}
           loading="lazy"
-          onError={() => setFailed(true)}
+          onError={() => setFailedCount((count) => count + 1)}
         />
       ) : (
         <div className="image-fallback">
@@ -192,7 +195,7 @@ function ConsoleCard({ product, onSelect }) {
         className="product-image-button"
         onClick={() => onSelect(product, variantIndex, editionIndex)}
       >
-        <ProductImage product={product} />
+        <ProductImage key={editionIndex} product={product} edition={edition} />
       </button>
 
       <div className="product-info">
@@ -316,7 +319,7 @@ function ProductDetail({
       </button>
 
       <div className="detail-grid">
-        <ProductImage product={product} />
+        <ProductImage key={editionIndex} product={product} edition={edition} />
 
         <div className="detail-copy">
           <span className="eyebrow">PIXO STATION / PRODUCT</span>
