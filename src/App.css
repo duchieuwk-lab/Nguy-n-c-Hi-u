@@ -823,7 +823,7 @@ theo Brand Guideline */
 
 .service-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 13px;
   margin-top: 35px;
 }
@@ -2653,4 +2653,201 @@ chân trang */
 
 .bestseller-info .primary-button {
   margin-top: auto;
+}
+
+/* TIN TỨC & SỰ KIỆN */
+.news-home {
+  margin-top: 56px;
+  margin-bottom: 64px;
+}
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.news-card {
+  overflow: hidden;
+  border: 1px solid #e3e7e0;
+  border-radius: 14px;
+  background: #fff;
+  transition: transform .2s, box-shadow .2s;
+}
+
+.news-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(0,0,0,.08);
+}
+
+.news-card-link {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: left;
+}
+
+.news-cover {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #f2f3ef;
+}
+
+.news-cover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.news-cover-text {
+  display: grid;
+  place-items: center;
+  background: var(--green-gradient);
+}
+
+.news-cover-text span {
+  color: #fff;
+  font-family: var(--font-title);
+  font-size: 34px;
+}
+
+.news-draft {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: #e5484d;
+  color: #fff;
+  font-size: 11px;
+  letter-spacing: .5px;
+}
+
+.news-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+}
+
+.news-meta {
+  color: var(--green-text);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.news-card-body h3 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.news-card-body p {
+  display: -webkit-box;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.news-more {
+  margin-top: auto;
+  color: var(--green-text);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.news-page {
+  padding: 32px 0 72px;
+}
+
+.news-page-title {
+  margin: 10px 0 24px;
+  font-size: clamp(30px, 4vw, 44px);
+}
+
+.news-article {
+  max-width: 760px;
+}
+
+.news-article h1 {
+  margin: 10px 0 20px;
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.25;
+}
+
+.news-article .news-cover {
+  margin-bottom: 24px;
+  border-radius: 14px;
+}
+
+.news-article p {
+  margin-bottom: 16px;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.news-cta {
+  margin: 8px 0 24px;
+  min-height: 48px;
+  font-size: 15px;
+}
+
+.news-sources {
+  display: grid;
+  gap: 6px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.news-sources a {
+  color: var(--green-text);
+}
+
+@media (max-width: 900px) {
+  .news-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.news-article .news-credit {
+  margin: -16px 0 20px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.news-figure {
+  margin: 8px 0 24px;
+}
+
+.news-figure img {
+  display: block;
+  width: 100%;
+  max-height: 420px;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.news-figure figcaption {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.news-scheduled {
+  background: #d97706;
 }

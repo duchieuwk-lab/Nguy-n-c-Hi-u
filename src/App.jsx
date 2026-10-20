@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 import { pokemonPerks, pokemonProducts, pokemonTypes } from "./pokemonProducts";
+import { isScheduled, newsCategories, visibleNews } from "./news";
 
 const CONTACT_URL = "https://m.me/pixostation";
 const ZALO_URL = "https://zalo.me/0917616498";
@@ -216,9 +217,8 @@ const categories = [
 
 const services = [
   { number: "01", title: "Sửa chữa máy", description: "Kiểm tra lỗi phần cứng, nút bấm, màn hình và pin." },
-  { number: "02", title: "Mod chip", description: "Tư vấn phương án phù hợp với model và tình trạng máy." },
-  { number: "03", title: "Cài đặt game", description: "Hỗ trợ cài đặt và quản lý game theo phương án tương thích, hợp pháp." },
-  { number: "04", title: "Khắc phục phần mềm", description: "Hỗ trợ kiểm tra lỗi hệ thống và xử lý sự cố phần mềm." },
+  { number: "02", title: "Cài đặt game", description: "Hỗ trợ cài đặt và quản lý game theo phương án tương thích, hợp pháp." },
+  { number: "03", title: "Khắc phục phần mềm", description: "Hỗ trợ kiểm tra lỗi hệ thống và xử lý sự cố phần mềm." },
 ];
 
 // Ảnh khách hàng thật (không ghi tên khách)
@@ -394,6 +394,7 @@ const navSections = [
   { id: "services", label: "Dịch vụ" },
   { id: "about", label: "Về Pixo" },
   { id: "policies", label: "Chính sách" },
+  { id: "news", label: "Tin tức" },
   { id: "faq", label: "Hỏi đáp" },
   { id: "contact", label: "Liên hệ" },
 ];
@@ -867,6 +868,110 @@ function ProductDetail({
   );
 }
 
+// TIN TỨC: thẻ bài, trang danh sách, trang chi tiết
+function formatDate(date) {
+  const [y, m, d] = date.split("-");
+  return `${d}/${m}/${y}`;
+}
+
+function NewsCover({ post }) {
+  return (
+    <div className={post.cover ? "news-cover" : "news-cover news-cover-text"}>
+      {post.cover ? <img src={post.cover} alt="" loading="lazy" /> : <span>{newsCategories[post.category]}</span>}
+      {post.status === "draft" && <b className="news-draft">BẢN NHÁP</b>}
+      {isScheduled(post) && <b className="news-draft news-scheduled">HẸN ĐĂNG {post.publishAt.slice(11)} {formatDate(post.publishAt.slice(0, 10))}</b>}
+    </div>
+  );
+}
+
+function NewsCard({ post, onOpen }) {
+  return (
+    <article className="news-card">
+      <button className="news-card-link" onClick={() => onOpen(post)}>
+        <NewsCover post={post} />
+        <div className="news-card-body">
+          <span className="news-meta">{newsCategories[post.category]} · {formatDate(post.date)}</span>
+          <h3>{post.title}</h3>
+          <p>{post.excerpt}</p>
+          <span className="news-more">Đọc tiếp →</span>
+        </div>
+      </button>
+    </article>
+  );
+}
+
+function NewsList({ onOpen, onBack }) {
+  return (
+    <main className="news-page page-width">
+      <button className="back-button" onClick={onBack}>← Về trang chủ</button>
+      <span className="eyebrow">TIN TỨC & SỰ KIỆN</span>
+      <h1 className="news-page-title">Tin tức gaming & TCG</h1>
+      <div className="news-grid">
+        {visibleNews.map((post) => <NewsCard key={post.slug} post={post} onOpen={onOpen} />)}
+      </div>
+    </main>
+  );
+}
+
+function NewsPost({ post, onOpen, onBack }) {
+  const others = visibleNews.filter((item) => item.slug !== post.slug).slice(0, 3);
+  return (
+    <main className="news-page page-width">
+      <button className="back-button" onClick={onBack}>← Tất cả tin tức</button>
+      <article className="news-article">
+        <span className="news-meta">{newsCategories[post.category]} · {formatDate(post.date)}</span>
+        <h1>{post.title}</h1>
+        <NewsCover post={post} />
+        {post.coverCredit && <p className="news-credit">{post.coverCredit}</p>}
+        {post.body.map((block) =>
+          typeof block === "string" ? (
+            <p key={block.slice(0, 40)}>{block}</p>
+          ) : (
+            <figure className="news-figure" key={block.image}>
+              <img src={block.image} alt={block.caption ?? ""} loading="lazy" />
+              {block.caption && <figcaption>{block.caption}</figcaption>}
+            </figure>
+          )
+        )}
+        {post.cta && (
+          <a
+            className="primary-button news-cta"
+            href={post.cta.href}
+            {...(post.cta.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
+          >
+            {post.cta.label} ↗
+          </a>
+        )}
+        {post.sources?.length > 0 && (
+          <div className="news-sources">
+            <b>Nguồn tham khảo:</b>
+            {post.sources.map((source) => (
+              <a key={source.url} href={source.url} target="_blank" rel="noreferrer nofollow">{source.name} ↗</a>
+            ))}
+          </div>
+        )}
+      </article>
+      {others.length > 0 && (
+        <section className="detail-section">
+          <h2>Tin khác</h2>
+          <div className="news-grid">
+            {others.map((item) => <NewsCard key={item.slug} post={item} onOpen={onOpen} />)}
+          </div>
+        </section>
+      )}
+    </main>
+  );
+}
+
+// Đọc link hiện tại: /tin-tuc (danh sách) hoặc /tin-tuc/<slug> (bài viết)
+function newsFromLocation() {
+  const match = window.location.pathname.match(/^\/tin-tuc(?:\/([^/]+))?\/?$/);
+  if (!match) return null;
+  if (!match[1]) return { list: true };
+  const post = visibleNews.find((item) => item.slug === match[1]);
+  return post ? { post } : { list: true };
+}
+
 // LINK RIÊNG CHO TỪNG SẢN PHẨM: /san-pham/<slug>?pb=<số thứ tự phiên bản>
 function slugify(text) {
   return text
@@ -907,23 +1012,38 @@ function App() {
   // Ở mục "Tất cả" (không tìm kiếm) chỉ hiện ô giới thiệu Pokémon thay vì cả 64 sản phẩm
   const collapsePokemon = category === "all" && !search.trim();
   const [selected, setSelected] = useState(selectionFromLocation);
+  const [newsView, setNewsView] = useState(newsFromLocation);
 
   // Nút Quay lại / Tiến tới của trình duyệt
   useEffect(() => {
-    const onPopState = () => setSelected(selectionFromLocation());
+    const onPopState = () => {
+      setSelected(selectionFromLocation());
+      setNewsView(newsFromLocation());
+    };
     window.addEventListener("popstate", onPopState);
     return () => window.removeEventListener("popstate", onPopState);
   }, []);
 
   // Tiêu đề tab theo sản phẩm đang xem
   useEffect(() => {
-    document.title = selected ? `${selected.product.name} – Pixo Station` : SITE_TITLE;
-  }, [selected]);
+    if (selected) document.title = `${selected.product.name} – Pixo Station`;
+    else if (newsView?.post) document.title = `${newsView.post.title} – Pixo Station`;
+    else if (newsView) document.title = "Tin tức – Pixo Station";
+    else document.title = SITE_TITLE;
+  }, [selected, newsView]);
 
   // Về trang chủ: đổi link về "/" (nếu đang ở trang sản phẩm) rồi đóng trang chi tiết
   const closeProduct = () => {
     if (window.location.pathname !== "/") window.history.pushState(null, "", "/");
     setSelected(null);
+    setNewsView(null);
+  };
+
+  const openNews = (post) => {
+    window.history.pushState(null, "", post ? `/tin-tuc/${post.slug}` : "/tin-tuc");
+    setSelected(null);
+    setNewsView(post ? { post } : { list: true });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const visibleConsoles = useMemo(() => {
@@ -973,6 +1093,7 @@ function App() {
 
   const openProduct = (product, variantIndex = 0, editionIndex = 0) => {
     window.history.pushState(null, "", productPath(product, editionIndex));
+    setNewsView(null);
     setSelected({ product, variantIndex, editionIndex });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -1010,6 +1131,10 @@ function App() {
           onBack={closeProduct}
           onSelect={openProduct}
         />
+      ) : newsView?.post ? (
+        <NewsPost key={newsView.post.slug} post={newsView.post} onOpen={openNews} onBack={() => openNews(null)} />
+      ) : newsView ? (
+        <NewsList onOpen={openNews} onBack={closeProduct} />
       ) : (
         <>
           <main>
@@ -1211,6 +1336,18 @@ function App() {
                 liên hệ Pixo để nhận báo giá chính xác.
               </p>
             </section>
+
+            {visibleNews.length > 0 && (
+              <section className="news-home page-width" id="news">
+                <div className="bestsellers-head">
+                  <h2>Tin tức & sự kiện</h2>
+                  <button className="text-link" onClick={() => openNews(null)}>Xem tất cả →</button>
+                </div>
+                <div className="news-grid">
+                  {visibleNews.slice(0, 3).map((post) => <NewsCard key={post.slug} post={post} onOpen={openNews} />)}
+                </div>
+              </section>
+            )}
 
             <section className="tcg-section" id="tcg">
               <div className="page-width tcg-inner">
