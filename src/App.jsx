@@ -1,4 +1,3 @@
-
 import { useMemo, useState } from "react";
 import "./App.css";
 
@@ -377,9 +376,41 @@ function ProductDetail({
             và chính sách bảo hành trước khi mua.
           </div>
 
-          <a className="primary-button" href={CONTACT_URL} target="_blank" rel="noreferrer">
+          <button
+            className="primary-button"
+            onClick={async () => {
+              const editionText = edition
+                ? `, màu/phiên bản ${edition.name}`
+                : "";
+
+              const variantText = variant
+                ? `, gói bộ nhớ/tình trạng ${variant.name}`
+                : "";
+
+              const message =
+                `Chào Pixo Station! Mình muốn hỏi mua ${product.name}` +
+                `${editionText}${variantText}. Giá hiển thị: ${money(price)}. ` +
+                "Shop tư vấn giúp mình nhé!";
+
+              // Sao chép trước khi mở Messenger: tab mới làm trang mất focus và trình duyệt sẽ chặn sao chép
+              const copying = navigator.clipboard
+                ? navigator.clipboard.writeText(message)
+                : Promise.reject(new Error("Clipboard không khả dụng"));
+
+              window.open(CONTACT_URL, "_blank", "noopener,noreferrer");
+
+              try {
+                await copying;
+                alert("Đã sao chép tin nhắn! Hãy dán vào Messenger để gửi.");
+              } catch {
+                alert(
+                  `Bạn hãy gửi tin nhắn này cho Pixo Station:\n\n${message}`
+                );
+              }
+            }}
+          >
             Hỏi mua sản phẩm ↗
-          </a>
+          </button>
         </div>
       </div>
     </main>
@@ -394,7 +425,7 @@ function App() {
 
   const visibleConsoles = useMemo(() => {
     return consoles
-      .filter((product) => category === "all" || category === "console")
+      .filter(() => category === "all" || category === "console")
       .filter((product) =>
         product.name.toLowerCase().includes(search.trim().toLowerCase())
       )
@@ -626,8 +657,8 @@ function App() {
               )}
 
               <p className="disclaimer">
-                Giá băng game, phụ kiện và TCG hiện là giá tham khảo. Giá máy lấy
-                từ bảng giá Pixo bạn cung cấp.
+                Giá băng game, phụ kiện và TCG hiện là giá tham khảo. Vui lòng
+                liên hệ Pixo để nhận báo giá chính xác.
               </p>
             </section>
 
