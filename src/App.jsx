@@ -138,6 +138,36 @@ const banners = [
 
 const BANNER_INTERVAL = 5000;
 
+// Máy bán chạy ở đầu trang chủ. Đổi máy: sửa productId / editionName / title (image không bắt buộc).
+const bestsellerConfig = [
+  { productId: "oled", editionName: "White Base", title: "Switch OLED Trắng", image: "/products/featured-oled-white.jpg" },
+  { productId: "switch2", title: "Nintendo Switch 2" },
+  { productId: "v2", editionName: "Neon Red / Neon Blue", title: "Switch V2 Neon" },
+  { productId: "lite", editionName: "Gray (Xám)", title: "Switch Lite Xám" },
+];
+
+const bestsellers = bestsellerConfig.map((config) => {
+  const product = consoles.find((item) => item.id === config.productId);
+  const editionIndex = product.editions
+    ? Math.max(0, product.editions.findIndex((item) => item.name === config.editionName))
+    : 0;
+  const baseEdition = product.editions ? product.editions[editionIndex] : null;
+  const edition = config.image ? { ...baseEdition, image: config.image } : baseEdition;
+  const price = product.variants[0].price + (baseEdition ? baseEdition.surcharge : 0);
+  return { ...config, product, editionIndex, edition, price };
+});
+
+const iconProps = { width: 26, height: 26, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.8, strokeLinecap: "round", strokeLinejoin: "round" };
+
+const quickCategories = [
+  { label: "Máy chơi game", category: "console", icon: <svg {...iconProps}><rect x="2" y="6" width="20" height="12" rx="4" /><path d="M7 10v4M5 12h4M16 11h.01M18 13h.01" /></svg> },
+  { label: "Băng game", category: "game", icon: <svg {...iconProps}><path d="M6 3h9l3 3v15H6z" /><path d="M9 7h6M9 17h6" /></svg> },
+  { label: "Phụ kiện", category: "accessory", icon: <svg {...iconProps}><path d="M4 14v-2a8 8 0 0 1 16 0v2" /><rect x="3" y="14" width="4" height="6" rx="1.5" /><rect x="17" y="14" width="4" height="6" rx="1.5" /></svg> },
+  { label: "Pokémon TCG", category: "pokemon", icon: <svg {...iconProps}><circle cx="12" cy="12" r="9" /><path d="M3 12h6M15 12h6" /><circle cx="12" cy="12" r="3" /></svg> },
+  { label: "Riftbound", category: "riftbound", icon: <svg {...iconProps}><rect x="5" y="3" width="11" height="15" rx="2" /><path d="M9 21h8a2 2 0 0 0 2-2V7" /></svg> },
+  { label: "Sửa máy", section: "services", icon: <svg {...iconProps}><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.6-.4-.4-2.6z" /></svg> },
+];
+
 function BannerSlider() {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -250,11 +280,7 @@ function Header({ onHome, onSection }) {
     <header className="site-header">
       <div className="header-inner">
         <button className="brand" onClick={() => navigate(onHome)}>
-          <span className="brand-symbol">P</span>
-          <span>
-            <strong>PIXO<span>STATION</span></strong>
-            <small>PLAY MORE. LIVE BIGGER.</small>
-          </span>
+          <img className="brand-logo" src="/logo-pixo-dark.png" alt="Pixo Station" />
         </button>
 
         <nav className="main-nav">{links}</nav>
@@ -475,7 +501,7 @@ function ProductDetail({
         </div>
 
         <div className="detail-copy">
-          <span className="eyebrow">PIXO STATION / PRODUCT</span>
+          <span className="eyebrow">PIXO STATION</span>
           <h1>{product.name}</h1>
           <p>{product.description}</p>
 
@@ -665,113 +691,62 @@ function App() {
           <main>
             <BannerSlider />
 
-            <section className="hero">
-              <div className="hero-grid-bg" />
-
-              <div className="hero-inner page-width">
-                <div className="hero-copy">
-                  <span className="eyebrow">
-                    <i /> YOUR GAMING DESTINATION
-                  </span>
-                  <h1>
-                    Chơi game.<br />
-                    <span>Sưu tầm. Kết nối.</span>
-                  </h1>
-                  <p>
-                    Máy chơi game, băng game, phụ kiện, TCG và dịch vụ kỹ thuật
-                    dành cho cộng đồng game thủ.
-                  </p>
-
-                  <div className="hero-actions">
-                    <button className="primary-button" onClick={goShop}>
-                      Khám phá sản phẩm ↘
-                    </button>
-                    <a className="secondary-button" href="#services">
-                      Dịch vụ kỹ thuật
-                    </a>
-                  </div>
-
-                  <div className="hero-points">
-                    <span>01 / CONSOLES</span>
-                    <span>02 / TCG</span>
-                    <span>03 / REPAIR</span>
-                  </div>
-                </div>
-
-                <div className="hero-visual">
-                  <div className="visual-ring ring-one" />
-                  <div className="visual-ring ring-two" />
-
-                  <div className="visual-panel">
-                    <span className="visual-topline">WELCOME TO YOUR NEXT LEVEL</span>
-
-                    <div className="visual-device">
-                      <span className="device-side side-left"><i /></span>
-                      <div className="device-screen">
-                        <small>PIXO STATION</small>
-                        <strong>GAME<br />ON<span>.</span></strong>
-                        <em>PLAY MORE. LIVE BIGGER.</em>
-                      </div>
-                      <span className="device-side side-right"><i /></span>
-                    </div>
-
-                    <div className="visual-bottom">
-                      <span>GAMING / TCG / COMMUNITY</span>
-                      <b>PS—001</b>
-                    </div>
-                  </div>
-
-                  <span className="float-label float-one">LEVEL UP ↗</span>
-                  <span className="float-label float-two">● PLAYER COMMUNITY</span>
-                </div>
-              </div>
-
-              <div className="hero-strip">
-                <span>PIXO STATION</span>
-                <span>GAMING GEAR & TCG</span>
-                <span>HANOI · VIETNAM</span>
-              </div>
+            <section className="quick-categories page-width" aria-label="Danh mục">
+              {quickCategories.map((item) => (
+                <button
+                  key={item.label}
+                  onClick={() => {
+                    if (item.section) {
+                      goSection(item.section);
+                    } else {
+                      setCategory(item.category);
+                      goShop();
+                    }
+                  }}
+                >
+                  <span className="quick-icon" aria-hidden="true">{item.icon}</span>
+                  {item.label}
+                </button>
+              ))}
             </section>
 
-            <section className="category-section page-width">
-              <div className="section-intro">
-                <span className="eyebrow">EXPLORE PIXO</span>
-                <h2>Mọi thứ cho<br /><span>cuộc chơi của bạn.</span></h2>
+            <section className="bestsellers page-width">
+              <div className="bestsellers-head">
+                <h2>Máy bán chạy</h2>
+                <button className="text-link" onClick={() => { setCategory("console"); goShop(); }}>
+                  Xem tất cả máy →
+                </button>
               </div>
 
-              <div className="category-tiles">
-                <button onClick={() => { setCategory("console"); goShop(); }}>
-                  <span>01 / HARDWARE</span>
-                  <strong>Máy chơi game</strong>
-                  <small>Lite · V2 · OLED · Switch 2</small>
-                  <b>↗</b>
-                </button>
-                <button onClick={() => { setCategory("game"); goShop(); }}>
-                  <span>02 / GAME LIBRARY</span>
-                  <strong>Băng game & phụ kiện</strong>
-                  <small>Game vật lý · Túi · Ốp · Tay cầm</small>
-                  <b>↗</b>
-                </button>
-                <a href="#tcg">
-                  <span>03 / TCG</span>
-                  <strong>Trading Card Games</strong>
-                  <small>Pokémon · Riftbound</small>
-                  <b>↗</b>
-                </a>
-                <a href="#services">
-                  <span>04 / TECH SERVICE</span>
-                  <strong>Dịch vụ kỹ thuật</strong>
-                  <small>Sửa chữa · Mod chip · Phần mềm</small>
-                  <b>↗</b>
-                </a>
+              <div className="bestseller-grid">
+                {bestsellers.map((item) => (
+                  <article className="bestseller-card" key={item.title}>
+                    <button
+                      className="bestseller-image"
+                      onClick={() => openProduct(item.product, 0, item.editionIndex)}
+                    >
+                      <ProductImage product={item.product} edition={item.edition} />
+                    </button>
+                    <div className="bestseller-info">
+                      <h3>{item.title}</h3>
+                      <p>Từ <strong>{money(item.price)}</strong></p>
+                      <button
+                        className="primary-button"
+                        onClick={() => openProduct(item.product, 0, item.editionIndex)}
+                      >
+                        Xem máy
+                      </button>
+                    </div>
+                  </article>
+                ))}
               </div>
             </section>
 
             <section className="catalog-section page-width" id="products">
               <div className="section-heading">
                 <div>
-                  <span className="eyebrow">PIXO MARKET</span>
-                  <h2>Chọn món đồ<br /><span>tiếp theo của bạn.</span></h2>
+                  <span className="eyebrow">TẤT CẢ SẢN PHẨM</span>
+                  <h2>Chọn món đồ <span>tiếp theo.</span></h2>
                 </div>
                 <p>
                   Giá máy hiển thị theo bảng giá Pixo cung cấp. Vui lòng xác
@@ -815,7 +790,6 @@ function App() {
 
               <div className="result-line">
                 <span>{visibleConsoles.length + visibleOthers.length} SẢN PHẨM</span>
-                <span>PIXO SELECTS ✳</span>
               </div>
 
               {visibleConsoles.length + visibleOthers.length > 0 ? (
@@ -850,7 +824,7 @@ function App() {
               <div className="page-width tcg-inner">
                 <div className="section-heading">
                   <div>
-                    <span className="eyebrow">COLLECT · PLAY · CONNECT</span>
+                    <span className="eyebrow">TCG & CỘNG ĐỒNG</span>
                     <h2>TCG & <span>cộng đồng.</span></h2>
                   </div>
                   <p>
@@ -891,7 +865,7 @@ function App() {
 
                 <div className="community-heading">
                   <div>
-                    <span className="eyebrow">MEET YOUR PEOPLE</span>
+                    <span className="eyebrow">SỰ KIỆN</span>
                     <h3>Chơi cùng cộng đồng.</h3>
                   </div>
                   <a href={CONTACT_URL} target="_blank" rel="noreferrer">
@@ -921,7 +895,7 @@ function App() {
             <section className="services-section page-width" id="services">
               <div className="section-heading">
                 <div>
-                  <span className="eyebrow">PIXO TECH SERVICE</span>
+                  <span className="eyebrow">DỊCH VỤ KỸ THUẬT</span>
                   <h2>Máy có vấn đề?<br /><span>Để Pixo hỗ trợ.</span></h2>
                 </div>
                 <p>
@@ -947,7 +921,7 @@ function App() {
 
               <div className="service-cta">
                 <div>
-                  <span className="eyebrow">NEED TECH SUPPORT?</span>
+                  <span className="eyebrow">CẦN HỖ TRỢ?</span>
                   <h3>Hãy mô tả lỗi máy bạn đang gặp.</h3>
                 </div>
                 <a className="primary-button" href={CONTACT_URL} target="_blank" rel="noreferrer">
@@ -961,15 +935,20 @@ function App() {
               <div className="page-width">
                 <div className="about-story">
                   <div className="section-intro">
-                    <span className="eyebrow">ABOUT PIXO</span>
+                    <span className="eyebrow">VỀ PIXO</span>
                     <h2>Từ game thủ,<br /><span>cho game thủ.</span></h2>
                   </div>
                   <div className="about-copy">
                     <p>
-                      Pixo Station bắt đầu từ một điều rất đơn giản: tụi mình mê
-                      game, và muốn ai mua máy cũng được tư vấn như đang hỏi một
-                      người bạn chơi game lâu năm, chứ không phải nghe một bài
-                      chào hàng.
+                      Pixo Station là điểm đến dành cho thế hệ trẻ yêu công nghệ
+                      và đam mê trải nghiệm game chất lượng. Tụi mình muốn ai mua
+                      máy cũng được tư vấn như đang hỏi một người bạn chơi game lâu
+                      năm, chứ không phải nghe một bài chào hàng.
+                    </p>
+                    <p>
+                      Tiêu chí của Pixo rất rõ: <strong>chất lượng thật, giá trị
+                      xứng đáng</strong>. Giúp bạn nâng tầm trải nghiệm chơi game
+                      một cách thông minh và bền vững.
                     </p>
                     <p>
                       Ở Pixo, bạn không chỉ mua một chiếc máy. Bạn có người tư vấn
@@ -1001,7 +980,7 @@ function App() {
               <div className="page-width policies-inner">
                 <div className="section-heading">
                   <div>
-                    <span className="eyebrow">SHOP WITH CONFIDENCE</span>
+                    <span className="eyebrow">CHÍNH SÁCH</span>
                     <h2>Chính sách <span>tại Pixo.</span></h2>
                   </div>
                   <p>
@@ -1050,36 +1029,12 @@ function App() {
                 </a>
               </div>
             </section>
-
-            <section className="trust-section">
-              <div className="page-width trust-inner">
-                <div>
-                  <span>01</span>
-                  <strong>Đúng nhu cầu</strong>
-                  <p>Tư vấn theo thiết bị và mục đích sử dụng.</p>
-                </div>
-                <div>
-                  <span>02</span>
-                  <strong>Thông tin rõ ràng</strong>
-                  <p>Xác nhận giá và tình trạng trước khi mua.</p>
-                </div>
-                <div>
-                  <span>03</span>
-                  <strong>Cộng đồng game</strong>
-                  <p>Kết nối người chơi và người sưu tầm.</p>
-                </div>
-              </div>
-            </section>
           </main>
 
           <footer className="site-footer">
             <div className="page-width footer-main">
               <button className="brand" onClick={goHome}>
-                <span className="brand-symbol">P</span>
-                <span>
-                  <strong>PIXO<span>STATION</span></strong>
-                  <small>PLAY MORE. LIVE BIGGER.</small>
-                </span>
+                <img className="brand-logo" src="/logo-pixo.png" alt="Pixo Station" />
               </button>
               <p>Gaming · TCG · Community · Tech Service</p>
               <a href={CONTACT_URL} target="_blank" rel="noreferrer">Facebook ↗</a>
