@@ -1,0 +1,25 @@
+# Cache cho Netlify: file JS/CSS có mã băm trong tên nên giữ 1 năm;
+# ảnh, logo giữ 1 ngày và được dùng bản cũ trong lúc tải bản mới (tối đa 7 ngày)
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/products/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/home/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/community/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/banners/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/news/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/payment/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800

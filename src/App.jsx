@@ -938,7 +938,7 @@ const installmentBanks = [
   { name: "OCB", logo: "ocb.svg", fees: [2.0, 3.9, 4.9, 5.9] },
   { name: "SeABank", logo: "sea.svg", fees: [2.0, 3.9, 4.9, 5.9] },
   { name: "Eximbank", logo: "exb.svg", fees: [2.0, 3.9, 4.9, 6.9] },
-  { name: "LPBank", logo: "lvpb.svg", fees: [2.0, 3.9, 4.9, 5.9] },
+  { name: "LPBank", logo: "lvpb.png", fees: [2.0, 3.9, 4.9, 5.9] },
   { name: "PVcomBank", logo: "pvb.svg", fees: [2.0, 3.9, 4.9, 5.9] },
   { name: "Kienlongbank", logo: "klb.png", fees: [2.0, 3.9, 4.9, 6.9] },
   { name: "BVBank (Bản Việt)", logo: "vccb.png", fees: [2.0, 3.9, 4.9, 5.9] },
@@ -947,7 +947,7 @@ const installmentBanks = [
   { name: "Citibank", logo: "ctb.svg", fees: [2.0, 3.9, 4.9, 5.9] },
   { name: "FE Credit", logo: "fec.svg", fees: [null, null, 8.19, 9.19] },
   { name: "Home Credit", logo: "homec.svg", fees: [2.9, 3.9, 5.9, 6.9] },
-  { name: "Mcredit", logo: "mcredit.svg", fees: [2.0, 3.9, 4.9, null] },
+  { name: "Mcredit", logo: "mcredit.png", fees: [2.0, 3.9, 4.9, null] },
   { name: "Ngân hàng khác", fees: null },
 ].map((bank) => ({ ...bank, logo: bank.logo && `/payment/bank-${bank.logo}` }));
 
