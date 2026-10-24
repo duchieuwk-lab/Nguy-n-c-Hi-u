@@ -39,7 +39,7 @@ export const newsPosts = [
       "Fan K/DA cũng có quà: các thành viên K/DA xuất hiện trên những lá bài đặc biệt của set.",
       "Pixo đang nhận đặt trước booster box Radiance bản tiếng Anh, nguyên seal, đặt cọc 1.000.000₫. Hẹn anh em ở Pixo Nexus Night để khui pack Radiance cùng nhau!",
     ],
-    cta: { label: "Đặt trước Radiance", href: "/san-pham/riftbound-booster-box?pb=4" },
+    cta: { label: "Đặt trước Radiance", href: "/san-pham/riftbound-booster-box-set-5-radiance" },
     sources: [
       { name: "Riftbound – The Radiance Overview (chính thức)", url: "https://playriftbound.com/en-us/news/announcements/the-radiance-overview/" },
       { name: "Inven Global", url: "https://www.invenglobal.com/articles/26530/riot-games-reveals-new-legends-and-mechanics-for-riftbound-radiance" },

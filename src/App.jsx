@@ -155,6 +155,48 @@ const consoles = [
   },
 ];
 
+// Riftbound: mỗi set là 1 sản phẩm riêng. Giá 4.900.000₫/box (xác nhận 20/10/2026).
+const riftboundSpecs = [
+  { label: "Ngôn ngữ", value: "Tiếng Anh" },
+  { label: "Tình trạng", value: "Box nguyên seal" },
+  { label: "Quy cách", value: "1 booster box = 24 gói (booster pack)" },
+  { label: "Mỗi gói", value: "14 lá → 336 lá / box" },
+  { label: "Cấu trúc 1 gói", value: "7 Common · 3 Uncommon · 2 Rare trở lên · 1 lá Foil · 1 Token/Rune" },
+  { label: "Lá Epic", value: "Khoảng 1/4 số gói có Epic (trung bình ~6 lá / box)" },
+  { label: "Độ tuổi", value: "14+" },
+];
+
+const riftboundSets = [
+  { set: 1, name: "Origins", image: "/products/riftbound-set1-origins.jpg" },
+  { set: 2, name: "Spiritforged", image: "/products/riftbound-set2-spiritforged.jpg", gallery: ["/products/photos/riftbound-spiritforged-thuc-te.jpg"] },
+  { set: 3, name: "Unleashed", image: "/products/riftbound-set3-unleashed.jpg", gallery: ["/products/photos/riftbound-unleashed-thuc-te.jpg"] },
+  { set: 4, name: "Vendetta", image: "/products/riftbound-set4-vendetta.jpg", gallery: ["/products/photos/riftbound-vendetta-thuc-te.jpg"] },
+  { set: 5, name: "Radiance", image: "/products/riftbound-set5-radiance.jpg", gallery: ["/products/photos/riftbound-radiance-thuc-te.jpg"], preorder: true },
+].map((item) => ({
+  id: 14 + item.set,
+  name: `Riftbound Booster Box – Set ${item.set}: ${item.name}`,
+  category: "riftbound",
+  badge: item.preorder ? "ĐẶT TRƯỚC" : `RIFTBOUND · SET ${item.set}`,
+  price: 4900000,
+  unit: "box",
+  confirmedPrice: true,
+  image: item.image,
+  gallery: item.gallery,
+  description: `Booster box Riftbound: League of Legends TCG – Set ${item.set} ${item.name}, bản tiếng Anh, nguyên seal.${item.preorder ? " Đang nhận đặt trước, cọc 1.000.000₫." : ""}`,
+  // TCG không áp dụng bảo hành / đổi 1–1 (xác nhận 20/10/2026)
+  perks: item.preorder
+    ? ["Box nguyên seal", "Bản tiếng Anh", "Hỏa tốc 2h nội thành Hà Nội", "Đặt trước, cọc 1.000.000₫"]
+    : ["Box nguyên seal", "Bản tiếng Anh", "Hỏa tốc 2h nội thành Hà Nội"],
+  // Nguồn: riftbound.leagueoflegends.com (Collectability in Riftbound: Origins) và các nhà bán lẻ
+  specs: riftboundSpecs,
+  notes: [
+    "Cấu trúc gói theo công bố chính thức của nhà phát hành cho Set 1 – Origins; các set sau cũng là box 24 gói × 14 lá.",
+    "Tỉ lệ lá hiếm là mức trung bình, không đảm bảo cho từng box.",
+    "Sản phẩm TCG không áp dụng bảo hành và đổi 1–1.",
+    ...(item.preorder ? ["Set 5 – Radiance phát hành ngày 23/10/2026. Nhận đặt trước, đặt cọc 1.000.000₫."] : []),
+  ],
+}));
+
 // Băng game Pixo đang có (theo ảnh kho/kệ Pixo). Ảnh: key art trên nintendo.com. platform: 1 = băng Switch đời đầu, mặc định Switch 2.
 // price: null = hiện "Liên hệ"; có bảng giá thì điền số vào price.
 const gameCatalog = [
@@ -225,45 +267,8 @@ const otherProducts = [
   { id: 11, name: "Túi đựng máy chơi game", category: "accessory", badge: "BẢO VỆ MÁY", price: 250000, image: "/products/carrying-case.jpg", description: "Túi đựng máy và phụ kiện khi di chuyển." },
   { id: 12, name: "Ốp bảo vệ Nintendo Switch", category: "accessory", badge: "PHỤ KIỆN", price: 150000, image: "/products/switch-case.jpg", description: "Nhiều mẫu ốp tùy theo model máy." },
   { id: 13, name: "Tay cầm chơi game", category: "accessory", badge: "CHƠI CÙNG BẠN", price: 590000, image: "/products/controller.jpg", description: "Tay cầm bổ sung cho những buổi chơi game." },
-  {
-    id: 15,
-    name: "Riftbound Booster Box",
-    category: "riftbound",
-    badge: "RIFTBOUND TCG",
-    price: 4900000,
-    unit: "box",
-    confirmedPrice: true,
-    image: "/products/riftbound-set1-origins.jpg",
-    description: "Booster box Riftbound: League of Legends TCG bản tiếng Anh, nguyên seal, có đủ từ Set 1 đến Set 5.",
-    editionLabel: "CHỌN SET",
-    editionNoun: "set",
-    editionPicker: "images",
-    editions: [
-      { name: "Set 1 – Origins", shortName: "Origins", surcharge: 0, image: "/products/riftbound-set1-origins.jpg" },
-      { name: "Set 2 – Spiritforged", shortName: "Spiritforged", surcharge: 0, image: "/products/riftbound-set2-spiritforged.jpg", gallery: ["/products/photos/riftbound-spiritforged-thuc-te.jpg"] },
-      { name: "Set 3 – Unleashed", shortName: "Unleashed", surcharge: 0, image: "/products/riftbound-set3-unleashed.jpg", gallery: ["/products/photos/riftbound-unleashed-thuc-te.jpg"] },
-      { name: "Set 4 – Vendetta", shortName: "Vendetta", surcharge: 0, image: "/products/riftbound-set4-vendetta.jpg", gallery: ["/products/photos/riftbound-vendetta-thuc-te.jpg"] },
-      { name: "Set 5 – Radiance (Đặt trước)", shortName: "Radiance", surcharge: 0, image: "/products/riftbound-set5-radiance.jpg", gallery: ["/products/photos/riftbound-radiance-thuc-te.jpg"] },
-    ],
-    // TCG không áp dụng bảo hành / đổi 1–1 (xác nhận 20/10/2026)
-    perks: ["Box nguyên seal", "Bản tiếng Anh", "Hỏa tốc 2h nội thành Hà Nội", "Có đủ Set 1 – Set 5", "Set 5 đặt trước, cọc 1.000.000₫"],
-    // Nguồn: riftbound.leagueoflegends.com (Collectability in Riftbound: Origins) và các nhà bán lẻ
-    specs: [
-      { label: "Ngôn ngữ", value: "Tiếng Anh" },
-      { label: "Tình trạng", value: "Box nguyên seal" },
-      { label: "Quy cách", value: "1 booster box = 24 gói (booster pack)" },
-      { label: "Mỗi gói", value: "14 lá → 336 lá / box" },
-      { label: "Cấu trúc 1 gói", value: "7 Common · 3 Uncommon · 2 Rare trở lên · 1 lá Foil · 1 Token/Rune" },
-      { label: "Lá Epic", value: "Khoảng 1/4 số gói có Epic (trung bình ~6 lá / box)" },
-      { label: "Độ tuổi", value: "14+" },
-    ],
-    notes: [
-      "Cấu trúc gói theo công bố chính thức của nhà phát hành cho Set 1 – Origins; các set sau cũng là box 24 gói × 14 lá.",
-      "Tỉ lệ lá hiếm là mức trung bình, không đảm bảo cho từng box.",
-      "Sản phẩm TCG không áp dụng bảo hành và đổi 1–1.",
-      "Set 5 – Radiance phát hành ngày 23/10/2026. Nhận đặt trước, đặt cọc 1.000.000₫.",
-    ],
-  },
+  ...riftboundSets,
+
 ];
 
 // Danh mục Pokémon TCG (dữ liệu ở src/pokemonProducts.js)
@@ -367,8 +372,7 @@ const preorders = [
     title: "Riftbound Set 5 – Radiance",
     image: "/products/photos/riftbound-radiance-thuc-te.jpg",
     tag: "ĐẶT TRƯỚC",
-    productName: "Riftbound Booster Box",
-    editionIndex: 4,
+    productName: "Riftbound Booster Box – Set 5: Radiance",
     note: "Booster box tiếng Anh, nguyên seal.",
   },
   {
