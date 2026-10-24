@@ -133,7 +133,8 @@ const consoles = [
     id: "switch2",
     perks: consolePerks,
     specs: [
-      { label: "Tình trạng", value: "Có máy mới (New) và máy like new: chọn ở mục Gói / Tình trạng" },
+      { label: "Tình trạng", value: "Bản thường có máy mới (New) và like new; bản Bundle, Zelda, Pokopia là máy mới" },
+      { label: "Bản Bundle", value: "Hộp Switch 2 kèm code tải 1 trong 3 game: Mario Kart World, Donkey Kong Bananza hoặc Pokémon Pokopia" },
       { label: "Màn hình", value: "LCD 7.9 inch, 1920×1080, HDR10, tối đa 120Hz" },
       { label: "Xuất hình lên TV", value: "Tối đa 4K 60fps qua dock" },
       { label: "Bộ nhớ trong", value: "256GB, mở rộng bằng thẻ microSD Express (tối đa 2TB)" },
@@ -146,11 +147,19 @@ const consoles = [
     image: "/products/switch-2.jpg",
     gallery: ["/products/photos/switch-2-thuc-te-1.jpg", "/products/photos/switch-2-thuc-te-2.jpg"],
     badge: "THẾ HỆ MỚI",
-    description: "Máy chơi game thế hệ mới với nhiều lựa chọn tình trạng.",
+    description: "Máy chơi game thế hệ mới: bản thường (máy không), bản Bundle chọn 1 trong 3 game, bản Zelda và bản Pokémon Pokopia.",
+    // Bản thường chia Like New / New; các bản kèm game / đặc biệt hiện "Liên hệ" (xác nhận 24/10/2026)
+    editionLabel: "CHỌN PHIÊN BẢN",
+    editions: [
+      { name: "Bản thường (máy không)", surcharge: 0, type: "base", image: "/products/switch-2.jpg", gallery: ["/products/photos/switch-2-thuc-te-1.jpg", "/products/photos/switch-2-thuc-te-2.jpg"] },
+      { name: "Bundle – chọn 1 trong 3 game (Mario Kart World / Donkey Kong Bananza / Pokémon Pokopia)", shortName: "Bundle chọn game", surcharge: 0, type: "bundle", contactPrice: true, image: "/products/switch-2-bundle.jpg" },
+      { name: "The Legend of Zelda Edition", surcharge: 0, type: "limited", contactPrice: true, image: "/products/switch-2-zelda.jpg", gallery: ["/products/switch-2-zelda-docked.jpg"] },
+      { name: "Bản Pokémon Pokopia", surcharge: 0, type: "bundle", contactPrice: true, image: "/products/switch-2-pokopia.jpg" },
+    ],
+    variantLabel: "CHỌN TÌNH TRẠNG",
     variants: [
       { name: "Like New", original: 14500000, price: 13500000 },
       { name: "New", original: 15000000, price: 14000000 },
-      { name: "Kèm băng game", original: 16000000, price: 15000000 },
     ],
   },
 ];
@@ -685,6 +694,8 @@ function ConsoleCard({ product, onSelect }) {
   const variant = product.variants[variantIndex];
   const edition = product.editions ? product.editions[editionIndex] : null;
   const surcharge = edition ? edition.surcharge : 0;
+  // Phiên bản kèm game / đặc biệt: không chia gói, giá "Liên hệ"
+  const contact = Boolean(edition?.contactPrice);
   const original = variant.original + surcharge;
   const price = variant.price + surcharge;
   const saving = original - price;
@@ -733,25 +744,35 @@ function ConsoleCard({ product, onSelect }) {
           </>
         )}
 
-        <label className="variant-label" htmlFor={`variant-${product.id}`}>
-          CHỌN GÓI BỘ NHỚ
-        </label>
-        <select
-          id={`variant-${product.id}`}
-          className="variant-select"
-          value={variantIndex}
-          onChange={(event) => setVariantIndex(Number(event.target.value))}
-        >
-          {product.variants.map((item, index) => (
-            <option key={item.name} value={index}>{item.name}</option>
-          ))}
-        </select>
+        {!contact && (
+          <>
+            <label className="variant-label" htmlFor={`variant-${product.id}`}>
+              {product.variantLabel ?? "CHỌN GÓI BỘ NHỚ"}
+            </label>
+            <select
+              id={`variant-${product.id}`}
+              className="variant-select"
+              value={variantIndex}
+              onChange={(event) => setVariantIndex(Number(event.target.value))}
+            >
+              {product.variants.map((item, index) => (
+                <option key={item.name} value={index}>{item.name}</option>
+              ))}
+            </select>
+          </>
+        )}
 
-        <div className="price-block">
-          <span className="original-price">{money(original)}</span>
-          <strong className="sale-price">{money(price)}</strong>
-          <span className="saving-label">Tiết kiệm {money(saving)}</span>
-        </div>
+        {contact ? (
+          <div className="price-block">
+            <strong className="sale-price">{money(null)}</strong>
+          </div>
+        ) : (
+          <div className="price-block">
+            <span className="original-price">{money(original)}</span>
+            <strong className="sale-price">{money(price)}</strong>
+            <span className="saving-label">Tiết kiệm {money(saving)}</span>
+          </div>
+        )}
 
         <button
           className="product-link"
@@ -854,9 +875,10 @@ function ProductDetail({
   const variant = hasVariants ? product.variants[variantIndex] : null;
   const edition = product.editions ? product.editions[editionIndex] : null;
   const surcharge = edition ? edition.surcharge : 0;
-  const basePrice = variant ? variant.price : product.price;
+  const contact = Boolean(edition?.contactPrice);
+  const basePrice = contact ? null : variant ? variant.price : product.price;
   const price = basePrice == null ? null : basePrice + surcharge;
-  const original = variant ? variant.original + surcharge : null;
+  const original = variant && !contact ? variant.original + surcharge : null;
 
   // Các ảnh của phiên bản đang chọn (hoặc của sản phẩm nếu không có phiên bản): ảnh chính trước, ảnh thực tế (gallery) sau
   const [photoIndex, setPhotoIndex] = useState(0);
@@ -879,7 +901,7 @@ function ProductDetail({
     const editionText = edition
       ? `, ${product.editionNoun ?? "màu/phiên bản"} ${edition.name}`
       : "";
-    const variantText = variant ? `, gói bộ nhớ/tình trạng ${variant.name}` : "";
+    const variantText = variant && !contact ? `, gói bộ nhớ/tình trạng ${variant.name}` : "";
     const message =
       `Chào Pixo Station! Mình muốn hỏi mua ${product.name}` +
       `${editionText}${variantText}. ${price == null ? "Shop báo giá giúp mình nhé." : `Giá hiển thị: ${money(price)}.`} ` +
@@ -976,10 +998,10 @@ function ProductDetail({
             </>
           )}
 
-          {hasVariants && (
+          {hasVariants && !contact && (
             <>
               <label className="variant-label" htmlFor="detail-variant">
-                CHỌN GÓI BỘ NHỚ / TÌNH TRẠNG
+                {product.variantLabel ?? "CHỌN GÓI BỘ NHỚ / TÌNH TRẠNG"}
               </label>
               <select
                 id="detail-variant"
