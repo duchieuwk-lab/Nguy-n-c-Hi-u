@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Picture from "./Picture";
 
 // Định dạng tiền giống App.jsx; null = "Liên hệ"
 function money(value) {
@@ -127,7 +128,7 @@ export function ComparePage({ consoles, onOpenProduct, onShop }) {
               <th aria-label="Tiêu chí" />
               {compareModels.map((model) => (
                 <th key={model.productId} className={model.highlight ? "highlight" : ""}>
-                  <img src={model.image} alt={model.name} loading="lazy" />
+                  <Picture src={model.image} sizes="180px" alt={model.name} loading="lazy" />
                   <strong>{model.name}</strong>
                   <span>Từ {money(startingPrice(model.productId))}</span>
                 </th>

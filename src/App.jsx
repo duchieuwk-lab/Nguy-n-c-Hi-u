@@ -3,6 +3,7 @@ import "./App.css";
 import { pokemonPerks, pokemonProducts, pokemonTypes } from "./pokemonProducts";
 import { isScheduled, newsCategories, visibleNews } from "./news";
 import { ComparePage, GoogleReviews, TradeInPage } from "./features";
+import Picture from "./Picture";
 
 const CONTACT_URL = "https://m.me/pixostation";
 // Zalo dùng chung số điện thoại cửa hàng (đổi 24/10/2026)
@@ -527,8 +528,9 @@ function BannerSlider() {
       <div className="banner-track" style={{ transform: `translateX(-${index * 100}%)` }}>
         {banners.map((banner, i) => {
           const image = (
-            <img
+            <Picture
               src={banner.image}
+              sizes="100vw"
               alt={banner.alt}
               loading={i === 0 ? "eager" : "lazy"}
               draggable="false"
@@ -694,7 +696,7 @@ function Header({ current, onHome, onSection, onSearch }) {
 }
 
 // Ảnh hiển thị: ảnh theo màu/phiên bản → ảnh chung của sản phẩm → khung "Ảnh sẽ cập nhật"
-function ProductImage({ product, edition }) {
+function ProductImage({ product, edition, sizes }) {
   const sources = [edition?.image, product.image].filter(Boolean);
   const [failedCount, setFailedCount] = useState(0);
   const src = sources[failedCount];
@@ -702,8 +704,9 @@ function ProductImage({ product, edition }) {
   return (
     <div className="product-image">
       {src ? (
-        <img
+        <Picture
           src={src}
+          sizes={sizes}
           alt={edition?.name ? `${product.name} - ${edition.name}` : product.name}
           loading="lazy"
           onError={() => setFailedCount((count) => count + 1)}
@@ -994,7 +997,7 @@ function InstallmentCalculator({ price, onContact, onMessenger }) {
           <span className="variant-label">CHẤP NHẬN THẺ TÍN DỤNG</span>
           <div className="card-strip">
             {cardNetworks.map((item) => (
-              <img key={item.name} src={item.logo} alt={item.name} title={item.name} />
+              <Picture key={item.name} src={item.logo} alt={item.name} title={item.name} />
             ))}
           </div>
 
@@ -1008,7 +1011,7 @@ function InstallmentCalculator({ price, onContact, onMessenger }) {
                 aria-label={item.name}
                 title={item.name}
               >
-                {item.logo ? <img src={item.logo} alt="" loading="lazy" /> : <span>{item.name}</span>}
+                {item.logo ? <Picture src={item.logo} alt="" loading="lazy" /> : <span>{item.name}</span>}
               </button>
             ))}
           </div>
@@ -1140,6 +1143,7 @@ function ProductDetail({
       <div className="detail-grid">
         <div className="detail-media">
           <ProductImage
+            sizes="(max-width: 720px) 100vw, 640px"
             key={`${editionIndex}-${photoIndex}`}
             product={product}
             edition={shownEdition}
@@ -1154,7 +1158,7 @@ function ProductDetail({
                   onClick={() => setPhotoIndex(index)}
                   aria-label={`Xem ảnh ${index + 1}`}
                 >
-                  <img src={photo} alt="" />
+                  <Picture src={photo} sizes="96px" alt="" />
                 </button>
               ))}
             </div>
@@ -1180,7 +1184,7 @@ function ProductDetail({
                     aria-label={item.name}
                     title={item.name}
                   >
-                    <img src={item.image} alt="" />
+                    <Picture src={item.image} sizes="96px" alt="" />
                     <span>{item.shortName ?? item.name}</span>
                   </button>
                 ))}
@@ -1325,7 +1329,7 @@ function formatDate(date) {
 function NewsCover({ post }) {
   return (
     <div className={post.cover ? "news-cover" : "news-cover news-cover-text"}>
-      {post.cover ? <img src={post.cover} alt="" loading="lazy" /> : <span>{newsCategories[post.category]}</span>}
+      {post.cover ? <Picture src={post.cover} alt="" loading="lazy" /> : <span>{newsCategories[post.category]}</span>}
       {post.status === "draft" && <b className="news-draft">BẢN NHÁP</b>}
       {isScheduled(post) && <b className="news-draft news-scheduled">HẸN ĐĂNG {post.publishAt.slice(11)} {formatDate(post.publishAt.slice(0, 10))}</b>}
     </div>
@@ -1376,7 +1380,7 @@ function NewsPost({ post, onOpen, onBack }) {
             <p key={block.slice(0, 40)}>{block}</p>
           ) : (
             <figure className="news-figure" key={block.image}>
-              <img src={block.image} alt={block.caption ?? ""} loading="lazy" />
+              <Picture src={block.image} alt={block.caption ?? ""} loading="lazy" />
               {block.caption && <figcaption>{block.caption}</figcaption>}
             </figure>
           )
@@ -1763,7 +1767,7 @@ function App() {
                 {preorders.map((item) => (
                   <article className="rail-card" key={item.title}>
                     <button className="rail-image" onClick={() => openPreorder(item)}>
-                      <img src={item.image} alt={item.title} loading="lazy" />
+                      <Picture src={item.image} alt={item.title} loading="lazy" />
                       <span className={item.tag === "ĐẶT TRƯỚC" ? "rail-tag preorder" : "rail-tag"}>{item.tag}</span>
                     </button>
                     <div className="rail-info">
@@ -1791,7 +1795,7 @@ function App() {
                 {pokemonRail.map((item) => (
                   <article className="rail-card" key={item.id}>
                     <button className="rail-image contain" onClick={() => openProduct(item)}>
-                      <img src={item.gallery?.[0] ?? item.image} alt={item.name} loading="lazy" />
+                      <Picture src={item.gallery?.[0] ?? item.image} alt={item.name} loading="lazy" />
                     </button>
                     <div className="rail-info">
                       <h3>{item.name}</h3>
@@ -1812,7 +1816,7 @@ function App() {
               <div className="combo-grid">
                 {combos.map((combo) => (
                   <article className="combo-card" key={combo.name}>
-                    <img src={combo.image} alt={combo.name} loading="lazy" />
+                    <Picture src={combo.image} alt={combo.name} loading="lazy" />
                     <div className="combo-info">
                       <h3>{combo.name}</h3>
                       <p>{combo.items}</p>
@@ -1849,8 +1853,8 @@ function App() {
                   </div>
                 </div>
                 <div className="community-posters">
-                  <img src="/home/nexus-night.jpg" alt="Poster Pixo Nexus Night" loading="lazy" />
-                  <img src="/community/nexus-night-nhom.jpg" alt="Người chơi tại Pixo Nexus Night" loading="lazy" />
+                  <Picture src="/home/nexus-night.jpg" alt="Poster Pixo Nexus Night" loading="lazy" />
+                  <Picture src="/community/nexus-night-nhom.jpg" alt="Người chơi tại Pixo Nexus Night" loading="lazy" />
                 </div>
               </div>
             </section>
@@ -1865,7 +1869,7 @@ function App() {
                 <div className="customer-track">
                   {[...customerPhotos, ...customerPhotos].map((photo, index) => (
                     <figure key={`${photo.src}-${index}`} aria-hidden={index >= customerPhotos.length}>
-                      <img src={photo.src} alt={`Khách hàng nhận ${photo.caption} tại Pixo Station`} loading="lazy" />
+                      <Picture src={photo.src} alt={`Khách hàng nhận ${photo.caption} tại Pixo Station`} loading="lazy" />
                       <figcaption>{photo.caption}</figcaption>
                     </figure>
                   ))}
@@ -1889,7 +1893,7 @@ function App() {
                 </button>
               </article>
               <article className="offer-card offer-card-image">
-                <img src="/home/tra-gop.jpg" alt="Mua trước trả sau, trả trước 0đ tại Pixo" loading="lazy" />
+                <Picture src="/home/tra-gop.jpg" alt="Mua trước trả sau, trả trước 0đ tại Pixo" loading="lazy" />
                 <div>
                   <span className="eyebrow">TRẢ GÓP</span>
                   <h3>Trả trước 0đ.</h3>
@@ -1987,7 +1991,7 @@ function App() {
                       <button className="product-image-button" onClick={() => setCategory("pokemon")}>
                         <div className="product-image pokemon-collage">
                           {pokemonProducts.slice(4, 8).map((item) => (
-                            <img key={item.id} src={item.image} alt="" loading="lazy" />
+                            <Picture key={item.id} src={item.image} alt="" loading="lazy" />
                           ))}
                           <span className="product-badge">POKÉMON TCG</span>
                         </div>
@@ -2053,7 +2057,7 @@ function App() {
             {/* SHOWROOM */}
             {page === "home" && (
               <section className="home-block page-width showroom-block">
-                <img src="/home/showroom-trung-bay.jpg" alt="Máy và hộp TCG trưng bày tại showroom Pixo Station" loading="lazy" />
+                <Picture src="/home/showroom-trung-bay.jpg" alt="Máy và hộp TCG trưng bày tại showroom Pixo Station" loading="lazy" />
                 <div>
                   <span className="eyebrow">SHOWROOM</span>
                   <h2>Ghé Pixo chơi thử máy</h2>
@@ -2089,7 +2093,7 @@ function App() {
                   <article className="tcg-card pokemon-card">
                     <button className="tcg-photo tcg-collage" onClick={() => shopCategory("pokemon")} aria-label="Xem Pokémon TCG">
                       {pokemonRail.slice(0, 4).map((item) => (
-                        <img key={item.id} src={item.gallery?.[0] ?? item.image} alt={item.name} loading="lazy" />
+                        <Picture key={item.id} src={item.gallery?.[0] ?? item.image} alt={item.name} loading="lazy" />
                       ))}
                     </button>
                     <div className="tcg-card-info">
@@ -2107,7 +2111,7 @@ function App() {
 
                   <article className="tcg-card riftbound-card">
                     <button className="tcg-photo" onClick={() => shopCategory("riftbound")} aria-label="Xem Riftbound">
-                      <img src="/products/photos/riftbound-radiance-thuc-te.jpg" alt="Booster box Riftbound Radiance tại Pixo" loading="lazy" />
+                      <Picture src="/products/photos/riftbound-radiance-thuc-te.jpg" alt="Booster box Riftbound Radiance tại Pixo" loading="lazy" />
                     </button>
                     <div className="tcg-card-info">
                       <span>STRATEGY CARD GAME</span>
@@ -2134,7 +2138,7 @@ function App() {
                 </div>
 
                 <div className="nexus-feature">
-                  <img
+                  <Picture
                     className="nexus-hero"
                     src="/community/nexus-night-nhom.jpg"
                     alt="Người chơi tham gia Pixo Nexus Night"
@@ -2159,7 +2163,7 @@ function App() {
 
                 <div className="nexus-gallery">
                   {nexusPhotos.map((photo) => (
-                    <img key={photo.src} src={photo.src} alt={photo.alt} loading="lazy" />
+                    <Picture key={photo.src} src={photo.src} alt={photo.alt} loading="lazy" />
                   ))}
                 </div>
 
@@ -2231,7 +2235,7 @@ function App() {
                   <div className="section-intro">
                     <span className="eyebrow">VỀ PIXO</span>
                     <h2>Từ game thủ,<br /><span>cho game thủ.</span></h2>
-                    <img
+                    <Picture
                       className="about-photo"
                       src="/community/showroom-quay.jpg"
                       alt="Quầy và khách hàng tại showroom Pixo Station"
