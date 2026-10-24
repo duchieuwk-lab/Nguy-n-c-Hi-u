@@ -71,6 +71,7 @@ export const pokemonProducts = [
     "price": 4000000,
     "confirmedPrice": true,
     "image": "/products/pokemon/ascended-heroes-elite-trainer-box.jpg",
+    "gallery": ["/products/photos/pokemon-ascended-heroes-etb.jpg"],
     "description": "Pokémon TCG · Elite Trainer Box."
   },
   {
@@ -175,6 +176,7 @@ export const pokemonProducts = [
     "price": 1320000,
     "confirmedPrice": true,
     "image": "/products/pokemon/chaos-rising-booster-bundle.jpg",
+    "gallery": ["/products/photos/pokemon-chaos-rising-booster-bundle.jpg"],
     "description": "Pokémon TCG · Booster Bundle."
   },
   {
@@ -197,6 +199,7 @@ export const pokemonProducts = [
     "price": 2040000,
     "confirmedPrice": true,
     "image": "/products/pokemon/chaos-rising-elite-trainer-box.jpg",
+    "gallery": ["/products/photos/pokemon-chaos-rising-etb-1.jpg","/products/photos/pokemon-chaos-rising-etb-2.jpg"],
     "description": "Pokémon TCG · Elite Trainer Box."
   },
   {
@@ -319,6 +322,7 @@ export const pokemonProducts = [
     "price": 1980000,
     "confirmedPrice": true,
     "image": "/products/pokemon/destined-rival-booster-bundle.jpg",
+    "gallery": ["/products/photos/pokemon-destined-rivals-booster-bundle.jpg"],
     "description": "Pokémon TCG · Booster Bundle."
   },
   {
@@ -341,6 +345,7 @@ export const pokemonProducts = [
     "price": 2090000,
     "confirmedPrice": true,
     "image": "/products/pokemon/first-partner-illustration-collection-series-1.jpg",
+    "gallery": ["/products/photos/pokemon-first-partner-1.jpg","/products/photos/pokemon-first-partner-2.jpg"],
     "description": "Pokémon TCG · Collection & Box."
   },
   {
@@ -363,6 +368,7 @@ export const pokemonProducts = [
     "price": 7800000,
     "confirmedPrice": true,
     "image": "/products/pokemon/great-tusk-ex-iron-treads-ex-premium-collection.jpg",
+    "gallery": ["/products/photos/pokemon-great-tusk-iron-treads.jpg"],
     "description": "Pokémon TCG · Collection & Box."
   },
   {
@@ -474,6 +480,7 @@ export const pokemonProducts = [
     "price": 1430000,
     "confirmedPrice": true,
     "image": "/products/pokemon/mega-zygarde-ex-premium-collection.jpg",
+    "gallery": ["/products/photos/pokemon-mega-zygarde.jpg"],
     "description": "Pokémon TCG · Collection & Box."
   },
   {

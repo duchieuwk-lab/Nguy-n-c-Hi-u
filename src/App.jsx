@@ -85,12 +85,9 @@ const consoles = [
       { name: "Neon Red / Neon Blue", surcharge: 100000, type: "neon", image: "/products/switch-v2-neon-red-neon-blue.jpg", gallery: ["/products/switch-v2-neon-red-neon-blue-box.jpg"] },
       { name: "Gray Joy-Con", surcharge: 0, type: "base", image: "/products/switch-v2-gray-joy-con.jpg" },
       { name: "Dragon Quest XI S Loto Edition", surcharge: 500000, type: "limited", image: "/products/switch-v2-dragon-quest-xi-s-loto.jpg" },
-      { name: "Disney Tsum Tsum Festival Edition", surcharge: 500000, type: "limited", image: "/products/switch-v2-disney-tsum-tsum-festival.jpg" },
       { name: "Animal Crossing: New Horizons Edition", surcharge: 500000, type: "limited", image: "/products/switch-v2-animal-crossing-new-horizons.jpg", gallery: ["/products/switch-v2-animal-crossing-new-horizons-box.jpg"] },
-      { name: "Fortnite Wildcat Edition", surcharge: 500000, type: "limited", image: "/products/switch-v2-fortnite-wildcat.jpg" },
       { name: "Mario Red & Blue Edition", surcharge: 500000, type: "limited", image: "/products/switch-v2-mario-red-blue.jpg", gallery: ["/products/switch-v2-mario-red-blue-box.jpg"] },
       { name: "Monster Hunter Rise Edition", surcharge: 500000, type: "limited", image: "/products/switch-v2-monster-hunter-rise.jpg" },
-      { name: "Fortnite Fleet Force Edition", surcharge: 500000, type: "limited", image: "/products/switch-v2-fortnite-fleet-force.jpg" },
     ],
     variants: [
       { name: "Zin", original: 5100000, price: 4850000 },
@@ -113,13 +110,12 @@ const consoles = [
       { label: "Trong hộp", value: "Máy Switch OLED · Joy-Con (L) và (R) · 2 dây đeo Joy-Con · Tay cầm Joy-Con Grip · Dock (có cổng LAN) · Sạc AC adapter · Cáp HDMI" },
     ],
     name: "Nintendo Switch OLED",
-    image: "/products/switch-oled.png",
+    image: "/products/switch-oled.jpg",
     badge: "PHỔ BIẾN",
     description: "Máy like new, màn hình OLED 7 inch cho màu sắc nổi bật khi chơi game.",
     editions: [
       { name: "White Base", surcharge: 0, type: "base", image: "/products/switch-oled-white-base.jpg" },
       { name: "Neon Red / Neon Blue", surcharge: 100000, type: "neon", image: "/products/switch-oled-neon-red-neon-blue.jpg" },
-      { name: "Secret Edition", surcharge: 100000, type: "neon", image: "/products/switch-oled-secret.jpg" },
       { name: "Splatoon Limited Edition", surcharge: 500000, type: "limited", image: "/products/switch-oled-splatoon.jpg" },
       { name: "Zelda Limited Edition", surcharge: 500000, type: "limited", image: "/products/switch-oled-zelda.jpg" },
       { name: "Pokémon Limited Edition", surcharge: 500000, type: "limited", image: "/products/switch-oled-pokemon.jpg" },
@@ -147,6 +143,7 @@ const consoles = [
     notes: ["Switch 2 dùng thẻ microSD Express; thẻ microSD thường chỉ dùng để sao chép ảnh và video."],
     name: "Nintendo Switch 2",
     image: "/products/switch-2.jpg",
+    gallery: ["/products/photos/switch-2-thuc-te-1.jpg", "/products/photos/switch-2-thuc-te-2.jpg"],
     badge: "THẾ HỆ MỚI",
     description: "Máy chơi game thế hệ mới với nhiều lựa chọn tình trạng.",
     variants: [
@@ -158,7 +155,7 @@ const consoles = [
 ];
 
 const otherProducts = [
-  { id: 10, name: "Băng game Nintendo Switch", category: "game", badge: "GAME VẬT LÝ", price: 890000, image: "/products/game-cartridge.jpg", description: "Giá tùy theo tựa game và tình trạng sản phẩm." },
+  { id: 10, name: "Băng game Nintendo Switch", category: "game", badge: "GAME VẬT LÝ", price: 890000, image: "/products/photos/game-switch2-bo-suu-tap.jpg", gallery: ["/products/photos/game-nba-2k26.jpg", "/products/photos/game-mario-party-jamboree.jpg", "/products/photos/game-mario-tennis-fever.jpg", "/products/photos/game-zelda-totk-switch2.jpg", "/products/photos/game-fc27-ps5.jpg", "/products/photos/game-ke-trung-bay.jpg"], description: "Giá tùy theo tựa game và tình trạng sản phẩm." },
   { id: 11, name: "Túi đựng máy chơi game", category: "accessory", badge: "BẢO VỆ MÁY", price: 250000, image: "/products/carrying-case.jpg", description: "Túi đựng máy và phụ kiện khi di chuyển." },
   { id: 12, name: "Ốp bảo vệ Nintendo Switch", category: "accessory", badge: "PHỤ KIỆN", price: 150000, image: "/products/switch-case.jpg", description: "Nhiều mẫu ốp tùy theo model máy." },
   { id: 13, name: "Tay cầm chơi game", category: "accessory", badge: "CHƠI CÙNG BẠN", price: 590000, image: "/products/controller.jpg", description: "Tay cầm bổ sung cho những buổi chơi game." },
@@ -177,10 +174,10 @@ const otherProducts = [
     editionPicker: "images",
     editions: [
       { name: "Set 1 – Origins", shortName: "Origins", surcharge: 0, image: "/products/riftbound-set1-origins.jpg" },
-      { name: "Set 2 – Spiritforged", shortName: "Spiritforged", surcharge: 0, image: "/products/riftbound-set2-spiritforged.jpg" },
-      { name: "Set 3 – Unleashed", shortName: "Unleashed", surcharge: 0, image: "/products/riftbound-set3-unleashed.jpg" },
-      { name: "Set 4 – Vendetta", shortName: "Vendetta", surcharge: 0, image: "/products/riftbound-set4-vendetta.jpg" },
-      { name: "Set 5 – Radiance (Đặt trước)", shortName: "Radiance", surcharge: 0, image: "/products/riftbound-set5-radiance.jpg" },
+      { name: "Set 2 – Spiritforged", shortName: "Spiritforged", surcharge: 0, image: "/products/riftbound-set2-spiritforged.jpg", gallery: ["/products/photos/riftbound-spiritforged-thuc-te.jpg"] },
+      { name: "Set 3 – Unleashed", shortName: "Unleashed", surcharge: 0, image: "/products/riftbound-set3-unleashed.jpg", gallery: ["/products/photos/riftbound-unleashed-thuc-te.jpg"] },
+      { name: "Set 4 – Vendetta", shortName: "Vendetta", surcharge: 0, image: "/products/riftbound-set4-vendetta.jpg", gallery: ["/products/photos/riftbound-vendetta-thuc-te.jpg"] },
+      { name: "Set 5 – Radiance (Đặt trước)", shortName: "Radiance", surcharge: 0, image: "/products/riftbound-set5-radiance.jpg", gallery: ["/products/photos/riftbound-radiance-thuc-te.jpg"] },
     ],
     // TCG không áp dụng bảo hành / đổi 1–1 (xác nhận 20/10/2026)
     perks: ["Box nguyên seal", "Bản tiếng Anh", "Hỏa tốc 2h nội thành Hà Nội", "Có đủ Set 1 – Set 5", "Set 5 đặt trước, cọc 1.000.000₫"],
@@ -282,6 +279,78 @@ const bestsellers = bestsellerConfig.map((config) => {
   const price = product.variants[0].price + (baseEdition ? baseEdition.surcharge : 0);
   return { ...config, product, editionIndex, edition, price };
 });
+
+// Dải cam kết ngay dưới banner trang chủ (xác nhận 24/10/2026)
+const trustBadges = [
+  { title: "Bảo hành 6 tháng", text: "Cho máy chơi game" },
+  { title: "Đổi 1–1 trong 7 ngày", text: "Theo chính sách Pixo" },
+  { title: "Hỏa tốc 2 giờ", text: "Nội thành Hà Nội" },
+  { title: "Trả góp 0đ trả trước", text: "Qua thẻ tín dụng" },
+];
+
+// Hàng đặt trước / mới về. productName: bấm sẽ mở trang sản phẩm đó; không có thì mở Zalo.
+const preorders = [
+  {
+    title: "Switch 2 bản Zelda",
+    image: "/home/preorder-switch-2-zelda.jpg",
+    tag: "ĐẶT TRƯỚC",
+    price: 16000000,
+    note: "Dự kiến giao 29/10. Nhắn Zalo để giữ máy.",
+  },
+  {
+    title: "Riftbound Set 5 – Radiance",
+    image: "/products/photos/riftbound-radiance-thuc-te.jpg",
+    tag: "ĐẶT TRƯỚC",
+    productName: "Riftbound Booster Box",
+    editionIndex: 4,
+    note: "Booster box tiếng Anh, nguyên seal.",
+  },
+  {
+    title: "Pokémon Chaos Rising ETB",
+    image: "/products/photos/pokemon-chaos-rising-etb-1.jpg",
+    tag: "MỚI VỀ",
+    productName: "Chaos Rising Elite Trainer Box",
+    note: "Hàng có sẵn tại showroom.",
+  },
+  {
+    title: "Băng game Switch 2",
+    image: "/products/photos/game-switch2-bo-suu-tap.jpg",
+    tag: "MỚI VỀ",
+    productName: "Băng game Nintendo Switch",
+    note: "NBA 2K26, Mario Party, Zelda, FC27…",
+  },
+];
+
+// Combo tiết kiệm (giá theo poster combo của Pixo)
+const combos = [
+  {
+    name: "Combo Khởi Đầu",
+    image: "/home/combo-khoi-dau.jpg",
+    items: "Switch V2 128GB + Joy-Con + Túi đựng máy + Host trọn đời + Cường lực + Ốp bảo vệ",
+    original: 8000000,
+    price: 7480000,
+  },
+  {
+    name: "Combo Gia Đình",
+    image: "/home/combo-gia-dinh.jpg",
+    items: "Switch OLED 256GB + Joy-Con + Túi đựng máy + Host trọn đời + Cường lực + Ốp bảo vệ",
+    original: 9650000,
+    price: 9080000,
+  },
+  {
+    name: "Combo Game Thủ",
+    image: "/home/combo-game-thu.jpg",
+    items: "Switch OLED 512GB + Pro Controller + Túi đựng máy + Host trọn đời + Cường lực + Ốp bảo vệ",
+    original: 10500000,
+    price: 9850000,
+  },
+];
+
+// Dải Pokémon lướt ngang trên trang chủ: ưu tiên sản phẩm đã có ảnh chụp thực tế
+const pokemonRail = [
+  ...pokemonProducts.filter((item) => item.gallery),
+  ...pokemonProducts.filter((item) => !item.gallery),
+].slice(0, 10);
 
 const iconProps = { width: 26, height: 26, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.8, strokeLinecap: "round", strokeLinejoin: "round" };
 
@@ -399,8 +468,45 @@ const navSections = [
   { id: "contact", label: "Liên hệ" },
 ];
 
-function Header({ onHome, onSection }) {
+// Mỗi mục menu là một trang riêng (link riêng), không cuộn dài trên trang chủ
+const pagePaths = {
+  home: "/",
+  products: "/san-pham",
+  tcg: "/tcg",
+  services: "/dich-vu",
+  about: "/ve-pixo",
+  policies: "/chinh-sach",
+  faq: "/hoi-dap",
+  contact: "/lien-he",
+};
+
+function pageFromLocation() {
+  const path = window.location.pathname.replace(/\/$/, "") || "/";
+  const found = Object.entries(pagePaths).find(([, value]) => value === path);
+  return found ? found[0] : "home";
+}
+
+function Header({ current, onHome, onSection, onSearch }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [query, setQuery] = useState("");
+
+  const submitSearch = (event) => {
+    event.preventDefault();
+    setMenuOpen(false);
+    onSearch(query.trim());
+  };
+
+  const searchForm = (className) => (
+    <form className={className} onSubmit={submitSearch} role="search">
+      <input
+        value={query}
+        onChange={(event) => setQuery(event.target.value)}
+        placeholder="Tìm máy, băng game, Pokémon..."
+        aria-label="Tìm sản phẩm"
+      />
+      <button type="submit" aria-label="Tìm">⌕</button>
+    </form>
+  );
 
   // Bấm một mục thì đóng menu điện thoại rồi mới chuyển trang/cuộn
   const navigate = (action) => {
@@ -410,10 +516,14 @@ function Header({ onHome, onSection }) {
 
   const links = (
     <>
-      <button onClick={() => navigate(onHome)}>Trang chủ</button>
-      <button onClick={() => navigate(() => onSection("products"))}>Sản phẩm</button>
+      <button className={current === "home" ? "active" : ""} onClick={() => navigate(onHome)}>Trang chủ</button>
+      <button className={current === "products" ? "active" : ""} onClick={() => navigate(() => onSection("products"))}>Sản phẩm</button>
       {navSections.map((section) => (
-        <button key={section.id} onClick={() => navigate(() => onSection(section.id))}>
+        <button
+          key={section.id}
+          className={current === section.id ? "active" : ""}
+          onClick={() => navigate(() => onSection(section.id))}
+        >
           {section.label}
         </button>
       ))}
@@ -429,6 +539,8 @@ function Header({ onHome, onSection }) {
 
         <nav className="main-nav">{links}</nav>
 
+        {searchForm("header-search")}
+
         <a className="header-cta" href={SHOP.phoneUrl}>
           ☎ {SHOP.phone}
         </a>
@@ -442,6 +554,8 @@ function Header({ onHome, onSection }) {
           {menuOpen ? "✕" : "☰"}
         </button>
       </div>
+
+      {searchForm("header-search header-search-mobile")}
 
       {menuOpen && <nav className="mobile-menu">{links}</nav>}
     </header>
@@ -459,7 +573,7 @@ function ProductImage({ product, edition }) {
       {src ? (
         <img
           src={src}
-          alt={edition ? `${product.name} - ${edition.name}` : product.name}
+          alt={edition?.name ? `${product.name} - ${edition.name}` : product.name}
           loading="lazy"
           onError={() => setFailedCount((count) => count + 1)}
         />
@@ -654,9 +768,13 @@ function ProductDetail({
   const price = (variant ? variant.price : product.price) + surcharge;
   const original = variant ? variant.original + surcharge : null;
 
-  // Các ảnh của phiên bản đang chọn: ảnh máy trước, ảnh hộp (gallery) sau
+  // Các ảnh của phiên bản đang chọn (hoặc của sản phẩm nếu không có phiên bản): ảnh chính trước, ảnh thực tế (gallery) sau
   const [photoIndex, setPhotoIndex] = useState(0);
-  const photos = edition?.image ? [edition.image, ...(edition.gallery ?? [])] : [];
+  const photos = edition?.image
+    ? [edition.image, ...(edition.gallery ?? [])]
+    : product.gallery
+      ? [product.image, ...product.gallery]
+      : [];
   const shownEdition = photos.length ? { ...edition, image: photos[photoIndex] } : edition;
 
   const chooseEdition = (index) => {
@@ -972,7 +1090,7 @@ function newsFromLocation() {
   return post ? { post } : { list: true };
 }
 
-// LINK RIÊNG CHO TỪNG SẢN PHẨM: /san-pham/<slug>?pb=<số thứ tự phiên bản>
+// LINK RIÊNG CHO TỪNG SẢN PHẨM: /san-pham/<slug>?pb=<số thứ tự phiên bản>&gb=<số thứ tự gói>
 function slugify(text) {
   return text
     .normalize("NFD")
@@ -985,9 +1103,12 @@ function slugify(text) {
 
 const allProducts = [...consoles, ...otherProducts];
 
-function productPath(product, editionIndex = 0) {
-  const query = editionIndex ? `?pb=${editionIndex}` : "";
-  return `/san-pham/${slugify(product.name)}${query}`;
+function productPath(product, editionIndex = 0, variantIndex = 0) {
+  const params = new URLSearchParams();
+  if (editionIndex) params.set("pb", editionIndex);
+  if (variantIndex) params.set("gb", variantIndex);
+  const query = params.toString();
+  return `/san-pham/${slugify(product.name)}${query ? `?${query}` : ""}`;
 }
 
 // Đọc link hiện tại để biết đang xem sản phẩm nào (null = trang chủ)
@@ -996,9 +1117,20 @@ function selectionFromLocation() {
   if (!match) return null;
   const product = allProducts.find((item) => slugify(item.name) === match[1]);
   if (!product) return null;
-  const editionIndex = Number(new URLSearchParams(window.location.search).get("pb")) || 0;
+  const params = new URLSearchParams(window.location.search);
+  const editionIndex = Number(params.get("pb")) || 0;
+  const variantIndex = Number(params.get("gb")) || 0;
   const validEdition = product.editions && editionIndex < product.editions.length ? editionIndex : 0;
-  return { product, variantIndex: 0, editionIndex: validEdition };
+  const validVariant = product.variants && variantIndex < product.variants.length ? variantIndex : 0;
+  return { product, variantIndex: validVariant, editionIndex: validEdition };
+}
+
+// Tìm theo tên, mô tả và tên màu/phiên bản (gõ "zelda" ra cả máy bản Zelda)
+function matchesSearch(product, search) {
+  const query = slugify(search);
+  if (!query) return true;
+  const text = [product.name, product.description, ...(product.editions ?? []).map((item) => item.name)].join(" ");
+  return slugify(text).includes(query);
 }
 
 const SITE_TITLE = "Pixo Station – Trạm Game của thế hệ bạn";
@@ -1013,12 +1145,14 @@ function App() {
   const collapsePokemon = category === "all" && !search.trim();
   const [selected, setSelected] = useState(selectionFromLocation);
   const [newsView, setNewsView] = useState(newsFromLocation);
+  const [page, setPage] = useState(pageFromLocation);
 
   // Nút Quay lại / Tiến tới của trình duyệt
   useEffect(() => {
     const onPopState = () => {
       setSelected(selectionFromLocation());
       setNewsView(newsFromLocation());
+      setPage(pageFromLocation());
     };
     window.addEventListener("popstate", onPopState);
     return () => window.removeEventListener("popstate", onPopState);
@@ -1029,14 +1163,23 @@ function App() {
     if (selected) document.title = `${selected.product.name} – Pixo Station`;
     else if (newsView?.post) document.title = `${newsView.post.title} – Pixo Station`;
     else if (newsView) document.title = "Tin tức – Pixo Station";
-    else document.title = SITE_TITLE;
-  }, [selected, newsView]);
+    else if (page === "products") document.title = "Sản phẩm – Pixo Station";
+    else if (page !== "home") {
+      const label = navSections.find((section) => section.id === page)?.label;
+      document.title = `${label} – Pixo Station`;
+    } else document.title = SITE_TITLE;
+  }, [selected, newsView, page]);
 
-  // Về trang chủ: đổi link về "/" (nếu đang ở trang sản phẩm) rồi đóng trang chi tiết
-  const closeProduct = () => {
-    if (window.location.pathname !== "/") window.history.pushState(null, "", "/");
+  // Chuyển sang một trang (trang chủ, sản phẩm, TCG, chính sách...) và lên đầu trang
+  const goPage = (id) => {
+    const path = pagePaths[id] ?? "/";
+    if (window.location.pathname !== path || window.location.search) {
+      window.history.pushState(null, "", path);
+    }
     setSelected(null);
     setNewsView(null);
+    setPage(id);
+    window.scrollTo({ top: 0 });
   };
 
   const openNews = (post) => {
@@ -1049,9 +1192,7 @@ function App() {
   const visibleConsoles = useMemo(() => {
     return consoles
       .filter(() => category === "all" || category === "console")
-      .filter((product) =>
-        product.name.toLowerCase().includes(search.trim().toLowerCase())
-      )
+      .filter((product) => matchesSearch(product, search))
       .sort((a, b) => {
         if (sort === "low") return a.variants[0].price - b.variants[0].price;
         if (sort === "high") return b.variants[0].price - a.variants[0].price;
@@ -1066,9 +1207,7 @@ function App() {
       .filter((product) =>
         category !== "pokemon" || pokemonType === "all" || product.type === pokemonType
       )
-      .filter((product) =>
-        product.name.toLowerCase().includes(search.trim().toLowerCase())
-      )
+      .filter((product) => matchesSearch(product, search))
       .sort((a, b) => {
         if (sort === "low") return a.price - b.price;
         if (sort === "high") return b.price - a.price;
@@ -1076,31 +1215,42 @@ function App() {
       });
   }, [category, search, sort, pokemonType, collapsePokemon]);
 
-  const goHome = () => {
-    closeProduct();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  const goHome = () => goPage("home");
+
+  // Mục "Tin tức" dùng trang tin riêng, các mục khác là trang theo pagePaths
+  const goSection = (id) => (id === "news" ? openNews(null) : goPage(id));
+
+  const goShop = () => goPage("products");
+
+  // Tìm từ ô tìm kiếm trên header: mở trang Sản phẩm với từ khóa đã gõ
+  const searchProducts = (query) => {
+    setSearch(query);
+    setCategory("all");
+    goShop();
   };
 
-  // Đóng trang chi tiết (nếu đang mở) rồi cuộn tới mục cần xem
-  const goSection = (id) => {
-    closeProduct();
-    window.setTimeout(() => {
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    }, 50);
+  const shopCategory = (id) => {
+    setCategory(id);
+    goShop();
   };
 
-  const goShop = () => goSection("products");
+  // Bấm thẻ đặt trước / mới về: mở trang sản phẩm nếu có, không thì mở Zalo
+  const openPreorder = (item) => {
+    const product = allProducts.find((entry) => entry.name === item.productName);
+    if (product) openProduct(product, 0, item.editionIndex ?? 0);
+    else window.open(ZALO_URL, "_blank", "noopener,noreferrer");
+  };
 
+  // Trang chi tiết sản phẩm luôn mở ở tab mới, trang đang xem giữ nguyên
   const openProduct = (product, variantIndex = 0, editionIndex = 0) => {
-    window.history.pushState(null, "", productPath(product, editionIndex));
-    setNewsView(null);
-    setSelected({ product, variantIndex, editionIndex });
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.open(productPath(product, editionIndex, variantIndex), "_blank");
   };
+
+  const current = selected ? "products" : newsView ? "news" : page;
 
   return (
     <>
-      <Header onHome={goHome} onSection={goSection} />
+      <Header current={current} onHome={goHome} onSection={goSection} onSearch={searchProducts} />
 
       <div className="floating-contact">
         <a
@@ -1128,17 +1278,27 @@ function App() {
           product={selected.product}
           initialVariant={selected.variantIndex}
           initialEdition={selected.editionIndex}
-          onBack={closeProduct}
+          onBack={goShop}
           onSelect={openProduct}
         />
       ) : newsView?.post ? (
         <NewsPost key={newsView.post.slug} post={newsView.post} onOpen={openNews} onBack={() => openNews(null)} />
       ) : newsView ? (
-        <NewsList onOpen={openNews} onBack={closeProduct} />
+        <NewsList onOpen={openNews} onBack={goHome} />
       ) : (
         <>
-          <main>
+          <main className={page === "home" ? "" : "single-page"}>
+            {page === "home" && (<>
             <BannerSlider />
+
+            <section className="trust-bar page-width" aria-label="Cam kết của Pixo">
+              {trustBadges.map((badge) => (
+                <div key={badge.title}>
+                  <b>✓ {badge.title}</b>
+                  <span>{badge.text}</span>
+                </div>
+              ))}
+            </section>
 
             <section className="quick-categories page-width" aria-label="Danh mục">
               {quickCategories.map((item) => (
@@ -1191,6 +1351,108 @@ function App() {
               </div>
             </section>
 
+            {/* ĐẶT TRƯỚC & HÀNG MỚI VỀ */}
+            <section className="home-block page-width">
+              <div className="bestsellers-head">
+                <h2>Đặt trước & hàng mới về</h2>
+                <button className="text-link" onClick={() => shopCategory("all")}>Xem tất cả →</button>
+              </div>
+              <div className="home-rail">
+                {preorders.map((item) => (
+                  <article className="rail-card" key={item.title}>
+                    <button className="rail-image" onClick={() => openPreorder(item)}>
+                      <img src={item.image} alt={item.title} loading="lazy" />
+                      <span className={item.tag === "ĐẶT TRƯỚC" ? "rail-tag preorder" : "rail-tag"}>{item.tag}</span>
+                    </button>
+                    <div className="rail-info">
+                      <h3>{item.title}</h3>
+                      {item.price && <strong>{money(item.price)}</strong>}
+                      <p>{item.note}</p>
+                      <button className="text-link" onClick={() => openPreorder(item)}>
+                        {item.productName ? "Xem sản phẩm →" : "Đặt trước qua Zalo →"}
+                      </button>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            {/* DẢI POKÉMON TCG */}
+            <section className="home-block page-width">
+              <div className="bestsellers-head">
+                <h2>Pokémon TCG</h2>
+                <button className="text-link" onClick={() => shopCategory("pokemon")}>
+                  Xem {pokemonProducts.length} sản phẩm →
+                </button>
+              </div>
+              <div className="home-rail">
+                {pokemonRail.map((item) => (
+                  <article className="rail-card" key={item.id}>
+                    <button className="rail-image contain" onClick={() => openProduct(item)}>
+                      <img src={item.gallery?.[0] ?? item.image} alt={item.name} loading="lazy" />
+                    </button>
+                    <div className="rail-info">
+                      <h3>{item.name}</h3>
+                      <strong>{money(item.price)}</strong>
+                      <button className="text-link" onClick={() => openProduct(item)}>Xem sản phẩm →</button>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            {/* COMBO TIẾT KIỆM */}
+            <section className="home-block page-width">
+              <div className="bestsellers-head">
+                <h2>Combo tiết kiệm</h2>
+                <span className="head-note">Host trọn đời · Đủ phụ kiện</span>
+              </div>
+              <div className="combo-grid">
+                {combos.map((combo) => (
+                  <article className="combo-card" key={combo.name}>
+                    <img src={combo.image} alt={combo.name} loading="lazy" />
+                    <div className="combo-info">
+                      <h3>{combo.name}</h3>
+                      <p>{combo.items}</p>
+                      <div className="combo-price">
+                        <span className="original-price">{money(combo.original)}</span>
+                        <strong>{money(combo.price)}</strong>
+                      </div>
+                      <a className="primary-button zalo-button" href={ZALO_URL} target="_blank" rel="noreferrer">
+                        Hỏi combo qua Zalo
+                      </a>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            {/* CỘNG ĐỒNG PIXO */}
+            <section className="home-community">
+              <div className="page-width community-inner">
+                <div className="community-copy">
+                  <span className="eyebrow">CỘNG ĐỒNG PIXO</span>
+                  <h2>Không chỉ mua bán.<br /><span>Còn là nơi để chơi cùng nhau.</span></h2>
+                  <p>
+                    Pixo Nexus Night giao lưu Riftbound hằng tuần và giải Pit Fight
+                    tại showroom. Người mới cũng được chào đón.
+                  </p>
+                  <div className="contact-actions">
+                    <a className="primary-button zalo-button" href={ZALO_URL} target="_blank" rel="noreferrer">
+                      Đăng ký qua Zalo
+                    </a>
+                    <button className="outline-button" onClick={() => goPage("tcg")}>
+                      Xem lịch & ảnh sự kiện
+                    </button>
+                  </div>
+                </div>
+                <div className="community-posters">
+                  <img src="/home/nexus-night.jpg" alt="Poster Pixo Nexus Night" loading="lazy" />
+                  <img src="/home/pit-fight.jpg" alt="Poster giải Pixo Pit Fight" loading="lazy" />
+                </div>
+              </div>
+            </section>
+
             <section className="customers page-width">
               <div className="customers-head">
                 <h2>Game thủ thật, máy thật</h2>
@@ -1209,6 +1471,34 @@ function App() {
               </div>
             </section>
 
+            {/* THU CŨ ĐỔI MỚI & TRẢ GÓP */}
+            <section className="home-block page-width offer-grid">
+              <article className="offer-card">
+                <span className="eyebrow">THU CŨ ĐỔI MỚI</span>
+                <h3>Máy cũ vẫn đáng tiền.</h3>
+                <p>
+                  Gửi ảnh và tình trạng máy cũ qua Zalo, Pixo định giá rồi trừ
+                  thẳng vào máy mới.
+                </p>
+                <a className="primary-button zalo-button" href={ZALO_URL} target="_blank" rel="noreferrer">
+                  Gửi ảnh định giá
+                </a>
+              </article>
+              <article className="offer-card offer-card-image">
+                <img src="/home/tra-gop.jpg" alt="Mua trước trả sau, trả trước 0đ tại Pixo" loading="lazy" />
+                <div>
+                  <span className="eyebrow">TRẢ GÓP</span>
+                  <h3>Trả trước 0đ.</h3>
+                  <p>Trả góp qua thẻ tín dụng, thủ tục nhanh. Nhắn Pixo để chọn kỳ hạn.</p>
+                  <a className="outline-button" href={CONTACT_URL} target="_blank" rel="noreferrer">
+                    Tư vấn trả góp
+                  </a>
+                </div>
+              </article>
+            </section>
+            </>)}
+
+            {page === "products" && (
             <section className="catalog-section page-width" id="products">
               <div className="section-heading">
                 <div>
@@ -1336,8 +1626,9 @@ function App() {
                 liên hệ Pixo để nhận báo giá chính xác.
               </p>
             </section>
+            )}
 
-            {visibleNews.length > 0 && (
+            {page === "home" && visibleNews.length > 0 && (
               <section className="news-home page-width" id="news">
                 <div className="bestsellers-head">
                   <h2>Tin tức & sự kiện</h2>
@@ -1349,6 +1640,27 @@ function App() {
               </section>
             )}
 
+            {/* SHOWROOM */}
+            {page === "home" && (
+              <section className="home-block page-width showroom-block">
+                <img src="/home/showroom-trung-bay.jpg" alt="Máy và hộp TCG trưng bày tại showroom Pixo Station" loading="lazy" />
+                <div>
+                  <span className="eyebrow">SHOWROOM</span>
+                  <h2>Ghé Pixo chơi thử máy</h2>
+                  <ul>
+                    <li><b>Địa chỉ</b>{SHOP.address}</li>
+                    <li><b>Giờ mở cửa</b>{SHOP.hours}</li>
+                    <li><b>Điện thoại</b><a href={SHOP.phoneUrl}>{SHOP.phone}</a></li>
+                  </ul>
+                  <div className="contact-actions">
+                    <a className="primary-button" href={SHOP.mapsUrl} target="_blank" rel="noreferrer">Chỉ đường ↗</a>
+                    <a className="outline-button" href={SHOP.phoneUrl}>Gọi ngay</a>
+                  </div>
+                </div>
+              </section>
+            )}
+
+            {page === "tcg" && (
             <section className="tcg-section" id="tcg">
               <div className="page-width tcg-inner">
                 <div className="section-heading">
@@ -1449,7 +1761,9 @@ function App() {
                 </p>
               </div>
             </section>
+            )}
 
+            {page === "services" && (
             <section className="services-section page-width" id="services">
               <div className="section-heading">
                 <div>
@@ -1487,8 +1801,10 @@ function App() {
                 </a>
               </div>
             </section>
+            )}
 
             {/* VỀ PIXO */}
+            {page === "about" && (
             <section className="about-section" id="about">
               <div className="page-width">
                 <div className="about-story">
@@ -1538,8 +1854,10 @@ function App() {
                 </a>
               </div>
             </section>
+            )}
 
             {/* CHÍNH SÁCH BÁN HÀNG */}
+            {page === "policies" && (
             <section className="policies-section" id="policies">
               <div className="page-width policies-inner">
                 <div className="section-heading">
@@ -1622,7 +1940,9 @@ function App() {
                 </a>
               </div>
             </section>
+            )}
 
+            {page === "faq" && (
             <section className="faq-section page-width" id="faq">
               <span className="eyebrow">HỎI ĐÁP</span>
               <h2>Câu hỏi thường gặp</h2>
@@ -1635,7 +1955,9 @@ function App() {
                 ))}
               </div>
             </section>
+            )}
 
+            {page === "contact" && (
             <section className="contact-section" id="contact">
               <div className="page-width contact-inner">
                 <div className="contact-info">
@@ -1665,9 +1987,29 @@ function App() {
                 />
               </div>
             </section>
+            )}
           </main>
         </>
       )}
+
+      {/* Thanh menu dưới đáy, chỉ hiện trên điện thoại */}
+      <nav className="bottom-nav" aria-label="Menu nhanh">
+        <button className={current === "home" ? "active" : ""} onClick={goHome}>
+          <span aria-hidden="true">⌂</span>Trang chủ
+        </button>
+        <button className={current === "products" ? "active" : ""} onClick={() => shopCategory("all")}>
+          <span aria-hidden="true">▦</span>Sản phẩm
+        </button>
+        <a href={ZALO_URL} target="_blank" rel="noreferrer">
+          <span aria-hidden="true">Z</span>Zalo
+        </a>
+        <a href={CONTACT_URL} target="_blank" rel="noreferrer">
+          <span aria-hidden="true">💬</span>Messenger
+        </a>
+        <a href={SHOP.phoneUrl}>
+          <span aria-hidden="true">☎</span>Gọi
+        </a>
+      </nav>
 
       <footer className="site-footer">
         <div className="page-width footer-main">
