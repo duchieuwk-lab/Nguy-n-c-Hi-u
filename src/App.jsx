@@ -896,10 +896,13 @@ function startingPrice(item) {
 const installmentTerms = [3, 6, 9, 12];
 // Chỉ hiện công cụ cho sản phẩm từ mức giá này (máy chơi game, box TCG lớn)
 const INSTALLMENT_MIN_PRICE = 3000000;
-const cardNetworks = ["Visa", "Mastercard", "JCB"];
+const cardNetworks = ["Visa", "Mastercard", "JCB", "UnionPay"];
+// Ngân hàng / tổ chức tài chính liên kết trả góp của mPOS (theo nextpay.vn/tragop.html, tra 24/10/2026)
 const installmentBanks = [
-  "Vietcombank", "Techcombank", "VPBank", "Sacombank", "VIB", "TPBank", "MB Bank", "ACB",
-  "HDBank", "Shinhan Bank", "HSBC", "Ngân hàng khác",
+  "Vietcombank", "Techcombank", "VPBank", "Sacombank", "MB Bank", "TPBank", "VIB", "ACB",
+  "BIDV", "VietinBank", "HDBank", "SHB", "MSB", "OCB", "SeABank", "Eximbank", "LPBank",
+  "PVcomBank", "Kienlongbank", "BVBank (Bản Việt)", "Shinhan Bank", "HSBC", "Citibank",
+  "FE Credit", "Home Credit", "Mcredit", "Ngân hàng khác",
 ];
 
 function InstallmentCalculator({ price, onContact, onMessenger }) {
@@ -962,7 +965,8 @@ function InstallmentCalculator({ price, onContact, onMessenger }) {
           </dl>
           <p>
             Số tiền chia đều, chưa gồm phí chuyển đổi trả góp của ngân hàng. Pixo
-            xác nhận ngân hàng hỗ trợ và phí chính xác khi làm thủ tục.
+            trả góp qua mPOS, hỗ trợ thẻ tín dụng của hơn 25 ngân hàng và công ty
+            tài chính; Pixo xác nhận điều kiện thẻ và phí chính xác khi làm thủ tục.
           </p>
         </div>
       </div>
