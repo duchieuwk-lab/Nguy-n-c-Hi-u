@@ -212,11 +212,15 @@ const gameCatalog = [
   name: game.name,
   category: "game",
   badge: game.platform === 1 ? "SWITCH" : "SWITCH 2",
+  type: game.platform === 1 ? "Switch" : "Switch 2",
   price: null,
   image: `/products/game-${game.slug}.jpg`,
   gallery: game.gallery,
   description: `Băng game Nintendo Switch${game.platform === 1 ? "" : " 2"} · ${game.genre}. Nhắn Pixo để nhận giá và tình trạng hàng.`,
 }));
+
+// Nút lọc trong mục Băng game
+const gameTypes = ["Switch 2", "Switch"];
 
 const otherProducts = [
   ...gameCatalog,
@@ -1207,6 +1211,7 @@ function App() {
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("featured");
   const [pokemonType, setPokemonType] = useState("all");
+  const [gameType, setGameType] = useState("all");
 
   // Ở mục "Tất cả" (không tìm kiếm) chỉ hiện ô giới thiệu Pokémon thay vì cả 64 sản phẩm
   const collapsePokemon = category === "all" && !search.trim();
@@ -1274,6 +1279,9 @@ function App() {
       .filter((product) =>
         category !== "pokemon" || pokemonType === "all" || product.type === pokemonType
       )
+      .filter((product) =>
+        category !== "game" || gameType === "all" || product.type === gameType
+      )
       .filter((product) => matchesSearch(product, search))
       .sort((a, b) => {
         // Sản phẩm chưa có giá luôn xếp cuối
@@ -1281,7 +1289,7 @@ function App() {
         if (sort === "high") return (b.price ?? -Infinity) - (a.price ?? -Infinity);
         return a.id - b.id;
       });
-  }, [category, search, sort, pokemonType, collapsePokemon]);
+  }, [category, search, sort, pokemonType, gameType, collapsePokemon]);
 
   const goHome = () => goPage("home");
 
@@ -1623,6 +1631,20 @@ function App() {
                       onClick={() => setPokemonType(type)}
                     >
                       {type === "all" ? "Tất cả Pokémon" : type}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {category === "game" && (
+                <div className="subtype-filters">
+                  {["all", ...gameTypes].map((type) => (
+                    <button
+                      key={type}
+                      className={gameType === type ? "active" : ""}
+                      onClick={() => setGameType(type)}
+                    >
+                      {type === "all" ? "Tất cả băng game" : `Băng ${type}`}
                     </button>
                   ))}
                 </div>
