@@ -946,7 +946,10 @@ hiện trên mọi màn hình) */
     right: 16px;
     bottom: calc(16px + env(safe-area-inset-bottom));
   }
+}
 
+/* Dưới 1100px menu ngang không đủ chỗ (đè số điện thoại) → dùng nút menu */
+@media (max-width: 1100px) {
   .main-nav {
     display: none;
   }
@@ -4276,6 +4279,11 @@ picture {
   display: contents;
 }
 
+/* <source> không được chiếm ô trong lưới / flex khi <picture> dùng display: contents */
+picture > source {
+  display: none;
+}
+
 /* Ảnh nằm trong nút (thẻ TCG): <picture> phải là khối thật để chiếm đủ ô */
 .tcg-photo picture,
 .tcg-collage picture,
@@ -4295,4 +4303,12 @@ picture {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* Thu cũ trên điện thoại: nút chọn máy xuống 2 hàng thay vì ép chữ */
+@media (max-width: 720px) {
+  .tradein-page .installment-options button {
+    flex: 1 1 calc(33% - 8px);
+    min-width: 92px;
+  }
 }
