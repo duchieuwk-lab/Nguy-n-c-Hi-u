@@ -154,9 +154,9 @@ const consoles = [
   },
 ];
 
-// Băng game Switch 2 Pixo đang có (theo ảnh kho Pixo). Ảnh: key art trên nintendo.com.
+// Băng game Pixo đang có (theo ảnh kho/kệ Pixo). Ảnh: key art trên nintendo.com. platform: 1 = băng Switch đời đầu, mặc định Switch 2.
 // price: null = hiện "Liên hệ"; có bảng giá thì điền số vào price.
-const switch2Games = [
+const gameCatalog = [
   { slug: "nba-2k26", name: "NBA 2K26", genre: "Thể thao · Bóng rổ" },
   { slug: "reanimal", name: "REANIMAL", genre: "Kinh dị · Phiêu lưu" },
   { slug: "pokemon-pokopia", name: "Pokémon Pokopia", genre: "Mô phỏng · Xây dựng" },
@@ -171,19 +171,55 @@ const switch2Games = [
   { slug: "ea-sports-fc-27", name: "EA SPORTS FC 27", genre: "Thể thao · Bóng đá" },
   { slug: "fire-emblem-fortunes-weave", name: "Fire Emblem: Fortune's Weave", genre: "Chiến thuật nhập vai" },
   { slug: "elden-ring-tarnished-edition", name: "ELDEN RING Tarnished Edition", genre: "Nhập vai hành động" },
+  // Thêm 24/10/2026 theo ảnh kệ game
+  { slug: "final-fantasy-vii-rebirth", name: "Final Fantasy VII Rebirth", genre: "Nhập vai hành động" },
+  { slug: "trails-beyond-the-horizon", name: "The Legend of Heroes: Trails beyond the Horizon", genre: "Nhập vai" },
+  { slug: "hades-ii", name: "Hades II – Nintendo Switch 2 Edition", genre: "Hành động roguelike" },
+  { slug: "xenoblade-chronicles-de-ns2", name: "Xenoblade Chronicles: Definitive Edition – Nintendo Switch 2 Edition", genre: "Nhập vai" },
+  { slug: "xenoblade-chronicles-2-ns2", name: "Xenoblade Chronicles 2 – Nintendo Switch 2 Edition", genre: "Nhập vai" },
+  { slug: "trails-in-the-sky-2nd-chapter", name: "Trails in the Sky 2nd Chapter – Nintendo Switch 2 Edition", genre: "Nhập vai" },
+  { slug: "cyberpunk-2077-ultimate", name: "Cyberpunk 2077: Ultimate Edition", genre: "Nhập vai hành động" },
+  { slug: "donkey-kong-bananza", name: "Donkey Kong Bananza", genre: "Phiêu lưu 3D" },
+  { slug: "hyrule-warriors-age-of-imprisonment", name: "Hyrule Warriors: Age of Imprisonment", genre: "Hành động" },
+  { slug: "oblivion-remastered", name: "The Elder Scrolls IV: Oblivion Remastered", genre: "Nhập vai thế giới mở" },
+  { slug: "pokemon-legends-z-a-ns2", name: "Pokémon Legends: Z-A – Nintendo Switch 2 Edition", genre: "Nhập vai" },
+  { slug: "zelda-breath-of-the-wild-ns2", name: "The Legend of Zelda: Breath of the Wild – Nintendo Switch 2 Edition", genre: "Phiêu lưu thế giới mở" },
+  { slug: "animal-crossing-new-horizons-ns2", name: "Animal Crossing: New Horizons – Nintendo Switch 2 Edition", genre: "Mô phỏng cuộc sống" },
+  { slug: "lies-of-p-complete", name: "Lies of P: Complete Edition", genre: "Hành động soulslike" },
+  { slug: "cronos-the-new-dawn", name: "Cronos: The New Dawn", genre: "Kinh dị sinh tồn" },
+  { slug: "granblue-fantasy-relink-endless-ragnarok", name: "Granblue Fantasy: Relink – Endless Ragnarok", genre: "Nhập vai hành động" },
+  { slug: "resident-evil-7-gold", name: "Resident Evil 7 biohazard Gold Edition", genre: "Kinh dị sinh tồn" },
+  { slug: "trails-to-azure", name: "The Legend of Heroes: Trails to Azure", genre: "Nhập vai", platform: 1 },
+  { slug: "trails-from-zero", name: "The Legend of Heroes: Trails from Zero", genre: "Nhập vai", platform: 1 },
+  { slug: "trails-through-daybreak", name: "The Legend of Heroes: Trails through Daybreak", genre: "Nhập vai", platform: 1 },
+  { slug: "trails-through-daybreak-ii", name: "The Legend of Heroes: Trails through Daybreak II", genre: "Nhập vai", platform: 1 },
+  { slug: "hades", name: "Hades", genre: "Hành động roguelike", platform: 1 },
+  { slug: "trails-in-the-sky-1st-chapter", name: "Trails in the Sky 1st Chapter", genre: "Nhập vai", platform: 1 },
+  { slug: "pokemon-shining-pearl", name: "Pokémon Shining Pearl", genre: "Nhập vai", platform: 1 },
+  { slug: "pokemon-brilliant-diamond", name: "Pokémon Brilliant Diamond", genre: "Nhập vai", platform: 1 },
+  { slug: "neon-white", name: "Neon White", genre: "Hành động · Bắn súng", platform: 1 },
+  { slug: "splatoon-3", name: "Splatoon 3", genre: "Bắn súng · Chơi nhóm", platform: 1 },
+  { slug: "ori-blind-forest", name: "Ori and the Blind Forest: Definitive Edition", genre: "Phiêu lưu · Platformer", platform: 1 },
+  { slug: "super-smash-bros-ultimate", name: "Super Smash Bros. Ultimate", genre: "Đối kháng · Chơi nhóm", platform: 1 },
+  { slug: "hollow-knight", name: "Hollow Knight", genre: "Phiêu lưu · Metroidvania", platform: 1 },
+  { slug: "ring-fit-adventure", name: "Ring Fit Adventure", genre: "Thể dục · Vận động", platform: 1 },
+  { slug: "octopath-traveler-ii", name: "Octopath Traveler II", genre: "Nhập vai", platform: 1 },
+  { slug: "ori-will-of-the-wisps", name: "Ori and the Will of the Wisps", genre: "Phiêu lưu · Platformer", platform: 1 },
+  { slug: "pokemon-mystery-dungeon-dx", name: "Pokémon Mystery Dungeon: Rescue Team DX", genre: "Nhập vai", platform: 1 },
+  { slug: "new-pokemon-snap", name: "New Pokémon Snap", genre: "Chụp ảnh · Phiêu lưu", platform: 1 },
 ].map((game, index) => ({
   id: 20 + index,
   name: game.name,
   category: "game",
-  badge: "SWITCH 2",
+  badge: game.platform === 1 ? "SWITCH" : "SWITCH 2",
   price: null,
   image: `/products/game-${game.slug}.jpg`,
   gallery: game.gallery,
-  description: `Băng game Nintendo Switch 2 · ${game.genre}. Nhắn Pixo để nhận giá và tình trạng hàng.`,
+  description: `Băng game Nintendo Switch${game.platform === 1 ? "" : " 2"} · ${game.genre}. Nhắn Pixo để nhận giá và tình trạng hàng.`,
 }));
 
 const otherProducts = [
-  ...switch2Games,
+  ...gameCatalog,
   { id: 11, name: "Túi đựng máy chơi game", category: "accessory", badge: "BẢO VỆ MÁY", price: 250000, image: "/products/carrying-case.jpg", description: "Túi đựng máy và phụ kiện khi di chuyển." },
   { id: 12, name: "Ốp bảo vệ Nintendo Switch", category: "accessory", badge: "PHỤ KIỆN", price: 150000, image: "/products/switch-case.jpg", description: "Nhiều mẫu ốp tùy theo model máy." },
   { id: 13, name: "Tay cầm chơi game", category: "accessory", badge: "CHƠI CÙNG BẠN", price: 590000, image: "/products/controller.jpg", description: "Tay cầm bổ sung cho những buổi chơi game." },
