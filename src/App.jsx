@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 import { pokemonPerks, pokemonProducts, pokemonTypes } from "./pokemonProducts";
 import { isScheduled, newsCategories, visibleNews } from "./news";
+import { ComparePage, GoogleReviews, TradeInPage } from "./features";
 
 const CONTACT_URL = "https://m.me/pixostation";
 // Zalo dùng chung số điện thoại cửa hàng (đổi 24/10/2026)
@@ -606,6 +607,8 @@ const pagePaths = {
   policies: "/chinh-sach",
   faq: "/hoi-dap",
   contact: "/lien-he",
+  compare: "/so-sanh-may",
+  tradein: "/thu-cu",
 };
 
 function pageFromLocation() {
@@ -717,6 +720,18 @@ function ProductImage({ product, edition }) {
   );
 }
 
+// Nhãn tồn kho trên thẻ sản phẩm. product.stock: "in" (còn hàng) | "out" (hết hàng) | "preorder" (đặt trước)
+const stockLabels = { in: "Còn hàng", out: "Hết hàng", preorder: "Đặt trước" };
+
+function StockLabel({ product, fallback }) {
+  const label = stockLabels[product.stock];
+  return (
+    <span className={label ? `availability stock-${product.stock}` : "availability"}>
+      ● {label ?? fallback}
+    </span>
+  );
+}
+
 function ConsoleCard({ product, onSelect }) {
   const [variantIndex, setVariantIndex] = useState(0);
   const [editionIndex, setEditionIndex] = useState(0);
@@ -742,7 +757,7 @@ function ConsoleCard({ product, onSelect }) {
       <div className="product-info">
         <div className="product-condition">
           <span>NINTENDO SWITCH</span>
-          <span className="availability">● Hỏi tình trạng</span>
+          <StockLabel product={product} fallback="Hỏi tình trạng" />
         </div>
 
         <button
@@ -828,7 +843,7 @@ function OtherProductCard({ product, onSelect }) {
       <div className="product-info">
         <div className="product-condition">
           <span>{product.category.toUpperCase()}</span>
-          <span className="availability">● Liên hệ xác nhận</span>
+          <StockLabel product={product} fallback="Liên hệ xác nhận" />
         </div>
 
         <button className="product-title" onClick={() => onSelect(product)}>
@@ -1407,6 +1422,67 @@ function matchesSearch(product, search) {
   return slugify(text).includes(query);
 }
 
+// ===== SEO =====
+const DEFAULT_DESCRIPTION =
+  "Pixo Station – cửa hàng Nintendo Switch, Switch 2, băng game và Pokémon TCG, Riftbound tại 23 Lê Đại Hành, Hà Nội. Bảo hành 6 tháng, trả góp 0đ, thu cũ đổi mới.";
+
+const pageDescriptions = {
+  products: "Máy Nintendo Switch, Switch 2, băng game, Pokémon TCG và Riftbound tại Pixo Station Hà Nội. Giá rõ ràng, bảo hành 6 tháng, trả góp qua thẻ tín dụng.",
+  compare: "So sánh Nintendo Switch Lite, V2, OLED và Switch 2: màn hình, pin, bộ nhớ, chơi trên TV. Chọn đúng máy theo nhu cầu cùng Pixo Station.",
+  tradein: "Thu cũ đổi mới Nintendo Switch tại Pixo Station Hà Nội: chọn máy và tình trạng, gửi ảnh để nhận giá thu, trừ thẳng khi lên đời.",
+  tcg: "Pokémon TCG, Riftbound và Pixo Nexus Night 19:00 thứ 4 hằng tuần tại Pixo Station, 23 Lê Đại Hành, Hà Nội.",
+};
+
+function pageDescription({ selected, newsView, page }) {
+  if (selected) {
+    const product = selected.product;
+    return `${product.name} tại Pixo Station Hà Nội. ${product.description ?? ""}`.trim().slice(0, 300);
+  }
+  if (newsView?.post) return newsView.post.excerpt ?? DEFAULT_DESCRIPTION;
+  return pageDescriptions[page] ?? DEFAULT_DESCRIPTION;
+}
+
+function setMetaDescription(content) {
+  let tag = document.querySelector('meta[name="description"]');
+  if (!tag) {
+    tag = document.createElement("meta");
+    tag.name = "description";
+    document.head.appendChild(tag);
+  }
+  tag.content = content;
+}
+
+// Dữ liệu sản phẩm (schema.org) để Google hiện tên, giá, ảnh sản phẩm trong kết quả tìm kiếm
+function setProductSchema(product) {
+  document.getElementById("product-schema")?.remove();
+  if (!product) return;
+  const price = product.variants ? Math.min(...product.variants.map((variant) => variant.price)) : product.price;
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    image: new URL(product.image, window.location.origin).href,
+    description: product.description,
+    brand: { "@type": "Brand", name: product.category === "pokemon" ? "Pokémon" : product.category === "riftbound" ? "Riftbound" : "Nintendo" },
+    ...(price && !product.contactPrice
+      ? {
+          offers: {
+            "@type": "Offer",
+            priceCurrency: "VND",
+            price,
+            url: window.location.href,
+            seller: { "@type": "Organization", name: "Pixo Station" },
+          },
+        }
+      : {}),
+  };
+  const script = document.createElement("script");
+  script.id = "product-schema";
+  script.type = "application/ld+json";
+  script.textContent = JSON.stringify(schema);
+  document.head.appendChild(script);
+}
+
 const SITE_TITLE = "Pixo Station – Trạm Game của thế hệ bạn";
 
 function App() {
@@ -1432,16 +1508,19 @@ function App() {
     return () => window.removeEventListener("popstate", onPopState);
   }, []);
 
-  // Tiêu đề tab theo sản phẩm đang xem
+  // Tiêu đề tab + mô tả trang (SEO) theo trang đang xem
   useEffect(() => {
+    const extraTitles = { products: "Sản phẩm", compare: "So sánh máy Nintendo Switch", tradein: "Thu cũ đổi mới" };
     if (selected) document.title = `${selected.product.name} – Pixo Station`;
     else if (newsView?.post) document.title = `${newsView.post.title} – Pixo Station`;
     else if (newsView) document.title = "Tin tức – Pixo Station";
-    else if (page === "products") document.title = "Sản phẩm – Pixo Station";
+    else if (extraTitles[page]) document.title = `${extraTitles[page]} – Pixo Station`;
     else if (page !== "home") {
       const label = navSections.find((section) => section.id === page)?.label;
       document.title = `${label} – Pixo Station`;
     } else document.title = SITE_TITLE;
+    setMetaDescription(pageDescription({ selected, newsView, page }));
+    setProductSchema(selected?.product ?? null);
   }, [selected, newsView, page]);
 
   // Chuyển sang một trang (trang chủ, sản phẩm, TCG, chính sách...) và lên đầu trang
@@ -1599,9 +1678,14 @@ function App() {
             <section className="bestsellers page-width">
               <div className="bestsellers-head">
                 <h2>Máy bán chạy</h2>
-                <button className="text-link" onClick={() => { setCategory("console"); goShop(); }}>
-                  Xem tất cả máy →
-                </button>
+                <div className="head-links">
+                  <button className="text-link" onClick={() => goPage("compare")}>
+                    So sánh máy
+                  </button>
+                  <button className="text-link" onClick={() => { setCategory("console"); goShop(); }}>
+                    Xem tất cả máy →
+                  </button>
+                </div>
               </div>
 
               <div className="bestseller-grid">
@@ -1748,18 +1832,20 @@ function App() {
               </div>
             </section>
 
+            <GoogleReviews mapsUrl={SHOP.mapsUrl} />
+
             {/* THU CŨ ĐỔI MỚI & TRẢ GÓP */}
             <section className="home-block page-width offer-grid">
               <article className="offer-card">
                 <span className="eyebrow">THU CŨ ĐỔI MỚI</span>
                 <h3>Máy cũ vẫn đáng tiền.</h3>
                 <p>
-                  Gửi ảnh và tình trạng máy cũ qua Zalo, Pixo định giá rồi trừ
-                  thẳng vào máy mới.
+                  Chọn máy và tình trạng để xem khoảng giá thu, Pixo trừ thẳng
+                  vào máy mới.
                 </p>
-                <a className="primary-button zalo-button" href={ZALO_URL} target="_blank" rel="noreferrer">
-                  Gửi ảnh định giá
-                </a>
+                <button className="primary-button zalo-button" onClick={() => goPage("tradein")}>
+                  Định giá máy cũ
+                </button>
               </article>
               <article className="offer-card offer-card-image">
                 <img src="/home/tra-gop.jpg" alt="Mua trước trả sau, trả trước 0đ tại Pixo" loading="lazy" />
@@ -1834,6 +1920,12 @@ function App() {
                     </button>
                   ))}
                 </div>
+              )}
+
+              {category === "console" && (
+                <button className="compare-hint" onClick={() => goPage("compare")}>
+                  Phân vân Lite, V2, OLED hay Switch 2? <b>Xem bảng so sánh →</b>
+                </button>
               )}
 
               <div className="result-line">
@@ -2229,6 +2321,16 @@ function App() {
             </section>
             )}
 
+            {page === "compare" && (
+              <ComparePage
+                consoles={consoles}
+                onOpenProduct={(id) => openProduct(consoles.find((item) => item.id === id))}
+                onShop={() => shopCategory("console")}
+              />
+            )}
+
+            {page === "tradein" && <TradeInPage zaloUrl={ZALO_URL} messengerUrl={CONTACT_URL} />}
+
             {page === "faq" && (
             <section className="faq-section page-width" id="faq">
               <span className="eyebrow">HỎI ĐÁP</span>
@@ -2310,6 +2412,8 @@ function App() {
             </span>
           </div>
           <div className="footer-links">
+            <button onClick={() => goPage("compare")}>So sánh máy</button>
+            <button onClick={() => goPage("tradein")}>Thu cũ đổi mới</button>
             <a href={SHOP.facebookUrl} target="_blank" rel="noreferrer">Facebook ↗</a>
             <a href={SHOP.mapsUrl} target="_blank" rel="noreferrer">Google Maps ↗</a>
           </div>
@@ -2324,3 +2428,13 @@ function App() {
 }
 
 export default App;
+// Danh sách mọi đường dẫn của web, dùng để tạo sitemap.xml khi build (vite.config.js)
+export function listSitePaths() {
+  const publishedNews = visibleNews.filter((post) => post.status === "published" && !isScheduled(post));
+  return [
+    ...Object.values(pagePaths),
+    "/tin-tuc",
+    ...publishedNews.map((post) => `/tin-tuc/${post.slug}`),
+    ...allProducts.map((product) => productPath(product)),
+  ];
+}

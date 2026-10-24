@@ -3638,3 +3638,292 @@ chân trang */
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+/* ===== SO SÁNH MÁY ===== */
+.head-links {
+  display: flex;
+  gap: 18px;
+}
+
+.footer-links button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--green-text);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.compare-hint {
+  display: block;
+  width: 100%;
+  margin: 14px 0 0;
+  padding: 12px 16px;
+  border: 1px dashed var(--green-dark);
+  border-radius: 10px;
+  background: #f1f8ea;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.compare-hint b {
+  color: var(--green-text);
+}
+
+.compare-page,
+.tradein-page {
+  margin-top: 8px;
+  margin-bottom: 64px;
+}
+
+.compare-scroll {
+  margin-top: 24px;
+  overflow-x: auto;
+  border: 1px solid #e3e7e0;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.compare-table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.compare-table th,
+.compare-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #edf0ea;
+  text-align: left;
+  vertical-align: top;
+}
+
+.compare-table thead th {
+  vertical-align: bottom;
+}
+
+.compare-table thead img {
+  display: block;
+  width: 100%;
+  max-width: 180px;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  margin-bottom: 8px;
+}
+
+.compare-table thead strong {
+  display: block;
+  font-size: 18px;
+}
+
+.compare-table thead span {
+  color: var(--green-text);
+  font-weight: 700;
+}
+
+.compare-table tbody th {
+  width: 140px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.compare-table .highlight {
+  background: #f1f8ea;
+}
+
+.compare-table .primary-button {
+  width: 100%;
+}
+
+.compare-tips {
+  margin-top: 24px;
+  padding: 22px;
+  border-radius: 14px;
+  background: #16191a;
+  color: #fff;
+}
+
+.compare-tips h3 {
+  margin: 0 0 12px;
+}
+
+.compare-tips ul {
+  margin: 0 0 18px;
+  padding: 0;
+  list-style: none;
+}
+
+.compare-tips li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+
+.compare-tips li span {
+  color: #c9cfc7;
+}
+
+.compare-tips li b {
+  color: var(--green);
+  text-align: right;
+}
+
+.compare-tips .outline-button {
+  border-color: rgba(255,255,255,.4);
+  background: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* ===== THU CŨ ===== */
+.tradein-conditions {
+  display: grid;
+  gap: 8px;
+}
+
+.tradein-conditions button {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 14px;
+  border: 1px solid #dfe3dc;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.tradein-conditions button span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.tradein-conditions button.active {
+  border-color: var(--green-dark);
+  background: #f1f8ea;
+  box-shadow: 0 0 0 2px var(--green) inset;
+}
+
+.tradein-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.tradein-check input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--green-dark);
+}
+
+.installment-result .tradein-pending {
+  font-size: clamp(26px, 3.4vw, 34px);
+}
+
+/* ===== NHÃN TỒN KHO ===== */
+.availability.stock-in {
+  color: var(--green-text);
+}
+
+.availability.stock-out {
+  color: #c0392b;
+}
+
+.availability.stock-preorder {
+  color: #b7791f;
+}
+
+/* ===== ĐÁNH GIÁ GOOGLE ===== */
+.google-reviews {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 28px;
+  margin-top: 40px;
+  padding: 24px 28px;
+  border: 1px solid #e3e7e0;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.google-score {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.google-g {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: conic-gradient(#ea4335 0 25%, #fbbc05 0 50%, #34a853 0 75%, #4285f4 0);
+  color: #fff;
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.google-score strong {
+  display: block;
+  font-size: 34px;
+  line-height: 1;
+}
+
+.google-stars {
+  color: #fbbc05;
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+.google-score p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.google-copy {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.google-reviews .contact-actions {
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .google-reviews {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .google-score {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 720px) {
+  .head-links {
+    gap: 12px;
+    font-size: 13px;
+  }
+
+  .compare-tips li {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .compare-tips li b {
+    text-align: left;
+  }
+}
