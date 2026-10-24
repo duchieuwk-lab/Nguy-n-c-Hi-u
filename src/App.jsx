@@ -2329,7 +2329,7 @@ function App() {
               />
             )}
 
-            {page === "tradein" && <TradeInPage zaloUrl={ZALO_URL} messengerUrl={CONTACT_URL} />}
+            {page === "tradein" && <TradeInPage consoles={consoles} zaloUrl={ZALO_URL} messengerUrl={CONTACT_URL} />}
 
             {page === "faq" && (
             <section className="faq-section page-width" id="faq">

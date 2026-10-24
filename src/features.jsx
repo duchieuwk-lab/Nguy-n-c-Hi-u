@@ -182,30 +182,74 @@ export function ComparePage({ consoles, onOpenProduct, onShop }) {
 }
 
 // ===== ĐỊNH GIÁ THU CŨ =====
-// Khoảng giá thu (₫). Pixo gửi bảng giá thu thì điền vào đây: { min, max } theo máy và tình trạng.
-// Để null = chưa có giá, công cụ hiện "Pixo báo giá sau khi xem ảnh".
-const tradeInModels = ["Switch Lite", "Switch V1", "Switch V2", "Switch OLED", "Switch 2"];
-const tradeInConditions = [
-  { id: "new", label: "Như mới", note: "Không trầy, đủ hộp, ít dùng" },
-  { id: "good", label: "Trầy nhẹ", note: "Có vết dùng nhẹ, mọi chức năng tốt" },
-  { id: "worn", label: "Trầy nhiều / lỗi nhẹ", note: "Trầy rõ, lỗi nút, drift Joy-Con, chai pin" },
+// Cơ chế thu cũ đổi mới của Pixo (Google Sheet "Cơ chế thu cũ đổi mới", nhận 24/10/2026):
+// giá thu = giá bán cùng dòng máy tại Pixo × (1 − % theo hạng) − khấu trừ phụ kiện; lên đời được cộng trợ giá.
+const tradeInModels = [
+  // productId: lấy giá bán hiện tại trên web (gói rẻ nhất); null = Pixo không bán dòng này, báo giá trực tiếp
+  { id: "lite", name: "Switch Lite", productId: "lite", handheldOnly: true },
+  { id: "v1", name: "Switch V1", productId: null },
+  { id: "v2", name: "Switch V2", productId: "v2" },
+  { id: "oled", name: "Switch OLED", productId: "oled" },
+  { id: "switch2", name: "Switch 2", productId: "switch2" },
 ];
-const tradeInPrices = {
-  // VD: "Switch OLED": { new: { min: 4500000, max: 5000000 }, good: {...}, worn: {...} },
-};
 
-export function TradeInPage({ zaloUrl, messengerUrl }) {
-  const [model, setModel] = useState(tradeInModels[3]);
-  const [condition, setCondition] = useState("good");
-  const [fullBox, setFullBox] = useState(true);
-  const [hacked, setHacked] = useState(false);
+const tradeInGrades = [
+  { id: "A", label: "A – Đẹp", note: "Ngoại hình ≥90–95%, chức năng hoàn hảo, pin tốt, không sửa chữa bất thường.", rate: 0.3, bonus: { v2: 200000, oled: 250000, switch2: 300000 } },
+  { id: "B", label: "B – Khá", note: "Xước nhẹ, dấu sử dụng bình thường.", rate: 0.35, bonus: { v2: 150000, oled: 200000, switch2: 250000 } },
+  { id: "C", label: "C – Xấu", note: "Xước nhiều, xước màn hình, Joy-Con lỗi nhẹ, pin yếu.", rate: 0.4, bonus: { v2: 100000, oled: 150000, switch2: 200000 } },
+  { id: "D", label: "D – Lỗi", note: "Lỗi màn hình, main, sạc, Wi-Fi, Joy-Con, pin hoặc lỗi không xác định.", rate: 0.45, screenRate: 0.5, bonus: { v2: 50000, oled: 100000, switch2: 150000 } },
+];
 
-  const range = tradeInPrices[model]?.[condition] ?? null;
-  const conditionLabel = tradeInConditions.find((item) => item.id === condition).label;
+// Khấu trừ phụ kiện: missing = thiếu, faulty = lỗi (null = không áp dụng). handheld: có cả ở Switch Lite.
+const tradeInParts = [
+  { id: "box", label: "Hộp (gồm khay)", missing: 300000, faulty: null, handheld: true },
+  { id: "joycon", label: "Joy-Con", missing: 1000000, faulty: 300000 },
+  { id: "dock", label: "Dock", missing: 600000, faulty: 300000 },
+  { id: "charger", label: "Sạc", missing: 250000, faulty: null, handheld: true },
+  { id: "hdmi", label: "Cáp HDMI", missing: 250000, faulty: null },
+  { id: "grip", label: "Grip", missing: 150000, faulty: null },
+  { id: "strap", label: "Dây strap", missing: 150000, faulty: null },
+];
+
+const upgradeTargets = [
+  { id: "none", label: "Chỉ bán máy" },
+  { id: "v2", label: "Lên Switch V2" },
+  { id: "oled", label: "Lên Switch OLED" },
+  { id: "switch2", label: "Lên Switch 2" },
+];
+
+const partStateLabels = { ok: "Đủ", missing: "Thiếu", faulty: "Lỗi" };
+
+export function TradeInPage({ consoles, zaloUrl, messengerUrl }) {
+  const [modelId, setModelId] = useState("oled");
+  const [gradeId, setGradeId] = useState("B");
+  const [screenError, setScreenError] = useState(false);
+  const [parts, setParts] = useState({});
+  const [target, setTarget] = useState("none");
+
+  const model = tradeInModels.find((item) => item.id === modelId);
+  const grade = tradeInGrades.find((item) => item.id === gradeId);
+  const visibleParts = tradeInParts.filter((part) => !model.handheldOnly || part.handheld);
+
+  const product = consoles.find((item) => item.id === model.productId);
+  const basePrice = product?.variants ? Math.min(...product.variants.map((variant) => variant.price)) : null;
+  const rate = grade.id === "D" && screenError ? grade.screenRate : grade.rate;
+  const deductions = visibleParts
+    .map((part) => ({ part, state: parts[part.id] ?? "ok" }))
+    .filter(({ state }) => state !== "ok")
+    .map(({ part, state }) => ({ label: `${partStateLabels[state]} ${part.label}`, amount: part[state] }));
+  const totalDeduction = deductions.reduce((sum, item) => sum + item.amount, 0);
+  const bonus = target === "none" ? 0 : grade.bonus[target];
+  const buyPrice = basePrice == null ? null : Math.max(0, Math.round(basePrice * (1 - rate)) - totalDeduction);
+  const finalValue = buyPrice == null ? null : buyPrice + bonus;
+
+  const setPart = (id, state) => setParts((current) => ({ ...current, [id]: state }));
+
+  const targetLabel = upgradeTargets.find((item) => item.id === target).label;
   const message =
-    `Chào Pixo Station! Mình muốn định giá máy cũ: ${model}, tình trạng ${conditionLabel}, ` +
-    `${fullBox ? "đủ hộp và phụ kiện" : "thiếu hộp / phụ kiện"}${hacked ? ", máy đã can thiệp phần mềm" : ""}. ` +
-    `${range ? `Web tạm tính ${money(range.min)} – ${money(range.max)}. ` : ""}Mình gửi ảnh máy để shop định giá nhé!`;
+    `Chào Pixo Station! Mình muốn thu cũ đổi mới: ${model.name}, hạng ${grade.label}${grade.id === "D" && screenError ? " (lỗi màn hình)" : ""}` +
+    `${deductions.length ? `, ${deductions.map((item) => item.label.toLowerCase()).join(", ")}` : ", đủ phụ kiện"}. ${targetLabel}. ` +
+    `${finalValue != null ? `Web tạm tính ${money(finalValue)}. ` : ""}Mình gửi ảnh máy để shop chốt giá nhé!`;
 
   return (
     <section className="tradein-page page-width">
@@ -214,7 +258,7 @@ export function TradeInPage({ zaloUrl, messengerUrl }) {
           <span className="eyebrow">THU CŨ ĐỔI MỚI</span>
           <h2>Máy cũ <span>đáng bao nhiêu?</span></h2>
         </div>
-        <p>Chọn máy và tình trạng để xem khoảng giá. Giá thu được trừ thẳng khi lên đời máy mới tại Pixo.</p>
+        <p>Chọn máy, hạng máy và phụ kiện để tạm tính giá thu. Lên đời máy mới tại Pixo được cộng thêm trợ giá.</p>
       </div>
 
       <div className="installment-grid">
@@ -222,47 +266,80 @@ export function TradeInPage({ zaloUrl, messengerUrl }) {
           <span className="variant-label">MÁY CỦA BẠN</span>
           <div className="installment-options">
             {tradeInModels.map((item) => (
-              <button key={item} className={model === item ? "active" : ""} onClick={() => setModel(item)}>{item}</button>
-            ))}
-          </div>
-
-          <span className="variant-label">TÌNH TRẠNG</span>
-          <div className="tradein-conditions">
-            {tradeInConditions.map((item) => (
-              <button key={item.id} className={condition === item.id ? "active" : ""} onClick={() => setCondition(item.id)}>
-                <b>{item.label}</b>
-                <span>{item.note}</span>
+              <button key={item.id} className={modelId === item.id ? "active" : ""} onClick={() => setModelId(item.id)}>
+                {item.name}
               </button>
             ))}
           </div>
 
-          <span className="variant-label">PHỤ KIỆN & PHẦN MỀM</span>
-          <label className="tradein-check">
-            <input type="checkbox" checked={fullBox} onChange={(event) => setFullBox(event.target.checked)} />
-            Đủ hộp, dock, sạc, Joy-Con
-          </label>
-          <label className="tradein-check">
-            <input type="checkbox" checked={hacked} onChange={(event) => setHacked(event.target.checked)} />
-            Máy đã can thiệp phần mềm (hack)
-          </label>
+          <span className="variant-label">HẠNG MÁY</span>
+          <div className="tradein-conditions">
+            {tradeInGrades.map((item) => (
+              <button key={item.id} className={gradeId === item.id ? "active" : ""} onClick={() => setGradeId(item.id)}>
+                <b>{item.label} <small>· thu {Math.round((1 - item.rate) * 100)}% giá bán</small></b>
+                <span>{item.note}</span>
+              </button>
+            ))}
+          </div>
+          {grade.id === "D" && (
+            <label className="tradein-check">
+              <input type="checkbox" checked={screenError} onChange={(event) => setScreenError(event.target.checked)} />
+              Lỗi màn hình (thu 50% giá bán)
+            </label>
+          )}
+
+          <span className="variant-label">PHỤ KIỆN</span>
+          <div className="tradein-parts">
+            {visibleParts.map((part) => {
+              const state = parts[part.id] ?? "ok";
+              return (
+                <div key={part.id} className="tradein-part">
+                  <span>{part.label}</span>
+                  <div>
+                    {["ok", "missing", "faulty"]
+                      .filter((option) => option === "ok" || part[option] != null)
+                      .map((option) => (
+                        <button
+                          key={option}
+                          className={state === option ? "active" : ""}
+                          onClick={() => setPart(part.id, option)}
+                        >
+                          {partStateLabels[option]}
+                          {option !== "ok" && <small> −{Math.round(part[option] / 1000)}k</small>}
+                        </button>
+                      ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <span className="variant-label">BẠN MUỐN</span>
+          <div className="installment-options">
+            {upgradeTargets.map((item) => (
+              <button key={item.id} className={target === item.id ? "active" : ""} onClick={() => setTarget(item.id)}>
+                {item.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="installment-result">
-          <span>Khoảng giá thu dự kiến</span>
-          {range ? (
-            <strong>{money(range.min)} – {money(range.max)}</strong>
-          ) : (
-            <strong className="tradein-pending">Pixo báo giá</strong>
-          )}
+          <span>{target === "none" ? "Giá thu tạm tính" : "Giá trị máy cũ khi lên đời"}</span>
+          {finalValue != null ? <strong>{money(finalValue)}</strong> : <strong className="tradein-pending">Pixo báo giá</strong>}
           <dl>
-            <div><dt>Máy</dt><dd>{model}</dd></div>
-            <div><dt>Tình trạng</dt><dd>{conditionLabel}</dd></div>
-            <div><dt>Phụ kiện</dt><dd>{fullBox ? "Đầy đủ" : "Thiếu"}</dd></div>
+            <div><dt>Máy</dt><dd>{model.name}</dd></div>
+            {basePrice != null && <div><dt>Giá bán cùng dòng tại Pixo</dt><dd>{money(basePrice)}</dd></div>}
+            <div><dt>Hạng {grade.id}</dt><dd>−{Math.round(rate * 100)}%</dd></div>
+            {deductions.map((item) => (
+              <div key={item.label}><dt>{item.label}</dt><dd>−{money(item.amount)}</dd></div>
+            ))}
+            {bonus > 0 && <div><dt>Trợ giá lên đời</dt><dd>+{money(bonus)}</dd></div>}
           </dl>
           <p>
-            {range
-              ? "Giá tham khảo. Giá chốt sau khi Pixo kiểm tra máy trực tiếp hoặc qua ảnh/video."
-              : "Gửi ảnh máy (mặt trước, mặt sau, các cạnh) để Pixo báo giá thu trong ngày."}
+            {basePrice == null
+              ? "Pixo không bán sẵn dòng máy này nên sẽ báo giá trực tiếp sau khi xem ảnh."
+              : "Giá tạm tính theo cơ chế thu cũ của Pixo. Giá chốt sau khi Pixo kiểm tra máy trực tiếp hoặc qua ảnh/video."}
           </p>
         </div>
       </div>
@@ -270,7 +347,7 @@ export function TradeInPage({ zaloUrl, messengerUrl }) {
       <div className="installment-cta">
         <div>
           <h3>Gửi ảnh để chốt giá</h3>
-          <p>Tin nhắn đã ghi sẵn máy và tình trạng bạn vừa chọn. Đính kèm ảnh máy rồi gửi cho Pixo.</p>
+          <p>Tin nhắn đã ghi sẵn máy, hạng và phụ kiện bạn vừa chọn. Đính kèm ảnh máy rồi gửi cho Pixo.</p>
         </div>
         <div className="detail-actions">
           <button className="primary-button zalo-button" onClick={() => sendMessage(zaloUrl, "Zalo", message)}>
