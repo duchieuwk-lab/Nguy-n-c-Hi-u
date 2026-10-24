@@ -1264,14 +1264,6 @@ function ProductDetail({
         </div>
       </div>
 
-      {price != null && price >= INSTALLMENT_MIN_PRICE && (
-        <InstallmentCalculator
-          price={price}
-          onContact={(plan) => askToBuy(ZALO_URL, "Zalo", plan)}
-          onMessenger={(plan) => askToBuy(CONTACT_URL, "Messenger", plan)}
-        />
-      )}
-
       {product.specs && (
         <section className="detail-section">
           <h2>Thông tin sản phẩm</h2>
@@ -1291,6 +1283,14 @@ function ProductDetail({
             </ul>
           )}
         </section>
+      )}
+
+      {price != null && price >= INSTALLMENT_MIN_PRICE && (
+        <InstallmentCalculator
+          price={price}
+          onContact={(plan) => askToBuy(ZALO_URL, "Zalo", plan)}
+          onMessenger={(plan) => askToBuy(CONTACT_URL, "Messenger", plan)}
+        />
       )}
 
       <section className="detail-section">
