@@ -1746,30 +1746,39 @@ function App() {
                 </div>
 
                 <div className="tcg-grid">
+                  {/* Ảnh chụp thật tại Pixo thay cho ô chữ trang trí */}
                   <article className="tcg-card pokemon-card">
-                    <div className="tcg-card-art">
-                      <span>POKÉMON</span><b>TCG</b><i>COLLECT YOUR FAVORITES</i>
-                    </div>
+                    <button className="tcg-photo tcg-collage" onClick={() => shopCategory("pokemon")} aria-label="Xem Pokémon TCG">
+                      {pokemonRail.slice(0, 4).map((item) => (
+                        <img key={item.id} src={item.gallery?.[0] ?? item.image} alt={item.name} loading="lazy" />
+                      ))}
+                    </button>
                     <div className="tcg-card-info">
                       <span>TRADING CARD GAME</span>
                       <h3>Pokémon TCG</h3>
-                      <p>Booster pack, hộp bài, lá bài đơn và phụ kiện sưu tầm.</p>
-                      <button onClick={() => { setCategory("pokemon"); goShop(); }}>
-                        Khám phá sản phẩm ↗
+                      <p className="tcg-stats">
+                        <b>{pokemonProducts.length} sản phẩm</b> · Từ {money(Math.min(...pokemonProducts.map((item) => item.price)))}
+                      </p>
+                      <p>Booster Box, Elite Trainer Box, Booster Bundle, Tin và hộp sưu tầm. Hàng nguyên seal, có sẵn tại showroom.</p>
+                      <button onClick={() => shopCategory("pokemon")}>
+                        Xem Pokémon TCG ↗
                       </button>
                     </div>
                   </article>
 
                   <article className="tcg-card riftbound-card">
-                    <div className="tcg-card-art">
-                      <span>RIFTBOUND</span><b>UNITE.</b><i>STRATEGY MEETS LEGENDS</i>
-                    </div>
+                    <button className="tcg-photo" onClick={() => shopCategory("riftbound")} aria-label="Xem Riftbound">
+                      <img src="/products/photos/riftbound-radiance-thuc-te.jpg" alt="Booster box Riftbound Radiance tại Pixo" loading="lazy" />
+                    </button>
                     <div className="tcg-card-info">
                       <span>STRATEGY CARD GAME</span>
                       <h3>Riftbound</h3>
-                      <p>Tìm sản phẩm Riftbound và theo dõi hoạt động cộng đồng tại Pixo.</p>
-                      <button onClick={() => { setCategory("riftbound"); goShop(); }}>
-                        Khám phá sản phẩm ↗
+                      <p className="tcg-stats">
+                        <b>Set 1 – 5</b> · Đang nhận đặt trước Radiance
+                      </p>
+                      <p>Booster box Riftbound: League of Legends TCG bản tiếng Anh, nguyên seal. Chơi cùng cộng đồng ở Nexus Night 19:00 thứ 4.</p>
+                      <button onClick={() => shopCategory("riftbound")}>
+                        Xem Riftbound ↗
                       </button>
                     </div>
                   </article>
