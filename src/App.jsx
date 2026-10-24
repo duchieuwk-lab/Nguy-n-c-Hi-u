@@ -1270,28 +1270,29 @@ function ProductDetail({
               và chính sách bảo hành trước khi mua.
             </div>
           )}
-
-          {product.specs && (
-            <div className="detail-specs">
-              <dl className="spec-list">
-                {product.specs.map((spec) => (
-                  <div key={spec.label}>
-                    <dt>{spec.label}</dt>
-                    <dd>{spec.value}</dd>
-                  </div>
-                ))}
-              </dl>
-              {product.notes && (
-                <ul className="detail-notes">
-                  {product.notes.map((note) => (
-                    <li key={note}>{note}</li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          )}
         </div>
       </div>
+
+      {product.specs && (
+        <section className="detail-section">
+          <h2>Thông tin sản phẩm</h2>
+          <dl className="spec-list">
+            {product.specs.map((spec) => (
+              <div key={spec.label}>
+                <dt>{spec.label}</dt>
+                <dd>{spec.value}</dd>
+              </div>
+            ))}
+          </dl>
+          {product.notes && (
+            <ul className="detail-notes">
+              {product.notes.map((note) => (
+                <li key={note}>{note}</li>
+              ))}
+            </ul>
+          )}
+        </section>
+      )}
 
       {canInstall && (
         <InstallmentCalculator
