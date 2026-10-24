@@ -4312,3 +4312,33 @@ picture > source {
     min-width: 92px;
   }
 }
+
+/* Thông tin sản phẩm gọn trong cột bên phải trang chi tiết */
+.detail-specs {
+  margin: 16px 0 6px;
+}
+
+.detail-specs .spec-list > div {
+  grid-template-columns: 130px 1fr;
+  gap: 12px;
+  padding: 9px 14px;
+}
+
+.detail-specs .spec-list dt {
+  font-size: 13px;
+}
+
+.detail-specs .spec-list dd {
+  font-size: 14px;
+}
+
+.detail-specs .detail-notes {
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+.primary-button.installment-button {
+  background: #fff;
+  border: 1px solid var(--green, #6abf3f);
+  color: var(--text);
+}

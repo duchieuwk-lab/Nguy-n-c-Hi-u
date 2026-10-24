@@ -985,7 +985,7 @@ function InstallmentCalculator({ price, onContact, onMessenger }) {
     `(web tạm tính khoảng ${money(monthly)}/tháng${fee ? `, tổng ${money(total)}` : ""}).`;
 
   return (
-    <section className="detail-section installment">
+    <section className="detail-section installment" id="tra-gop">
       <div className="installment-head">
         <span className="eyebrow">TRẢ GÓP QUA THẺ TÍN DỤNG</span>
         <h2>Tự tính trả góp</h2>
@@ -1090,6 +1090,7 @@ function ProductDetail({
   const contact = Boolean(edition?.contactPrice || product.contactPrice);
   const basePrice = contact ? null : variant ? variant.price : product.price;
   const price = basePrice == null ? null : basePrice + surcharge;
+  const canInstall = price != null && price >= INSTALLMENT_MIN_PRICE;
   const original = variant && !contact ? variant.original + surcharge : null;
 
   // Các ảnh của phiên bản đang chọn (hoặc của sản phẩm nếu không có phiên bản): ảnh chính trước, ảnh thực tế (gallery) sau
@@ -1247,6 +1248,14 @@ function ProductDetail({
             <button className="primary-button" onClick={() => askToBuy(CONTACT_URL, "Messenger")}>
               Nhắn Messenger
             </button>
+            {canInstall && (
+              <button
+                className="primary-button installment-button"
+                onClick={() => document.getElementById("tra-gop")?.scrollIntoView({ behavior: "smooth" })}
+              >
+                Trả góp
+              </button>
+            )}
           </div>
 
           {product.perks ? (
@@ -1261,31 +1270,30 @@ function ProductDetail({
               và chính sách bảo hành trước khi mua.
             </div>
           )}
+
+          {product.specs && (
+            <div className="detail-specs">
+              <dl className="spec-list">
+                {product.specs.map((spec) => (
+                  <div key={spec.label}>
+                    <dt>{spec.label}</dt>
+                    <dd>{spec.value}</dd>
+                  </div>
+                ))}
+              </dl>
+              {product.notes && (
+                <ul className="detail-notes">
+                  {product.notes.map((note) => (
+                    <li key={note}>{note}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
-      {product.specs && (
-        <section className="detail-section">
-          <h2>Thông tin sản phẩm</h2>
-          <dl className="spec-list">
-            {product.specs.map((spec) => (
-              <div key={spec.label}>
-                <dt>{spec.label}</dt>
-                <dd>{spec.value}</dd>
-              </div>
-            ))}
-          </dl>
-          {product.notes && (
-            <ul className="detail-notes">
-              {product.notes.map((note) => (
-                <li key={note}>{note}</li>
-              ))}
-            </ul>
-          )}
-        </section>
-      )}
-
-      {price != null && price >= INSTALLMENT_MIN_PRICE && (
+      {canInstall && (
         <InstallmentCalculator
           price={price}
           onContact={(plan) => askToBuy(ZALO_URL, "Zalo", plan)}
