@@ -1058,11 +1058,11 @@ function InstallmentCalculator({ price, onContact, onMessenger }) {
               <p>Liên hệ Pixo để làm thủ tục trả góp ngay. Tin nhắn đã ghi sẵn phương án bạn vừa chọn.</p>
             </div>
             <div className="detail-actions">
-              <button className="primary-button zalo-button" onClick={() => onContact(plan)}>
-                Làm thủ tục qua Zalo
-              </button>
               <button className="primary-button" onClick={() => onMessenger(plan)}>
-                Nhắn Messenger
+                Làm thủ tục qua Messenger
+              </button>
+              <button className="outline-button zalo-outline" onClick={() => onContact(plan)}>
+                Qua Zalo
               </button>
             </div>
           </div>
@@ -1242,11 +1242,11 @@ function ProductDetail({
           )}
 
           <div className="detail-actions">
-            <button className="primary-button zalo-button" onClick={() => askToBuy(ZALO_URL, "Zalo")}>
-              Hỏi mua qua Zalo
-            </button>
             <button className="primary-button" onClick={() => askToBuy(CONTACT_URL, "Messenger")}>
-              Nhắn Messenger
+              Nhắn tin mua hàng
+            </button>
+            <button className="outline-button zalo-outline" onClick={() => askToBuy(ZALO_URL, "Zalo")}>
+              Hỏi qua Zalo
             </button>
             {canInstall && (
               <button
@@ -1650,7 +1650,7 @@ function App() {
     const product = allProducts.find((entry) => entry.name === item.productName);
     if (product) openProduct(product, 0, item.editionIndex ?? 0);
     else if (item.category) shopCategory(item.category);
-    else window.open(ZALO_URL, "_blank", "noopener,noreferrer");
+    else window.open(CONTACT_URL, "_blank", "noopener,noreferrer");
   };
 
   // Trang chi tiết sản phẩm luôn mở ở tab mới, trang đang xem giữ nguyên
@@ -1666,6 +1666,14 @@ function App() {
 
       <div className="floating-contact">
         <a
+          href={CONTACT_URL}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Nhắn tin cho Pixo Station qua Messenger"
+        >
+          💬 Nhắn Pixo
+        </a>
+        <a
           className="floating-zalo"
           href={ZALO_URL}
           target="_blank"
@@ -1673,14 +1681,6 @@ function App() {
           aria-label="Nhắn tin cho Pixo Station qua Zalo"
         >
           Zalo
-        </a>
-        <a
-          href={CONTACT_URL}
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Nhắn tin cho Pixo Station qua Messenger"
-        >
-          💬 Nhắn Pixo
         </a>
       </div>
 
@@ -1835,8 +1835,8 @@ function App() {
                         <span className="original-price">{money(combo.original)}</span>
                         <strong>{money(combo.price)}</strong>
                       </div>
-                      <a className="primary-button zalo-button" href={ZALO_URL} target="_blank" rel="noreferrer">
-                        Hỏi combo qua Zalo
+                      <a className="primary-button" href={CONTACT_URL} target="_blank" rel="noreferrer">
+                        Nhắn tin hỏi combo
                       </a>
                     </div>
                   </article>
@@ -1855,8 +1855,8 @@ function App() {
                     tại showroom 23 Lê Đại Hành. Người mới cũng được chào đón.
                   </p>
                   <div className="contact-actions">
-                    <a className="primary-button zalo-button" href={ZALO_URL} target="_blank" rel="noreferrer">
-                      Đăng ký qua Zalo
+                    <a className="primary-button" href={CONTACT_URL} target="_blank" rel="noreferrer">
+                      Nhắn tin đăng ký
                     </a>
                     <button className="outline-button" onClick={() => goPage("tcg")}>
                       Xem lịch & ảnh sự kiện
@@ -1899,7 +1899,7 @@ function App() {
                   Chọn máy và tình trạng để xem khoảng giá thu, Pixo trừ thẳng
                   vào máy mới.
                 </p>
-                <button className="primary-button zalo-button" onClick={() => goPage("tradein")}>
+                <button className="primary-button" onClick={() => goPage("tradein")}>
                   Định giá máy cũ
                 </button>
               </article>
@@ -2165,8 +2165,8 @@ function App() {
                       Hà Nội. Người mới cũng được chào đón.
                     </p>
                     <div className="contact-actions">
-                      <a className="primary-button zalo-button" href={ZALO_URL} target="_blank" rel="noreferrer">
-                        Hỏi lịch &amp; đăng ký qua Zalo
+                      <a className="primary-button" href={CONTACT_URL} target="_blank" rel="noreferrer">
+                        Nhắn tin hỏi lịch &amp; đăng ký
                       </a>
                     </div>
                   </div>
@@ -2444,11 +2444,11 @@ function App() {
         <button className={current === "products" ? "active" : ""} onClick={() => shopCategory("all")}>
           <span aria-hidden="true">▦</span>Sản phẩm
         </button>
-        <a href={ZALO_URL} target="_blank" rel="noreferrer">
-          <span aria-hidden="true">Z</span>Zalo
-        </a>
         <a href={CONTACT_URL} target="_blank" rel="noreferrer">
           <span aria-hidden="true">💬</span>Messenger
+        </a>
+        <a href={ZALO_URL} target="_blank" rel="noreferrer">
+          <span aria-hidden="true">Z</span>Zalo
         </a>
         <a href={SHOP.phoneUrl}>
           <span aria-hidden="true">☎</span>Gọi

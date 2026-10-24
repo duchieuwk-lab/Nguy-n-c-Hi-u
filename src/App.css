@@ -4350,3 +4350,15 @@ picture > source {
   min-height: 46px;
   font-size: 14px;
 }
+
+/* Ưu tiên Messenger: nút Zalo là nút phụ, viền xanh Zalo */
+.detail-actions .outline-button {
+  flex: 1;
+  min-height: 50px;
+  font-size: 15px;
+}
+
+.outline-button.zalo-outline {
+  border-color: #0068ff;
+  color: #0068ff;
+}

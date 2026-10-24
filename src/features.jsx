@@ -351,11 +351,11 @@ export function TradeInPage({ consoles, zaloUrl, messengerUrl }) {
           <p>Tin nhắn đã ghi sẵn máy, hạng và phụ kiện bạn vừa chọn. Đính kèm ảnh máy rồi gửi cho Pixo.</p>
         </div>
         <div className="detail-actions">
-          <button className="primary-button zalo-button" onClick={() => sendMessage(zaloUrl, "Zalo", message)}>
-            Gửi ảnh qua Zalo
-          </button>
           <button className="primary-button" onClick={() => sendMessage(messengerUrl, "Messenger", message)}>
-            Nhắn Messenger
+            Gửi ảnh qua Messenger
+          </button>
+          <button className="outline-button zalo-outline" onClick={() => sendMessage(zaloUrl, "Zalo", message)}>
+            Qua Zalo
           </button>
         </div>
       </div>
