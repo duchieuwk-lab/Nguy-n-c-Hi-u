@@ -35,7 +35,7 @@ function sitemapPlugin() {
         .replace(/<meta\s+property="og:title"[\s\S]*?\/>\s*/, '')
         .replace(/<meta\s+property="og:description"[\s\S]*?\/>\s*/, '')
         .replace('</head>', `  ${tags}\n  </head>`)
-      const file = page.path === '/' ? 'index.html' : path.join(page.path.slice(1), 'index.html')
+      const file = page.path === '/' ? 'index.html' : `${page.path.slice(1)}.html`
       fs.mkdirSync(path.join(outDir, path.dirname(file)), { recursive: true })
       fs.writeFileSync(path.join(outDir, file), html)
     }
