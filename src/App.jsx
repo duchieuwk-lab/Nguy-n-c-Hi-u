@@ -4,7 +4,8 @@ import { pokemonPerks, pokemonProducts, pokemonTypes } from "./pokemonProducts";
 import { isScheduled, newsCategories, visibleNews } from "./news";
 
 const CONTACT_URL = "https://m.me/pixostation";
-const ZALO_URL = "https://zalo.me/0917616498";
+// Zalo dùng chung số điện thoại cửa hàng (đổi 24/10/2026)
+const ZALO_URL = "https://zalo.me/0792371904";
 
 // Thông tin cửa hàng (xác nhận 20/10/2026)
 const SHOP = {
@@ -12,7 +13,7 @@ const SHOP = {
   hours: "10:00 – 19:00",
   phone: "0792 371 904",
   phoneUrl: "tel:0792371904",
-  zalo: "0917 616 498",
+  zalo: "0792 371 904",
   mapsUrl: "https://www.google.com/maps/place/PixoStation/data=!4m2!3m1!1s0x0:0xcf5f3f432daf6979",
   mapsEmbed: "https://www.google.com/maps?q=PixoStation,+23+L%C3%AA+%C4%90%E1%BA%A1i+H%C3%A0nh,+Hai+B%C3%A0+Tr%C6%B0ng,+H%C3%A0+N%E1%BB%99i&output=embed",
   facebookUrl: "https://www.facebook.com/pixostation",
@@ -305,7 +306,7 @@ const nexusPhotos = [
 
 const events = [
   { tag: "POKÉMON TCG", title: "Gặp gỡ cộng đồng Pokémon", description: "Giao lưu, chia sẻ bộ bài và tìm người chơi cùng." },
-  { tag: "RIFTBOUND", title: "Pixo Nexus Night", description: "Theo dõi lịch giao lưu và các giải đấu tại Pixo Station." },
+  { tag: "RIFTBOUND", title: "Pixo Nexus Night", description: "19:00 thứ 4 hằng tuần tại showroom Pixo Station." },
 ];
 
 const aboutValues = [
@@ -1504,8 +1505,8 @@ function App() {
                   <span className="eyebrow">CỘNG ĐỒNG PIXO</span>
                   <h2>Không chỉ mua bán.<br /><span>Còn là nơi để chơi cùng nhau.</span></h2>
                   <p>
-                    Pixo Nexus Night giao lưu Riftbound hằng tuần và giải Pit Fight
-                    tại showroom. Người mới cũng được chào đón.
+                    <b>Pixo Nexus Night</b>: giao lưu Riftbound lúc <b>19:00 thứ 4 hằng tuần</b>
+                    tại showroom 23 Lê Đại Hành. Người mới cũng được chào đón.
                   </p>
                   <div className="contact-actions">
                     <a className="primary-button zalo-button" href={ZALO_URL} target="_blank" rel="noreferrer">
@@ -1518,7 +1519,7 @@ function App() {
                 </div>
                 <div className="community-posters">
                   <img src="/home/nexus-night.jpg" alt="Poster Pixo Nexus Night" loading="lazy" />
-                  <img src="/home/pit-fight.jpg" alt="Poster giải Pixo Pit Fight" loading="lazy" />
+                  <img src="/community/nexus-night-nhom.jpg" alt="Người chơi tại Pixo Nexus Night" loading="lazy" />
                 </div>
               </div>
             </section>
@@ -1720,7 +1721,7 @@ function App() {
                   <ul>
                     <li><b>Địa chỉ</b>{SHOP.address}</li>
                     <li><b>Giờ mở cửa</b>{SHOP.hours}</li>
-                    <li><b>Điện thoại</b><a href={SHOP.phoneUrl}>{SHOP.phone}</a></li>
+                    <li><b>Điện thoại / Zalo</b><a href={ZALO_URL} target="_blank" rel="noreferrer">{SHOP.phone} ↗</a></li>
                   </ul>
                   <div className="contact-actions">
                     <a className="primary-button" href={SHOP.mapsUrl} target="_blank" rel="noreferrer">Chỉ đường ↗</a>
@@ -1792,8 +1793,9 @@ function App() {
                     loading="lazy"
                   />
                   <div className="nexus-copy">
-                    <span className="eyebrow">RIFTBOUND · HẰNG TUẦN</span>
+                    <span className="eyebrow">RIFTBOUND · 19:00 THỨ 4 HẰNG TUẦN</span>
                     <h3>Pixo Nexus Night</h3>
+                    <p className="nexus-time">19:00 thứ 4 hằng tuần · {SHOP.address}</p>
                     <p>
                       Buổi giao lưu Riftbound diễn ra hằng tuần: đánh giao hữu, đổi
                       bài, mở pack cùng nhau và làm quen với cộng đồng người chơi
@@ -1827,7 +1829,7 @@ function App() {
                 </div>
 
                 <p className="disclaimer">
-                  Nhắn Zalo để nhận lịch Nexus Night tuần này và các giải đấu sắp tới.
+                  Nexus Night diễn ra 19:00 thứ 4 hằng tuần. Nhắn Zalo để giữ chỗ và hỏi thể lệ tuần này.
                 </p>
               </div>
             </section>
@@ -2036,8 +2038,7 @@ function App() {
                   <ul>
                     <li><b>Địa chỉ</b>{SHOP.address}</li>
                     <li><b>Giờ mở cửa</b>{SHOP.hours}</li>
-                    <li><b>Điện thoại</b><a href={SHOP.phoneUrl}>{SHOP.phone}</a></li>
-                    <li><b>Zalo</b><a href={ZALO_URL} target="_blank" rel="noreferrer">{SHOP.zalo}</a></li>
+                    <li><b>Điện thoại / Zalo</b><a href={ZALO_URL} target="_blank" rel="noreferrer">{SHOP.phone} ↗</a></li>
                   </ul>
                   <div className="contact-actions">
                     <a className="primary-button" href={SHOP.mapsUrl} target="_blank" rel="noreferrer">
@@ -2090,7 +2091,7 @@ function App() {
             <span>{SHOP.address}</span>
             <span>{SHOP.hours}</span>
             <span>
-              <a href={SHOP.phoneUrl}>☎ {SHOP.phone}</a> · <a href={ZALO_URL} target="_blank" rel="noreferrer">Zalo {SHOP.zalo}</a>
+              <a href={ZALO_URL} target="_blank" rel="noreferrer">☎ Điện thoại / Zalo {SHOP.phone} ↗</a>
             </span>
           </div>
           <div className="footer-links">

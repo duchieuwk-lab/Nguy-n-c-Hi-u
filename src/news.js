@@ -61,7 +61,7 @@ export const newsPosts = [
       "Set có hơn 135 lá bài, trong đó hơn 20 lá Trainer và hơn 35 lá có hình minh họa đặc biệt (special illustration) – nhóm lá mà dân sưu tầm săn nhiều nhất.",
       "Thông tin chi tiết về các sản phẩm (Elite Trainer Box, Booster Bundle…) sẽ được nhà phát hành công bố thêm. Anh em muốn giữ hàng Delta Reign có thể nhắn Pixo để được báo khi có lịch hàng về.",
     ],
-    cta: { label: "Nhắn Pixo hỏi lịch hàng", href: "https://zalo.me/0917616498" },
+    cta: { label: "Nhắn Pixo hỏi lịch hàng", href: "https://zalo.me/0792371904" },
     sources: [
       { name: "Pokémon (chính thức)", url: "https://www.pokemon.com/uk/news/the-pokemon-tcg-mega-evolution-delta-reign-expansion-arrives-november-6-2026" },
     ],
@@ -131,7 +131,7 @@ export const newsPosts = [
       "Người mới hoàn toàn cũng có thể đến: anh em trong cộng đồng sẵn sàng hướng dẫn luật chơi. Nếu chưa có bài, bạn có thể mua booster box Radiance tại Pixo (đặt trước, cọc 1.000.000₫) để khui pack ngay tại buổi giao lưu.",
       "Nhắn Zalo cho Pixo để nhận lịch Nexus Night tuần này và giữ chỗ.",
     ],
-    cta: { label: "Hỏi lịch Nexus Night qua Zalo", href: "https://zalo.me/0917616498" },
+    cta: { label: "Hỏi lịch Nexus Night qua Zalo", href: "https://zalo.me/0792371904" },
     sources: [
       { name: "Riftbound – The Radiance Overview (chính thức)", url: "https://playriftbound.com/en-us/news/announcements/the-radiance-overview/" },
       { name: "riftbound.gg – Radiance Nexus Night Promos", url: "https://riftbound.gg/radiance-nexus-night-promos/" },
