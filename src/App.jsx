@@ -1487,6 +1487,16 @@ function pageDescription({ selected, newsView, page }) {
   return pageDescriptions[page] ?? DEFAULT_DESCRIPTION;
 }
 
+function pageTitle({ selected, newsView, page }) {
+  const extraTitles = { products: "Sản phẩm", compare: "So sánh máy Nintendo Switch", tradein: "Thu cũ đổi mới" };
+  if (selected) return `${selected.product.name} – Pixo Station`;
+  if (newsView?.post) return `${newsView.post.title} – Pixo Station`;
+  if (newsView) return "Tin tức – Pixo Station";
+  if (extraTitles[page]) return `${extraTitles[page]} – Pixo Station`;
+  if (page !== "home") return `${navSections.find((section) => section.id === page)?.label} – Pixo Station`;
+  return SITE_TITLE;
+}
+
 function setMetaDescription(content) {
   let tag = document.querySelector('meta[name="description"]');
   if (!tag) {
@@ -1555,15 +1565,7 @@ function App() {
 
   // Tiêu đề tab + mô tả trang (SEO) theo trang đang xem
   useEffect(() => {
-    const extraTitles = { products: "Sản phẩm", compare: "So sánh máy Nintendo Switch", tradein: "Thu cũ đổi mới" };
-    if (selected) document.title = `${selected.product.name} – Pixo Station`;
-    else if (newsView?.post) document.title = `${newsView.post.title} – Pixo Station`;
-    else if (newsView) document.title = "Tin tức – Pixo Station";
-    else if (extraTitles[page]) document.title = `${extraTitles[page]} – Pixo Station`;
-    else if (page !== "home") {
-      const label = navSections.find((section) => section.id === page)?.label;
-      document.title = `${label} – Pixo Station`;
-    } else document.title = SITE_TITLE;
+    document.title = pageTitle({ selected, newsView, page });
     setMetaDescription(pageDescription({ selected, newsView, page }));
     setProductSchema(selected?.product ?? null);
   }, [selected, newsView, page]);
@@ -2481,5 +2483,25 @@ export function listSitePaths() {
     "/tin-tuc",
     ...publishedNews.map((post) => `/tin-tuc/${post.slug}`),
     ...allProducts.map((product) => productPath(product)),
+  ];
+}
+
+// Tiêu đề, mô tả, ảnh của từng trang: vite.config.js ghi sẵn vào HTML từng trang khi build,
+// để Google, Facebook, Zalo đọc được ngay mà không cần chạy JavaScript (khung xem trước khi gửi link)
+export function listSitePages() {
+  const publishedNews = visibleNews.filter((post) => post.status === "published" && !isScheduled(post));
+  const head = (path, view, image = "/home/showroom-trung-bay.jpg") => ({
+    path,
+    title: pageTitle(view),
+    description: pageDescription(view),
+    image,
+  });
+  return [
+    ...Object.entries(pagePaths).map(([page, path]) => head(path, { page })),
+    head("/tin-tuc", { newsView: {} }),
+    ...publishedNews.map((post) => head(`/tin-tuc/${post.slug}`, { newsView: { post } }, post.cover)),
+    ...allProducts.map((product) =>
+      head(productPath(product).split("?")[0], { selected: { product } }, product.image),
+    ),
   ];
 }
