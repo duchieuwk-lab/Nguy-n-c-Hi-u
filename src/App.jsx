@@ -896,18 +896,34 @@ function startingPrice(item) {
 const installmentTerms = [3, 6, 9, 12];
 // Chỉ hiện công cụ cho sản phẩm từ mức giá này (máy chơi game, box TCG lớn)
 const INSTALLMENT_MIN_PRICE = 3000000;
-const cardNetworks = ["Visa", "Mastercard", "JCB", "UnionPay"];
+// Logo hãng thẻ lấy từ mpos.vn, logo ngân hàng từ nextpay.vn (public/payment)
+const cardNetworks = [
+  { name: "Visa", logo: "/payment/card-visa.svg" },
+  { name: "Mastercard", logo: "/payment/card-master.svg" },
+  { name: "JCB", logo: "/payment/card-jcb.svg" },
+  { name: "UnionPay", logo: "/payment/card-union.svg" },
+];
 // Ngân hàng / tổ chức tài chính liên kết trả góp của mPOS (theo nextpay.vn/tragop.html, tra 24/10/2026)
 const installmentBanks = [
-  "Vietcombank", "Techcombank", "VPBank", "Sacombank", "MB Bank", "TPBank", "VIB", "ACB",
-  "BIDV", "VietinBank", "HDBank", "SHB", "MSB", "OCB", "SeABank", "Eximbank", "LPBank",
-  "PVcomBank", "Kienlongbank", "BVBank (Bản Việt)", "Shinhan Bank", "HSBC", "Citibank",
-  "FE Credit", "Home Credit", "Mcredit", "Ngân hàng khác",
-];
+  { name: "Vietcombank", logo: "vcb.svg" }, { name: "Techcombank", logo: "tcb.svg" },
+  { name: "VPBank", logo: "vpb.png" }, { name: "Sacombank", logo: "stb.svg" },
+  { name: "MB Bank", logo: "mb.svg" }, { name: "TPBank", logo: "tpb.svg" },
+  { name: "VIB", logo: "vib.svg" }, { name: "ACB", logo: "acb.svg" },
+  { name: "BIDV", logo: "bidv.png" }, { name: "VietinBank", logo: "icb.svg" },
+  { name: "HDBank", logo: "hdb.svg" }, { name: "SHB", logo: "shb.svg" },
+  { name: "MSB", logo: "msb.svg" }, { name: "OCB", logo: "ocb.svg" },
+  { name: "SeABank", logo: "sea.svg" }, { name: "Eximbank", logo: "exb.svg" },
+  { name: "LPBank", logo: "lvpb.svg" }, { name: "PVcomBank", logo: "pvb.svg" },
+  { name: "Kienlongbank", logo: "klb.png" }, { name: "BVBank (Bản Việt)", logo: "vccb.png" },
+  { name: "Shinhan Bank", logo: "shihanbank.svg" }, { name: "HSBC", logo: "hsbc.svg" },
+  { name: "Citibank", logo: "ctb.svg" }, { name: "FE Credit", logo: "fec.svg" },
+  { name: "Home Credit", logo: "homec.svg" }, { name: "Mcredit", logo: "mcredit.svg" },
+  { name: "Ngân hàng khác" },
+].map((bank) => ({ ...bank, logo: bank.logo && `/payment/bank-${bank.logo}` }));
 
 function InstallmentCalculator({ price, onContact, onMessenger }) {
-  const [network, setNetwork] = useState(cardNetworks[0]);
-  const [bank, setBank] = useState(installmentBanks[0]);
+  const [network, setNetwork] = useState(cardNetworks[0].name);
+  const [bank, setBank] = useState(installmentBanks[0].name);
   const [term, setTerm] = useState(6);
 
   // Làm tròn lên hàng nghìn để khách không thiếu tiền kỳ cuối
@@ -927,23 +943,32 @@ function InstallmentCalculator({ price, onContact, onMessenger }) {
           <span className="variant-label">HÃNG THẺ</span>
           <div className="installment-options">
             {cardNetworks.map((item) => (
-              <button key={item} className={network === item ? "active" : ""} onClick={() => setNetwork(item)}>
-                {item}
+              <button
+                key={item.name}
+                className={network === item.name ? "card-logo active" : "card-logo"}
+                onClick={() => setNetwork(item.name)}
+                aria-label={item.name}
+                title={item.name}
+              >
+                <img src={item.logo} alt="" />
               </button>
             ))}
           </div>
 
-          <label className="variant-label" htmlFor="installment-bank">NGÂN HÀNG PHÁT HÀNH THẺ</label>
-          <select
-            id="installment-bank"
-            className="variant-select"
-            value={bank}
-            onChange={(event) => setBank(event.target.value)}
-          >
+          <span className="variant-label">NGÂN HÀNG PHÁT HÀNH THẺ: <b>{bank}</b></span>
+          <div className="bank-grid">
             {installmentBanks.map((item) => (
-              <option key={item} value={item}>{item}</option>
+              <button
+                key={item.name}
+                className={bank === item.name ? "active" : ""}
+                onClick={() => setBank(item.name)}
+                aria-label={item.name}
+                title={item.name}
+              >
+                {item.logo ? <img src={item.logo} alt="" loading="lazy" /> : <span>{item.name}</span>}
+              </button>
             ))}
-          </select>
+          </div>
 
           <span className="variant-label">KỲ HẠN</span>
           <div className="installment-options">

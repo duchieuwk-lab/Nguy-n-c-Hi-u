@@ -3569,3 +3569,72 @@ chân trang */
     min-width: 0;
   }
 }
+
+/* Logo hãng thẻ và lưới logo ngân hàng trong công cụ trả góp */
+.installment-options .card-logo {
+  display: grid;
+  place-items: center;
+  height: 52px;
+  padding: 8px 12px;
+}
+
+.card-logo img {
+  width: 100%;
+  max-width: 76px;
+  max-height: 30px;
+  object-fit: contain;
+}
+
+.installment-options .card-logo.active {
+  background: #f1f8ea;
+  box-shadow: 0 0 0 2px var(--green) inset;
+}
+
+.bank-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 8px;
+  max-height: 248px;
+  overflow-y: auto;
+  padding: 2px;
+}
+
+.bank-grid button {
+  display: grid;
+  place-items: center;
+  height: 52px;
+  padding: 6px 8px;
+  border: 1px solid #dfe3dc;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.bank-grid img {
+  max-width: 100%;
+  max-height: 34px;
+  object-fit: contain;
+}
+
+.bank-grid span {
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.bank-grid button.active {
+  border-color: var(--green-dark);
+  background: #f1f8ea;
+  box-shadow: 0 0 0 2px var(--green) inset;
+}
+
+.installment-form .variant-label b {
+  color: var(--green-text);
+}
+
+@media (max-width: 480px) {
+  .bank-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
