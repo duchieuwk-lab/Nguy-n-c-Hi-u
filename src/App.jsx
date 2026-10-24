@@ -154,8 +154,36 @@ const consoles = [
   },
 ];
 
+// Băng game Switch 2 Pixo đang có (theo ảnh kho Pixo). Ảnh: key art trên nintendo.com.
+// price: null = hiện "Liên hệ"; có bảng giá thì điền số vào price.
+const switch2Games = [
+  { slug: "nba-2k26", name: "NBA 2K26", genre: "Thể thao · Bóng rổ" },
+  { slug: "reanimal", name: "REANIMAL", genre: "Kinh dị · Phiêu lưu" },
+  { slug: "pokemon-pokopia", name: "Pokémon Pokopia", genre: "Mô phỏng · Xây dựng" },
+  { slug: "super-mario-party-jamboree-ns2", name: "Super Mario Party Jamboree – Nintendo Switch 2 Edition + Jamboree TV", genre: "Party · Chơi nhóm", gallery: ["/products/photos/game-mario-party-jamboree.jpg"] },
+  { slug: "monster-hunter-stories-3", name: "Monster Hunter Stories 3: Twisted Reflection", genre: "Nhập vai" },
+  { slug: "final-fantasy-vii-remake-intergrade", name: "Final Fantasy VII Remake Intergrade", genre: "Nhập vai hành động" },
+  { slug: "mario-tennis-fever", name: "Mario Tennis Fever", genre: "Thể thao · Chơi nhóm", gallery: ["/products/photos/game-mario-tennis-fever.jpg"] },
+  { slug: "zelda-tears-of-the-kingdom-ns2", name: "The Legend of Zelda: Tears of the Kingdom – Nintendo Switch 2 Edition", genre: "Phiêu lưu thế giới mở", gallery: ["/products/photos/game-zelda-totk-switch2.jpg"] },
+  { slug: "pragmata", name: "PRAGMATA", genre: "Hành động · Khoa học viễn tưởng" },
+  { slug: "efootball-kick-off", name: "eFootball Kick-Off!", genre: "Thể thao · Bóng đá" },
+  { slug: "onimusha-way-of-the-sword", name: "Onimusha: Way of the Sword", genre: "Hành động" },
+  { slug: "ea-sports-fc-27", name: "EA SPORTS FC 27", genre: "Thể thao · Bóng đá" },
+  { slug: "fire-emblem-fortunes-weave", name: "Fire Emblem: Fortune's Weave", genre: "Chiến thuật nhập vai" },
+  { slug: "elden-ring-tarnished-edition", name: "ELDEN RING Tarnished Edition", genre: "Nhập vai hành động" },
+].map((game, index) => ({
+  id: 20 + index,
+  name: game.name,
+  category: "game",
+  badge: "SWITCH 2",
+  price: null,
+  image: `/products/game-${game.slug}.jpg`,
+  gallery: game.gallery,
+  description: `Băng game Nintendo Switch 2 · ${game.genre}. Nhắn Pixo để nhận giá và tình trạng hàng.`,
+}));
+
 const otherProducts = [
-  { id: 10, name: "Băng game Nintendo Switch", category: "game", badge: "GAME VẬT LÝ", price: 890000, image: "/products/photos/game-switch2-bo-suu-tap.jpg", gallery: ["/products/photos/game-nba-2k26.jpg", "/products/photos/game-mario-party-jamboree.jpg", "/products/photos/game-mario-tennis-fever.jpg", "/products/photos/game-zelda-totk-switch2.jpg", "/products/photos/game-fc27-ps5.jpg", "/products/photos/game-ke-trung-bay.jpg"], description: "Giá tùy theo tựa game và tình trạng sản phẩm." },
+  ...switch2Games,
   { id: 11, name: "Túi đựng máy chơi game", category: "accessory", badge: "BẢO VỆ MÁY", price: 250000, image: "/products/carrying-case.jpg", description: "Túi đựng máy và phụ kiện khi di chuyển." },
   { id: 12, name: "Ốp bảo vệ Nintendo Switch", category: "accessory", badge: "PHỤ KIỆN", price: 150000, image: "/products/switch-case.jpg", description: "Nhiều mẫu ốp tùy theo model máy." },
   { id: 13, name: "Tay cầm chơi game", category: "accessory", badge: "CHƠI CÙNG BẠN", price: 590000, image: "/products/controller.jpg", description: "Tay cầm bổ sung cho những buổi chơi game." },
@@ -288,7 +316,7 @@ const trustBadges = [
   { title: "Trả góp 0đ trả trước", text: "Qua thẻ tín dụng" },
 ];
 
-// Hàng đặt trước / mới về. productName: bấm sẽ mở trang sản phẩm đó; không có thì mở Zalo.
+// Hàng đặt trước / mới về. productName: mở trang sản phẩm đó; category: mở danh mục; không có cả hai thì mở Zalo.
 const preorders = [
   {
     title: "Switch 2 bản Zelda",
@@ -316,7 +344,7 @@ const preorders = [
     title: "Băng game Switch 2",
     image: "/products/photos/game-switch2-bo-suu-tap.jpg",
     tag: "MỚI VỀ",
-    productName: "Băng game Nintendo Switch",
+    category: "game",
     note: "NBA 2K26, Mario Party, Zelda, FC27…",
   },
 ];
@@ -439,7 +467,9 @@ function BannerSlider() {
   );
 }
 
+// value null/undefined = sản phẩm chưa có giá → hiện "Liên hệ"
 function money(value) {
+  if (value == null) return "Liên hệ";
   return new Intl.NumberFormat("vi-VN").format(value) + "₫";
 }
 
@@ -717,9 +747,9 @@ function OtherProductCard({ product, onSelect }) {
 
         <div className="price-block">
           <strong className="sale-price">
-            {money(product.price + (edition ? edition.surcharge : 0))}{product.unit && <small> / {product.unit}</small>}
+            {money(product.price == null ? null : product.price + (edition ? edition.surcharge : 0))}{product.unit && <small> / {product.unit}</small>}
           </strong>
-          {!product.confirmedPrice && <span className="saving-label">Giá tham khảo</span>}
+          {!product.confirmedPrice && product.price != null && <span className="saving-label">Giá tham khảo</span>}
         </div>
 
         <button className="product-link" onClick={() => onSelect(product, 0, editionIndex)}>
@@ -765,7 +795,8 @@ function ProductDetail({
   const variant = hasVariants ? product.variants[variantIndex] : null;
   const edition = product.editions ? product.editions[editionIndex] : null;
   const surcharge = edition ? edition.surcharge : 0;
-  const price = (variant ? variant.price : product.price) + surcharge;
+  const basePrice = variant ? variant.price : product.price;
+  const price = basePrice == null ? null : basePrice + surcharge;
   const original = variant ? variant.original + surcharge : null;
 
   // Các ảnh của phiên bản đang chọn (hoặc của sản phẩm nếu không có phiên bản): ảnh chính trước, ảnh thực tế (gallery) sau
@@ -792,7 +823,7 @@ function ProductDetail({
     const variantText = variant ? `, gói bộ nhớ/tình trạng ${variant.name}` : "";
     const message =
       `Chào Pixo Station! Mình muốn hỏi mua ${product.name}` +
-      `${editionText}${variantText}. Giá hiển thị: ${money(price)}. ` +
+      `${editionText}${variantText}. ${price == null ? "Shop báo giá giúp mình nhé." : `Giá hiển thị: ${money(price)}.`} ` +
       `Shop tư vấn giúp mình nhé!\n${window.location.href}`;
 
     const copying = navigator.clipboard
@@ -1209,8 +1240,9 @@ function App() {
       )
       .filter((product) => matchesSearch(product, search))
       .sort((a, b) => {
-        if (sort === "low") return a.price - b.price;
-        if (sort === "high") return b.price - a.price;
+        // Sản phẩm chưa có giá luôn xếp cuối
+        if (sort === "low") return (a.price ?? Infinity) - (b.price ?? Infinity);
+        if (sort === "high") return (b.price ?? -Infinity) - (a.price ?? -Infinity);
         return a.id - b.id;
       });
   }, [category, search, sort, pokemonType, collapsePokemon]);
@@ -1234,10 +1266,11 @@ function App() {
     goShop();
   };
 
-  // Bấm thẻ đặt trước / mới về: mở trang sản phẩm nếu có, không thì mở Zalo
+  // Bấm thẻ đặt trước / mới về: mở trang sản phẩm hoặc danh mục nếu có, không thì mở Zalo
   const openPreorder = (item) => {
     const product = allProducts.find((entry) => entry.name === item.productName);
     if (product) openProduct(product, 0, item.editionIndex ?? 0);
+    else if (item.category) shopCategory(item.category);
     else window.open(ZALO_URL, "_blank", "noopener,noreferrer");
   };
 
@@ -1369,7 +1402,7 @@ function App() {
                       {item.price && <strong>{money(item.price)}</strong>}
                       <p>{item.note}</p>
                       <button className="text-link" onClick={() => openPreorder(item)}>
-                        {item.productName ? "Xem sản phẩm →" : "Đặt trước qua Zalo →"}
+                        {item.productName ? "Xem sản phẩm →" : item.category ? "Xem tất cả →" : "Đặt trước qua Zalo →"}
                       </button>
                     </div>
                   </article>
