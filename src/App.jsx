@@ -28,6 +28,15 @@ const packageSpecs = [
   { label: "Gói Free Game", value: "Kèm thêm thẻ nhớ theo dung lượng đã chọn (128GB / 256GB / 512GB)" },
 ];
 
+const switch2Specs = [
+  { label: "Màn hình", value: "LCD 7.9 inch, 1920×1080, HDR10, tối đa 120Hz" },
+  { label: "Xuất hình lên TV", value: "Tối đa 4K 60fps qua dock" },
+  { label: "Bộ nhớ trong", value: "256GB, mở rộng bằng thẻ microSD Express (tối đa 2TB)" },
+  { label: "Pin", value: "Khoảng 2–6.5 giờ (tùy game)" },
+  { label: "Trọng lượng", value: "Khoảng 535g (kèm Joy-Con 2)" },
+  { label: "Trong hộp", value: "Máy Switch 2 · Joy-Con 2 (L) và (R) · 2 dây đeo Joy-Con 2 · Tay cầm Joy-Con 2 Grip · Dock · Sạc AC adapter · Cáp HDMI Ultra High Speed" },
+];
+
 const consoles = [
   {
     id: "lite",
@@ -132,35 +141,50 @@ const consoles = [
   {
     id: "switch2",
     perks: consolePerks,
-    specs: [
-      { label: "Tình trạng", value: "Bản thường có máy mới (New) và like new; bản Bundle, Zelda, Pokopia là máy mới" },
-      { label: "Bản Bundle", value: "Hộp Switch 2 kèm code tải 1 trong 3 game: Mario Kart World, Donkey Kong Bananza hoặc Pokémon Pokopia" },
-      { label: "Màn hình", value: "LCD 7.9 inch, 1920×1080, HDR10, tối đa 120Hz" },
-      { label: "Xuất hình lên TV", value: "Tối đa 4K 60fps qua dock" },
-      { label: "Bộ nhớ trong", value: "256GB, mở rộng bằng thẻ microSD Express (tối đa 2TB)" },
-      { label: "Pin", value: "Khoảng 2–6.5 giờ (tùy game)" },
-      { label: "Trọng lượng", value: "Khoảng 535g (kèm Joy-Con 2)" },
-      { label: "Trong hộp", value: "Máy Switch 2 · Joy-Con 2 (L) và (R) · 2 dây đeo Joy-Con 2 · Tay cầm Joy-Con 2 Grip · Dock · Sạc AC adapter · Cáp HDMI Ultra High Speed" },
-    ],
+    specs: [{ label: "Tình trạng", value: "Có máy mới (New) và máy like new: chọn ở mục Tình trạng" }, ...switch2Specs],
     notes: ["Switch 2 dùng thẻ microSD Express; thẻ microSD thường chỉ dùng để sao chép ảnh và video."],
     name: "Nintendo Switch 2",
     image: "/products/switch-2.jpg",
     gallery: ["/products/photos/switch-2-thuc-te-1.jpg", "/products/photos/switch-2-thuc-te-2.jpg"],
     badge: "THẾ HỆ MỚI",
-    description: "Máy chơi game thế hệ mới: bản thường (máy không), bản Bundle chọn 1 trong 3 game, bản Zelda và bản Pokémon Pokopia.",
-    // Bản thường chia Like New / New; các bản kèm game / đặc biệt hiện "Liên hệ" (xác nhận 24/10/2026)
-    editionLabel: "CHỌN PHIÊN BẢN",
-    editions: [
-      { name: "Bản thường (máy không)", surcharge: 0, type: "base", image: "/products/switch-2.jpg", gallery: ["/products/photos/switch-2-thuc-te-1.jpg", "/products/photos/switch-2-thuc-te-2.jpg"] },
-      { name: "Bundle – chọn 1 trong 3 game (Mario Kart World / Donkey Kong Bananza / Pokémon Pokopia)", shortName: "Bundle chọn game", surcharge: 0, type: "bundle", contactPrice: true, image: "/products/switch-2-bundle.jpg" },
-      { name: "The Legend of Zelda Edition", surcharge: 0, type: "limited", contactPrice: true, image: "/products/switch-2-zelda.jpg", gallery: ["/products/switch-2-zelda-docked.jpg"] },
-      { name: "Bản Pokémon Pokopia", surcharge: 0, type: "bundle", contactPrice: true, image: "/products/switch-2-pokopia.jpg" },
-    ],
+    description: "Máy chơi game thế hệ mới, bản thường (máy không kèm game).",
     variantLabel: "CHỌN TÌNH TRẠNG",
     variants: [
       { name: "Like New", original: 14500000, price: 13500000 },
       { name: "New", original: 15000000, price: 14000000 },
     ],
+  },
+  // Các bản Switch 2 kèm game / đặc biệt: sản phẩm riêng, giá "Liên hệ" (xác nhận 24/10/2026)
+  {
+    id: "switch2-bundle",
+    name: "Nintendo Switch 2 Bundle – chọn 1 trong 3 game",
+    image: "/products/switch-2-bundle.jpg",
+    badge: "KÈM GAME",
+    contactPrice: true,
+    description: "Hộp Switch 2 kèm code tải 1 trong 3 game: Mario Kart World, Donkey Kong Bananza hoặc Pokémon Pokopia.",
+    perks: consolePerks,
+    specs: [{ label: "Kèm game", value: "Code tải 1 trong 3 game: Mario Kart World, Donkey Kong Bananza hoặc Pokémon Pokopia" }, { label: "Tình trạng", value: "Máy mới" }, ...switch2Specs],
+  },
+  {
+    id: "switch2-zelda",
+    name: "Nintendo Switch 2 – The Legend of Zelda Edition",
+    image: "/products/switch-2-zelda.jpg",
+    gallery: ["/products/switch-2-zelda-docked.jpg"],
+    badge: "PHIÊN BẢN GIỚI HẠN",
+    contactPrice: true,
+    description: "Switch 2 bản đặc biệt The Legend of Zelda, máy và dock thiết kế riêng.",
+    perks: consolePerks,
+    specs: [{ label: "Tình trạng", value: "Máy mới" }, ...switch2Specs],
+  },
+  {
+    id: "switch2-pokopia",
+    name: "Nintendo Switch 2 + Pokémon Pokopia Bundle",
+    image: "/products/switch-2-pokopia.jpg",
+    badge: "KÈM GAME",
+    contactPrice: true,
+    description: "Hộp Switch 2 kèm bản tải đầy đủ Pokémon Pokopia.",
+    perks: consolePerks,
+    specs: [{ label: "Kèm game", value: "Pokémon Pokopia (bản tải)" }, { label: "Tình trạng", value: "Máy mới" }, ...switch2Specs],
   },
 ];
 
@@ -691,14 +715,14 @@ function ConsoleCard({ product, onSelect }) {
   const [variantIndex, setVariantIndex] = useState(0);
   const [editionIndex, setEditionIndex] = useState(0);
 
-  const variant = product.variants[variantIndex];
+  const variant = product.variants?.[variantIndex];
   const edition = product.editions ? product.editions[editionIndex] : null;
   const surcharge = edition ? edition.surcharge : 0;
   // Phiên bản kèm game / đặc biệt: không chia gói, giá "Liên hệ"
-  const contact = Boolean(edition?.contactPrice);
-  const original = variant.original + surcharge;
-  const price = variant.price + surcharge;
-  const saving = original - price;
+  const contact = Boolean(edition?.contactPrice || product.contactPrice);
+  const original = contact ? null : variant.original + surcharge;
+  const price = contact ? null : variant.price + surcharge;
+  const saving = contact ? null : original - price;
 
   return (
     <article className="product-card console-card">
@@ -875,7 +899,7 @@ function ProductDetail({
   const variant = hasVariants ? product.variants[variantIndex] : null;
   const edition = product.editions ? product.editions[editionIndex] : null;
   const surcharge = edition ? edition.surcharge : 0;
-  const contact = Boolean(edition?.contactPrice);
+  const contact = Boolean(edition?.contactPrice || product.contactPrice);
   const basePrice = contact ? null : variant ? variant.price : product.price;
   const price = basePrice == null ? null : basePrice + surcharge;
   const original = variant && !contact ? variant.original + surcharge : null;
@@ -1306,8 +1330,9 @@ function App() {
       .filter(() => category === "all" || category === "console")
       .filter((product) => matchesSearch(product, search))
       .sort((a, b) => {
-        if (sort === "low") return a.variants[0].price - b.variants[0].price;
-        if (sort === "high") return b.variants[0].price - a.variants[0].price;
+        // Máy giá "Liên hệ" luôn xếp cuối
+        if (sort === "low") return (a.variants?.[0].price ?? Infinity) - (b.variants?.[0].price ?? Infinity);
+        if (sort === "high") return (b.variants?.[0].price ?? -Infinity) - (a.variants?.[0].price ?? -Infinity);
         return a.id.localeCompare(b.id);
       });
   }, [category, search, sort]);
