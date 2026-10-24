@@ -11,6 +11,8 @@ const OUT_DIR = path.join(PUBLIC_DIR, "_webp");
 const WIDTHS = [480, 960, 1600];
 const FOLDERS = ["products", "home", "community", "banners", "news"];
 const QUALITY = 74;
+// Ảnh bìa trang chủ hiện to toàn màn hình: giữ nét, gần như không nén
+const BANNER_QUALITY = 92;
 
 function listImages(dir) {
   if (!fs.existsSync(dir)) return [];
@@ -33,7 +35,7 @@ for (const file of FOLDERS.flatMap((folder) => listImages(path.join(PUBLIC_DIR, 
   // Chỉ tạo các cỡ nhỏ hơn ảnh gốc (thêm cỡ gốc nếu ảnh nhỏ hơn cỡ lớn nhất)
   const widths = WIDTHS.filter((size) => size < width);
   // Thêm cỡ gốc chỉ khi cỡ lớn nhất đã tạo nhỏ hơn ảnh gốc đáng kể (>15%)
-  if (widths.length < WIDTHS.length && (widths.at(-1) ?? 0) < width * 0.85) widths.push(width);
+  if ((widths.at(-1) ?? 0) < width * 0.85) widths.push(width);
   if (!widths.length) widths.push(width);
   manifest[`/${relative}`] = widths;
 
@@ -44,7 +46,7 @@ for (const file of FOLDERS.flatMap((folder) => listImages(path.join(PUBLIC_DIR, 
       continue;
     }
     fs.mkdirSync(path.dirname(target), { recursive: true });
-    await sharp(file).resize({ width: size, withoutEnlargement: true }).webp({ quality: QUALITY }).toFile(target);
+    await sharp(file).resize({ width: size, withoutEnlargement: true }).webp({ quality: relative.startsWith("banners/") ? BANNER_QUALITY : QUALITY }).toFile(target);
     created++;
   }
 }
