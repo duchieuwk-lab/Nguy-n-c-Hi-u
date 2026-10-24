@@ -198,37 +198,37 @@ const riftboundSets = [
 }));
 
 // Băng game Pixo đang có (theo ảnh kho/kệ Pixo). Ảnh: key art trên nintendo.com. platform: 1 = băng Switch đời đầu, mặc định Switch 2.
-// price: null = hiện "Liên hệ"; có bảng giá thì điền số vào price.
+// price: giá bán (₫); bỏ trống = hiện "Liên hệ".
 const gameCatalog = [
-  { slug: "nba-2k26", name: "NBA 2K26", genre: "Thể thao · Bóng rổ" },
-  { slug: "reanimal", name: "REANIMAL", genre: "Kinh dị · Phiêu lưu" },
-  { slug: "pokemon-pokopia", name: "Pokémon Pokopia", genre: "Mô phỏng · Xây dựng" },
-  { slug: "super-mario-party-jamboree-ns2", name: "Super Mario Party Jamboree – Nintendo Switch 2 Edition + Jamboree TV", genre: "Party · Chơi nhóm", gallery: ["/products/photos/game-mario-party-jamboree.jpg"] },
-  { slug: "monster-hunter-stories-3", name: "Monster Hunter Stories 3: Twisted Reflection", genre: "Nhập vai" },
+  { slug: "nba-2k26", name: "NBA 2K26", genre: "Thể thao · Bóng rổ", price: 1200000 },
+  { slug: "reanimal", name: "REANIMAL", genre: "Kinh dị · Phiêu lưu", price: 1250000 },
+  { slug: "pokemon-pokopia", name: "Pokémon Pokopia", genre: "Mô phỏng · Xây dựng", price: 1550000 },
+  { slug: "super-mario-party-jamboree-ns2", name: "Super Mario Party Jamboree – Nintendo Switch 2 Edition + Jamboree TV", genre: "Party · Chơi nhóm", gallery: ["/products/photos/game-mario-party-jamboree.jpg"], price: 1500000 },
+  { slug: "monster-hunter-stories-3", name: "Monster Hunter Stories 3: Twisted Reflection", genre: "Nhập vai", price: 1300000 },
   { slug: "final-fantasy-vii-remake-intergrade", name: "Final Fantasy VII Remake Intergrade", genre: "Nhập vai hành động" },
-  { slug: "mario-tennis-fever", name: "Mario Tennis Fever", genre: "Thể thao · Chơi nhóm", gallery: ["/products/photos/game-mario-tennis-fever.jpg"] },
-  { slug: "zelda-tears-of-the-kingdom-ns2", name: "The Legend of Zelda: Tears of the Kingdom – Nintendo Switch 2 Edition", genre: "Phiêu lưu thế giới mở", gallery: ["/products/photos/game-zelda-totk-switch2.jpg"] },
-  { slug: "pragmata", name: "PRAGMATA", genre: "Hành động · Khoa học viễn tưởng" },
-  { slug: "efootball-kick-off", name: "eFootball Kick-Off!", genre: "Thể thao · Bóng đá" },
+  { slug: "mario-tennis-fever", name: "Mario Tennis Fever", genre: "Thể thao · Chơi nhóm", gallery: ["/products/photos/game-mario-tennis-fever.jpg"], price: 1350000 },
+  { slug: "zelda-tears-of-the-kingdom-ns2", name: "The Legend of Zelda: Tears of the Kingdom – Nintendo Switch 2 Edition", genre: "Phiêu lưu thế giới mở", gallery: ["/products/photos/game-zelda-totk-switch2.jpg"], price: 1650000 },
+  { slug: "pragmata", name: "PRAGMATA", genre: "Hành động · Khoa học viễn tưởng", price: 1700000 },
+  { slug: "efootball-kick-off", name: "eFootball Kick-Off!", genre: "Thể thao · Bóng đá", price: 850000 },
   { slug: "onimusha-way-of-the-sword", name: "Onimusha: Way of the Sword", genre: "Hành động" },
-  { slug: "ea-sports-fc-27", name: "EA SPORTS FC 27", genre: "Thể thao · Bóng đá" },
-  { slug: "fire-emblem-fortunes-weave", name: "Fire Emblem: Fortune's Weave", genre: "Chiến thuật nhập vai" },
+  { slug: "ea-sports-fc-27", name: "EA SPORTS FC 27", genre: "Thể thao · Bóng đá", price: 1700000 },
+  { slug: "fire-emblem-fortunes-weave", name: "Fire Emblem: Fortune's Weave", genre: "Chiến thuật nhập vai", price: 1850000 },
   { slug: "elden-ring-tarnished-edition", name: "ELDEN RING Tarnished Edition", genre: "Nhập vai hành động" },
   // Thêm 24/10/2026 theo ảnh kệ game
-  { slug: "final-fantasy-vii-rebirth", name: "Final Fantasy VII Rebirth", genre: "Nhập vai hành động" },
+  { slug: "final-fantasy-vii-rebirth", name: "Final Fantasy VII Rebirth", genre: "Nhập vai hành động", price: 1300000 },
   { slug: "trails-beyond-the-horizon", name: "The Legend of Heroes: Trails beyond the Horizon", genre: "Nhập vai" },
   { slug: "hades-ii", name: "Hades II – Nintendo Switch 2 Edition", genre: "Hành động roguelike" },
   { slug: "xenoblade-chronicles-de-ns2", name: "Xenoblade Chronicles: Definitive Edition – Nintendo Switch 2 Edition", genre: "Nhập vai" },
   { slug: "xenoblade-chronicles-2-ns2", name: "Xenoblade Chronicles 2 – Nintendo Switch 2 Edition", genre: "Nhập vai" },
   { slug: "trails-in-the-sky-2nd-chapter", name: "Trails in the Sky 2nd Chapter – Nintendo Switch 2 Edition", genre: "Nhập vai" },
   { slug: "cyberpunk-2077-ultimate", name: "Cyberpunk 2077: Ultimate Edition", genre: "Nhập vai hành động" },
-  { slug: "donkey-kong-bananza", name: "Donkey Kong Bananza", genre: "Phiêu lưu 3D" },
+  { slug: "donkey-kong-bananza", name: "Donkey Kong Bananza", genre: "Phiêu lưu 3D", price: 1350000 },
   { slug: "hyrule-warriors-age-of-imprisonment", name: "Hyrule Warriors: Age of Imprisonment", genre: "Hành động" },
   { slug: "oblivion-remastered", name: "The Elder Scrolls IV: Oblivion Remastered", genre: "Nhập vai thế giới mở" },
-  { slug: "pokemon-legends-z-a-ns2", name: "Pokémon Legends: Z-A – Nintendo Switch 2 Edition", genre: "Nhập vai" },
+  { slug: "pokemon-legends-z-a-ns2", name: "Pokémon Legends: Z-A – Nintendo Switch 2 Edition", genre: "Nhập vai", price: 1300000 },
   { slug: "zelda-breath-of-the-wild-ns2", name: "The Legend of Zelda: Breath of the Wild – Nintendo Switch 2 Edition", genre: "Phiêu lưu thế giới mở" },
   { slug: "animal-crossing-new-horizons-ns2", name: "Animal Crossing: New Horizons – Nintendo Switch 2 Edition", genre: "Mô phỏng cuộc sống" },
-  { slug: "lies-of-p-complete", name: "Lies of P: Complete Edition", genre: "Hành động soulslike" },
+  { slug: "lies-of-p-complete", name: "Lies of P: Complete Edition", genre: "Hành động soulslike", price: 1600000 },
   { slug: "cronos-the-new-dawn", name: "Cronos: The New Dawn", genre: "Kinh dị sinh tồn" },
   { slug: "granblue-fantasy-relink-endless-ragnarok", name: "Granblue Fantasy: Relink – Endless Ragnarok", genre: "Nhập vai hành động" },
   { slug: "resident-evil-7-gold", name: "Resident Evil 7 biohazard Gold Edition", genre: "Kinh dị sinh tồn" },
@@ -243,7 +243,7 @@ const gameCatalog = [
   { slug: "neon-white", name: "Neon White", genre: "Hành động · Bắn súng", platform: 1 },
   { slug: "splatoon-3", name: "Splatoon 3", genre: "Bắn súng · Chơi nhóm", platform: 1 },
   { slug: "ori-blind-forest", name: "Ori and the Blind Forest: Definitive Edition", genre: "Phiêu lưu · Platformer", platform: 1 },
-  { slug: "super-smash-bros-ultimate", name: "Super Smash Bros. Ultimate", genre: "Đối kháng · Chơi nhóm", platform: 1 },
+  { slug: "super-smash-bros-ultimate", name: "Super Smash Bros. Ultimate", genre: "Đối kháng · Chơi nhóm", platform: 1, price: 750000 },
   { slug: "hollow-knight", name: "Hollow Knight", genre: "Phiêu lưu · Metroidvania", platform: 1 },
   { slug: "ring-fit-adventure", name: "Ring Fit Adventure", genre: "Thể dục · Vận động", platform: 1 },
   { slug: "octopath-traveler-ii", name: "Octopath Traveler II", genre: "Nhập vai", platform: 1 },
@@ -256,10 +256,12 @@ const gameCatalog = [
   category: "game",
   // Băng Switch đời đầu vẫn chơi được trên Switch 2
   badge: game.platform === 1 ? "SWITCH 2 / SWITCH" : "SWITCH 2",
-  price: null,
+  // Giá bán theo bảng kho Pixo (24/10/2026); chưa có giá thì hiện "Liên hệ"
+  price: game.price ?? null,
+  confirmedPrice: true,
   image: `/products/game-${game.slug}.jpg`,
   gallery: game.gallery,
-  description: `Băng game Nintendo Switch${game.platform === 1 ? " · chơi được trên cả Switch 2" : " 2"} · ${game.genre}. Nhắn Pixo để nhận giá và tình trạng hàng.`,
+  description: `Băng game Nintendo Switch${game.platform === 1 ? " · chơi được trên cả Switch 2" : " 2"} · ${game.genre}. ${game.price ? "Nhắn Pixo để kiểm tra tình trạng hàng." : "Nhắn Pixo để nhận giá và tình trạng hàng."}`,
 }));
 
 const otherProducts = [
