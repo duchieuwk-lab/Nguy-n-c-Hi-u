@@ -3,8 +3,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { createServer, defineConfig } from 'vite'
 
-// Đổi sang https://pixostation.com khi tên miền đã trỏ xong
-const SITE_URL = 'https://pixostation.netlify.app'
+const SITE_URL = 'https://pixostation.com'
 
 // Sau khi build: đọc danh sách trang từ App.jsx và ghi dist/sitemap.xml + dist/robots.txt
 function sitemapPlugin() {
