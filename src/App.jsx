@@ -1052,23 +1052,23 @@ function InstallmentCalculator({ price, onContact, onMessenger }) {
             Phí chuyển đổi là mức tham khảo theo biểu phí trả góp mPOS của từng ngân hàng, có thể thay
             đổi theo chương trình. Pixo xác nhận điều kiện thẻ và số tiền chính xác khi làm thủ tục.
           </p>
+          <div className="installment-cta">
+            <div>
+              <h3>Tính xong rồi?</h3>
+              <p>Liên hệ Pixo để làm thủ tục trả góp ngay. Tin nhắn đã ghi sẵn phương án bạn vừa chọn.</p>
+            </div>
+            <div className="detail-actions">
+              <button className="primary-button zalo-button" onClick={() => onContact(plan)}>
+                Làm thủ tục qua Zalo
+              </button>
+              <button className="primary-button" onClick={() => onMessenger(plan)}>
+                Nhắn Messenger
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="installment-cta">
-        <div>
-          <h3>Tính xong rồi?</h3>
-          <p>Liên hệ Pixo để làm thủ tục trả góp ngay. Tin nhắn đã ghi sẵn phương án bạn vừa chọn.</p>
-        </div>
-        <div className="detail-actions">
-          <button className="primary-button zalo-button" onClick={() => onContact(plan)}>
-            Làm thủ tục qua Zalo
-          </button>
-          <button className="primary-button" onClick={() => onMessenger(plan)}>
-            Nhắn Messenger
-          </button>
-        </div>
-      </div>
     </section>
   );
 }
