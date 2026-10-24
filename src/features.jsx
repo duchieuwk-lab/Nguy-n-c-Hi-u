@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Picture from "./Picture";
+import { trackContact } from "./analytics";
 
 // Định dạng tiền giống App.jsx; null = "Liên hệ"
 function money(value) {
@@ -12,6 +13,7 @@ async function sendMessage(url, appName, message) {
   const copying = navigator.clipboard
     ? navigator.clipboard.writeText(message)
     : Promise.reject(new Error("Clipboard không khả dụng"));
+  trackContact(appName, "Thu cũ đổi mới");
   window.open(url, "_blank", "noopener,noreferrer");
   try {
     await copying;

@@ -4,6 +4,7 @@ import { pokemonPerks, pokemonProducts, pokemonTypes } from "./pokemonProducts";
 import { isScheduled, newsCategories, visibleNews } from "./news";
 import { ComparePage, GoogleReviews, TradeInPage } from "./features";
 import Picture from "./Picture";
+import { initAnalytics, trackContact, trackPageView, trackProductView } from "./analytics";
 
 const CONTACT_URL = "https://m.me/pixostation";
 // Zalo dùng chung số điện thoại cửa hàng (đổi 24/10/2026)
@@ -1091,6 +1092,9 @@ function ProductDetail({
   const basePrice = contact ? null : variant ? variant.price : product.price;
   const price = basePrice == null ? null : basePrice + surcharge;
   const canInstall = price != null && price >= INSTALLMENT_MIN_PRICE;
+
+  // Đo lường: một lượt xem sản phẩm mỗi lần mở trang chi tiết
+  useEffect(() => trackProductView(product, price), [product.id]);
   const original = variant && !contact ? variant.original + surcharge : null;
 
   // Các ảnh của phiên bản đang chọn (hoặc của sản phẩm nếu không có phiên bản): ảnh chính trước, ảnh thực tế (gallery) sau
@@ -1125,6 +1129,7 @@ function ProductDetail({
       ? navigator.clipboard.writeText(message)
       : Promise.reject(new Error("Clipboard không khả dụng"));
 
+    trackContact(appName, product.name);
     window.open(url, "_blank", "noopener,noreferrer");
 
     try {
@@ -1575,6 +1580,8 @@ function App() {
   // Tiêu đề tab + mô tả trang (SEO) theo trang đang xem
   useEffect(() => {
     document.title = pageTitle({ selected, newsView, page });
+    initAnalytics();
+    trackPageView(document.title);
     setMetaDescription(pageDescription({ selected, newsView, page }));
     setProductSchema(selected?.product ?? null);
   }, [selected, newsView, page]);
