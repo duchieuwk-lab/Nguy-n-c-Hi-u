@@ -2,8 +2,8 @@
 // Điền mã vào 2 hằng số dưới đây; để trống thì web không tải công cụ nào (không lỗi gì).
 // - GA_ID: mã đo lường GA4, dạng "G-XXXXXXXXXX" (analytics.google.com → Quản trị → Luồng dữ liệu)
 // - PIXEL_ID: dãy số Pixel (Meta Business → Trình quản lý sự kiện)
-const GA_ID = "";
-const PIXEL_ID = "";
+const GA_ID = "G-JDSNVM18HT";
+const PIXEL_ID = "1798166270894151";
 
 let started = false;
 
