@@ -891,6 +891,100 @@ function startingPrice(item) {
   return item.variants ? item.variants[0].price : item.price;
 }
 
+// TRẢ GÓP QUA THẺ TÍN DỤNG (mPOS). Kỳ hạn xác nhận 24/10/2026.
+// Chỉ chia đều giá, chưa gồm phí chuyển đổi (tùy ngân hàng, Pixo báo khi làm thủ tục).
+const installmentTerms = [3, 6, 9, 12];
+// Chỉ hiện công cụ cho sản phẩm từ mức giá này (máy chơi game, box TCG lớn)
+const INSTALLMENT_MIN_PRICE = 3000000;
+const cardNetworks = ["Visa", "Mastercard", "JCB"];
+const installmentBanks = [
+  "Vietcombank", "Techcombank", "VPBank", "Sacombank", "VIB", "TPBank", "MB Bank", "ACB",
+  "HDBank", "Shinhan Bank", "HSBC", "Ngân hàng khác",
+];
+
+function InstallmentCalculator({ price, onContact, onMessenger }) {
+  const [network, setNetwork] = useState(cardNetworks[0]);
+  const [bank, setBank] = useState(installmentBanks[0]);
+  const [term, setTerm] = useState(6);
+
+  // Làm tròn lên hàng nghìn để khách không thiếu tiền kỳ cuối
+  const monthly = Math.ceil(price / term / 1000) * 1000;
+  const plan = `Mình muốn trả góp qua thẻ ${network} ${bank}, kỳ hạn ${term} tháng (khoảng ${money(monthly)}/tháng).`;
+
+  return (
+    <section className="detail-section installment">
+      <div className="installment-head">
+        <span className="eyebrow">TRẢ GÓP QUA THẺ TÍN DỤNG</span>
+        <h2>Tự tính trả góp</h2>
+        <p>Chọn thẻ và kỳ hạn để xem số tiền trả mỗi tháng.</p>
+      </div>
+
+      <div className="installment-grid">
+        <div className="installment-form">
+          <span className="variant-label">HÃNG THẺ</span>
+          <div className="installment-options">
+            {cardNetworks.map((item) => (
+              <button key={item} className={network === item ? "active" : ""} onClick={() => setNetwork(item)}>
+                {item}
+              </button>
+            ))}
+          </div>
+
+          <label className="variant-label" htmlFor="installment-bank">NGÂN HÀNG PHÁT HÀNH THẺ</label>
+          <select
+            id="installment-bank"
+            className="variant-select"
+            value={bank}
+            onChange={(event) => setBank(event.target.value)}
+          >
+            {installmentBanks.map((item) => (
+              <option key={item} value={item}>{item}</option>
+            ))}
+          </select>
+
+          <span className="variant-label">KỲ HẠN</span>
+          <div className="installment-options">
+            {installmentTerms.map((item) => (
+              <button key={item} className={term === item ? "active" : ""} onClick={() => setTerm(item)}>
+                {item} tháng
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="installment-result">
+          <span>Trả mỗi tháng (tạm tính)</span>
+          <strong>{money(monthly)}</strong>
+          <dl>
+            <div><dt>Giá sản phẩm</dt><dd>{money(price)}</dd></div>
+            <div><dt>Kỳ hạn</dt><dd>{term} tháng</dd></div>
+            <div><dt>Trả trước</dt><dd>0₫</dd></div>
+          </dl>
+          <p>
+            Số tiền chia đều, chưa gồm phí chuyển đổi trả góp của ngân hàng. Pixo
+            xác nhận ngân hàng hỗ trợ và phí chính xác khi làm thủ tục.
+          </p>
+        </div>
+      </div>
+
+      <div className="installment-cta">
+        <div>
+          <h3>Tính xong rồi?</h3>
+          <p>Liên hệ Pixo để làm thủ tục trả góp ngay. Tin nhắn đã ghi sẵn phương án bạn vừa chọn.</p>
+        </div>
+        <div className="detail-actions">
+          <button className="primary-button zalo-button" onClick={() => onContact(plan)}>
+            Làm thủ tục qua Zalo
+          </button>
+          <button className="primary-button" onClick={() => onMessenger(plan)}>
+            Nhắn Messenger
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function ProductDetail({
   product,
   initialVariant = 0,
@@ -927,7 +1021,8 @@ function ProductDetail({
   };
 
   // Sao chép tin nhắn trước rồi mới mở Zalo/Messenger: tab mới làm trang mất focus và trình duyệt sẽ chặn sao chép
-  const askToBuy = async (url, appName) => {
+  // extra: câu bổ sung (VD: phương án trả góp khách vừa tính)
+  const askToBuy = async (url, appName, extra = "") => {
     const editionText = edition
       ? `, ${product.editionNoun ?? "màu/phiên bản"} ${edition.name}`
       : "";
@@ -935,7 +1030,7 @@ function ProductDetail({
     const message =
       `Chào Pixo Station! Mình muốn hỏi mua ${product.name}` +
       `${editionText}${variantText}. ${price == null ? "Shop báo giá giúp mình nhé." : `Giá hiển thị: ${money(price)}.`} ` +
-      `Shop tư vấn giúp mình nhé!\n${window.location.href}`;
+      `${extra ? `${extra} ` : ""}Shop tư vấn giúp mình nhé!\n${window.location.href}`;
 
     const copying = navigator.clipboard
       ? navigator.clipboard.writeText(message)
@@ -1079,6 +1174,14 @@ function ProductDetail({
           )}
         </div>
       </div>
+
+      {price != null && price >= INSTALLMENT_MIN_PRICE && (
+        <InstallmentCalculator
+          price={price}
+          onContact={(plan) => askToBuy(ZALO_URL, "Zalo", plan)}
+          onMessenger={(plan) => askToBuy(CONTACT_URL, "Messenger", plan)}
+        />
+      )}
 
       {product.specs && (
         <section className="detail-section">
