@@ -37,6 +37,9 @@ const switch2Specs = [
   { label: "Trong hộp", value: "Máy Switch 2 · Joy-Con 2 (L) và (R) · 2 dây đeo Joy-Con 2 · Tay cầm Joy-Con 2 Grip · Dock · Sạc AC adapter · Cáp HDMI Ultra High Speed" },
 ];
 
+// Thứ tự hiện máy chơi game (mục "Nổi bật"): Switch 2 → OLED → V2 → Lite
+const consoleOrder = ["switch2", "switch2-bundle", "switch2-pokopia", "switch2-zelda", "oled", "v2", "lite"];
+
 const consoles = [
   {
     id: "lite",
@@ -1336,7 +1339,7 @@ function App() {
         // Máy giá "Liên hệ" luôn xếp cuối
         if (sort === "low") return (a.variants?.[0].price ?? Infinity) - (b.variants?.[0].price ?? Infinity);
         if (sort === "high") return (b.variants?.[0].price ?? -Infinity) - (a.variants?.[0].price ?? -Infinity);
-        return a.id.localeCompare(b.id);
+        return consoleOrder.indexOf(a.id) - consoleOrder.indexOf(b.id);
       });
   }, [category, search, sort]);
 
