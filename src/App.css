@@ -4248,3 +4248,25 @@ body {
     transition: none;
   }
 }
+
+/* Trả góp: dải logo thẻ chấp nhận, kỳ hạn không hỗ trợ */
+.card-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  padding: 4px 0 6px;
+}
+
+.card-strip img {
+  height: 28px;
+  width: auto;
+  max-width: 64px;
+  object-fit: contain;
+}
+
+.installment-options button:disabled {
+  opacity: .35;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}

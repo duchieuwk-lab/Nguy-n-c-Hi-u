@@ -906,8 +906,7 @@ function startingPrice(item) {
   return item.variants ? item.variants[0].price : item.price;
 }
 
-// TRẢ GÓP QUA THẺ TÍN DỤNG (mPOS). Kỳ hạn xác nhận 24/10/2026.
-// Chỉ chia đều giá, chưa gồm phí chuyển đổi (tùy ngân hàng, Pixo báo khi làm thủ tục).
+// TRẢ GÓP QUA THẺ TÍN DỤNG (mPOS). Kỳ hạn Pixo áp dụng: 3 / 6 / 9 / 12 tháng (xác nhận 24/10/2026).
 const installmentTerms = [3, 6, 9, 12];
 // Chỉ hiện công cụ cho sản phẩm từ mức giá này (máy chơi game, box TCG lớn)
 const INSTALLMENT_MIN_PRICE = 3000000;
@@ -918,65 +917,94 @@ const cardNetworks = [
   { name: "JCB", logo: "/payment/card-jcb.svg" },
   { name: "UnionPay", logo: "/payment/card-union.svg" },
 ];
-// Ngân hàng / tổ chức tài chính liên kết trả góp của mPOS (theo nextpay.vn/tragop.html, tra 24/10/2026)
+// Phí chuyển đổi trả góp THAM KHẢO (%), theo kỳ hạn [3, 6, 9, 12] tháng; null = ngân hàng không hỗ trợ kỳ đó.
+// Nguồn: bảng phí mPOS công khai tại thanhnamstudio.vn/tinh-phi-chuyen-doi (cập nhật 14/09/2026).
+// Phí thật theo hợp đồng mPOS của Pixo: lấy trong app mPOS.vn rồi sửa các con số dưới đây.
+// MSB đã cộng phí quản lý 3% (kỳ 3, 9, 12); FE Credit đã cộng phí quản lý 2,99% + VAT (kỳ 9, 12).
 const installmentBanks = [
-  { name: "Vietcombank", logo: "vcb.svg" }, { name: "Techcombank", logo: "tcb.svg" },
-  { name: "VPBank", logo: "vpb.png" }, { name: "Sacombank", logo: "stb.svg" },
-  { name: "MB Bank", logo: "mb.svg" }, { name: "TPBank", logo: "tpb.svg" },
-  { name: "VIB", logo: "vib.svg" }, { name: "ACB", logo: "acb.svg" },
-  { name: "BIDV", logo: "bidv.png" }, { name: "VietinBank", logo: "icb.svg" },
-  { name: "HDBank", logo: "hdb.svg" }, { name: "SHB", logo: "shb.svg" },
-  { name: "MSB", logo: "msb.svg" }, { name: "OCB", logo: "ocb.svg" },
-  { name: "SeABank", logo: "sea.svg" }, { name: "Eximbank", logo: "exb.svg" },
-  { name: "LPBank", logo: "lvpb.svg" }, { name: "PVcomBank", logo: "pvb.svg" },
-  { name: "Kienlongbank", logo: "klb.png" }, { name: "BVBank (Bản Việt)", logo: "vccb.png" },
-  { name: "Shinhan Bank", logo: "shihanbank.svg" }, { name: "HSBC", logo: "hsbc.svg" },
-  { name: "Citibank", logo: "ctb.svg" }, { name: "FE Credit", logo: "fec.svg" },
-  { name: "Home Credit", logo: "homec.svg" }, { name: "Mcredit", logo: "mcredit.svg" },
-  { name: "Ngân hàng khác" },
+  { name: "Vietcombank", logo: "vcb.svg", fees: [2.9, 3.9, 4.9, 6.9] },
+  { name: "Techcombank", logo: "tcb.svg", fees: [2.0, 3.9, 4.9, 6.9] },
+  { name: "VPBank", logo: "vpb.png", fees: [2.9, 3.9, 7.9, 8.9] },
+  { name: "Sacombank", logo: "stb.svg", fees: [2.0, 3.9, 4.9, 5.9] },
+  { name: "MB Bank", logo: "mb.svg", fees: [2.0, 3.9, 4.9, 5.9] },
+  { name: "TPBank", logo: "tpb.svg", fees: [2.0, 3.9, 4.9, 5.9] },
+  { name: "VIB", logo: "vib.svg", fees: [2.0, 3.9, 4.9, 5.9] },
+  { name: "ACB", logo: "acb.svg", fees: [2.0, 3.9, 4.9, 5.9] },
+  { name: "BIDV", logo: "bidv.png", fees: [2.0, 3.9, 4.9, 5.9] },
+  { name: "VietinBank", logo: "icb.svg", fees: [2.0, 3.9, 4.9, 6.9] },
+  { name: "HDBank", logo: "hdb.svg", fees: [2.9, 3.9, 4.9, 5.9] },
+  { name: "SHB", logo: "shb.svg", fees: [2.0, 3.9, 4.9, 5.9] },
+  { name: "MSB", logo: "msb.svg", fees: [5.0, 3.9, 7.9, 8.9] },
+  { name: "OCB", logo: "ocb.svg", fees: [2.0, 3.9, 4.9, 5.9] },
+  { name: "SeABank", logo: "sea.svg", fees: [2.0, 3.9, 4.9, 5.9] },
+  { name: "Eximbank", logo: "exb.svg", fees: [2.0, 3.9, 4.9, 6.9] },
+  { name: "LPBank", logo: "lvpb.svg", fees: [2.0, 3.9, 4.9, 5.9] },
+  { name: "PVcomBank", logo: "pvb.svg", fees: [2.0, 3.9, 4.9, 5.9] },
+  { name: "Kienlongbank", logo: "klb.png", fees: [2.0, 3.9, 4.9, 6.9] },
+  { name: "BVBank (Bản Việt)", logo: "vccb.png", fees: [2.0, 3.9, 4.9, 5.9] },
+  { name: "Shinhan Bank", logo: "shihanbank.svg", fees: [null, 3.9, 4.9, 5.9] },
+  { name: "HSBC", logo: "hsbc.svg", fees: [2.0, 3.9, 4.9, 5.9] },
+  { name: "Citibank", logo: "ctb.svg", fees: [2.0, 3.9, 4.9, 5.9] },
+  { name: "FE Credit", logo: "fec.svg", fees: [null, null, 8.19, 9.19] },
+  { name: "Home Credit", logo: "homec.svg", fees: [2.9, 3.9, 5.9, 6.9] },
+  { name: "Mcredit", logo: "mcredit.svg", fees: [2.0, 3.9, 4.9, null] },
+  { name: "Ngân hàng khác", fees: null },
 ].map((bank) => ({ ...bank, logo: bank.logo && `/payment/bank-${bank.logo}` }));
 
+// Phí (%) của ngân hàng cho kỳ hạn; undefined = chưa có biểu phí (ngân hàng khác), null = không hỗ trợ kỳ này
+function bankFee(bank, term) {
+  if (!bank.fees) return undefined;
+  return bank.fees[installmentTerms.indexOf(term)];
+}
+
 function InstallmentCalculator({ price, onContact, onMessenger }) {
-  const [network, setNetwork] = useState(cardNetworks[0].name);
-  const [bank, setBank] = useState(installmentBanks[0].name);
+  const [bankName, setBankName] = useState(installmentBanks[0].name);
   const [term, setTerm] = useState(6);
 
-  // Làm tròn lên hàng nghìn để khách không thiếu tiền kỳ cuối
-  const monthly = Math.ceil(price / term / 1000) * 1000;
-  const plan = `Mình muốn trả góp qua thẻ ${network} ${bank}, kỳ hạn ${term} tháng (khoảng ${money(monthly)}/tháng).`;
+  const bank = installmentBanks.find((item) => item.name === bankName);
+  const fee = bankFee(bank, term);
+  // Phí chuyển đổi cộng vào tổng tiền; làm tròn lên hàng nghìn để khách không thiếu tiền kỳ cuối
+  const feeAmount = fee ? Math.round((price * fee) / 100) : 0;
+  const total = price + feeAmount;
+  const monthly = Math.ceil(total / term / 1000) * 1000;
+
+  const chooseBank = (item) => {
+    setBankName(item.name);
+    // Ngân hàng không có kỳ đang chọn: chuyển sang kỳ gần nhất ngân hàng có hỗ trợ
+    if (bankFee(item, term) === null) {
+      const available = installmentTerms.filter((option) => bankFee(item, option) !== null);
+      setTerm(available.reduce((best, option) => (Math.abs(option - term) < Math.abs(best - term) ? option : best)));
+    }
+  };
+
+  const plan =
+    `Mình muốn trả góp qua thẻ tín dụng ${bank.name}, kỳ hạn ${term} tháng ` +
+    `(web tạm tính khoảng ${money(monthly)}/tháng${fee ? `, tổng ${money(total)}` : ""}).`;
 
   return (
     <section className="detail-section installment">
       <div className="installment-head">
         <span className="eyebrow">TRẢ GÓP QUA THẺ TÍN DỤNG</span>
         <h2>Tự tính trả góp</h2>
-        <p>Chọn thẻ và kỳ hạn để xem số tiền trả mỗi tháng.</p>
+        <p>Chọn ngân hàng phát hành thẻ và kỳ hạn để xem số tiền trả mỗi tháng.</p>
       </div>
 
       <div className="installment-grid">
         <div className="installment-form">
-          <span className="variant-label">HÃNG THẺ</span>
-          <div className="installment-options">
+          <span className="variant-label">CHẤP NHẬN THẺ TÍN DỤNG</span>
+          <div className="card-strip">
             {cardNetworks.map((item) => (
-              <button
-                key={item.name}
-                className={network === item.name ? "card-logo active" : "card-logo"}
-                onClick={() => setNetwork(item.name)}
-                aria-label={item.name}
-                title={item.name}
-              >
-                <img src={item.logo} alt="" />
-              </button>
+              <img key={item.name} src={item.logo} alt={item.name} title={item.name} />
             ))}
           </div>
 
-          <span className="variant-label">NGÂN HÀNG PHÁT HÀNH THẺ: <b>{bank}</b></span>
+          <span className="variant-label">NGÂN HÀNG PHÁT HÀNH THẺ: <b>{bank.name}</b></span>
           <div className="bank-grid">
             {installmentBanks.map((item) => (
               <button
                 key={item.name}
-                className={bank === item.name ? "active" : ""}
-                onClick={() => setBank(item.name)}
+                className={bankName === item.name ? "active" : ""}
+                onClick={() => chooseBank(item)}
                 aria-label={item.name}
                 title={item.name}
               >
@@ -987,11 +1015,20 @@ function InstallmentCalculator({ price, onContact, onMessenger }) {
 
           <span className="variant-label">KỲ HẠN</span>
           <div className="installment-options">
-            {installmentTerms.map((item) => (
-              <button key={item} className={term === item ? "active" : ""} onClick={() => setTerm(item)}>
-                {item} tháng
-              </button>
-            ))}
+            {installmentTerms.map((item) => {
+              const supported = bankFee(bank, item) !== null;
+              return (
+                <button
+                  key={item}
+                  className={term === item ? "active" : ""}
+                  onClick={() => setTerm(item)}
+                  disabled={!supported}
+                  title={supported ? undefined : `${bank.name} không hỗ trợ kỳ ${item} tháng`}
+                >
+                  {item} tháng
+                </button>
+              );
+            })}
           </div>
         </div>
 
@@ -1000,13 +1037,17 @@ function InstallmentCalculator({ price, onContact, onMessenger }) {
           <strong>{money(monthly)}</strong>
           <dl>
             <div><dt>Giá sản phẩm</dt><dd>{money(price)}</dd></div>
+            <div>
+              <dt>Phí chuyển đổi{fee ? ` (${String(fee).replace(".", ",")}%)` : ""}</dt>
+              <dd>{fee ? money(feeAmount) : "Pixo báo khi làm thủ tục"}</dd>
+            </div>
+            {fee ? <div><dt>Tổng thanh toán</dt><dd>{money(total)}</dd></div> : null}
             <div><dt>Kỳ hạn</dt><dd>{term} tháng</dd></div>
             <div><dt>Trả trước</dt><dd>0₫</dd></div>
           </dl>
           <p>
-            Số tiền chia đều, chưa gồm phí chuyển đổi trả góp của ngân hàng. Pixo
-            trả góp qua mPOS, hỗ trợ thẻ tín dụng của hơn 25 ngân hàng và công ty
-            tài chính; Pixo xác nhận điều kiện thẻ và phí chính xác khi làm thủ tục.
+            Phí chuyển đổi là mức tham khảo theo biểu phí trả góp mPOS của từng ngân hàng, có thể thay
+            đổi theo chương trình. Pixo xác nhận điều kiện thẻ và số tiền chính xác khi làm thủ tục.
           </p>
         </div>
       </div>
