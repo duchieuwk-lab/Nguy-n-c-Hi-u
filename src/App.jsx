@@ -1795,7 +1795,7 @@ function App() {
                   <span className="eyebrow">CỘNG ĐỒNG PIXO</span>
                   <h2>Không chỉ mua bán.<br /><span>Còn là nơi để chơi cùng nhau.</span></h2>
                   <p>
-                    <b>Pixo Nexus Night</b>: giao lưu Riftbound lúc <b>19:00 thứ 4 hằng tuần</b>
+                    <b>Pixo Nexus Night</b>: giao lưu Riftbound lúc <b>19:00 thứ 4 hằng tuần</b>{" "}
                     tại showroom 23 Lê Đại Hành. Người mới cũng được chào đón.
                   </p>
                   <div className="contact-actions">

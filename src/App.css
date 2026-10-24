@@ -3987,3 +3987,264 @@ chân trang */
     align-items: flex-start;
   }
 }
+
+/* =========================================================
+   LIQUID GLASS: khung kính trong suốt thay cho khối nền đen,
+   nền trang có mảng màu mờ để kính khúc xạ
+   ========================================================= */
+:root {
+  --glass-bg: rgba(255, 255, 255, .55);
+  --glass-bg-strong: rgba(255, 255, 255, .72);
+  --glass-border: rgba(255, 255, 255, .75);
+  --glass-edge: rgba(55, 132, 64, .14);
+  --glass-blur: blur(18px) saturate(170%);
+  --glass-shadow: 0 10px 34px rgba(30, 60, 25, .10), inset 0 1px 0 rgba(255, 255, 255, .9), inset 0 -1px 0 rgba(255, 255, 255, .35);
+}
+
+/* Nền: vài mảng xanh Pixo mờ, đứng yên khi cuộn */
+body {
+  background:
+    radial-gradient(42vw 42vw at 8% 12%, rgba(121, 193, 68, .20), transparent 70%),
+    radial-gradient(38vw 38vw at 92% 30%, rgba(55, 132, 64, .14), transparent 70%),
+    radial-gradient(46vw 46vw at 30% 88%, rgba(160, 220, 120, .18), transparent 70%),
+    radial-gradient(30vw 30vw at 80% 85%, rgba(66, 180, 160, .10), transparent 70%),
+    #f4f5f1;
+  background-attachment: fixed;
+}
+
+/* Kính chung cho các thẻ và khung */
+.product-card,
+.bestseller-card,
+.rail-card,
+.combo-card,
+.offer-card,
+.trust-bar div,
+.quick-categories button,
+.google-reviews,
+.installment-form,
+.installment-result,
+.installment-cta,
+.compare-scroll,
+.compare-tips,
+.community-inner,
+.tcg-card,
+.event-card,
+.policy-card,
+.service-card,
+.news-card,
+.faq-list details,
+.detail-media .product-image,
+.spec-list,
+.showroom-block {
+  position: relative;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+
+/* Ánh sáng chạy chéo trên mặt kính (hiệu ứng "liquid") */
+.product-card::after,
+.bestseller-card::after,
+.rail-card::after,
+.combo-card::after,
+.offer-card::after,
+.google-reviews::after,
+.installment-result::after,
+.compare-tips::after,
+.community-inner::after,
+.tcg-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(115deg, rgba(255, 255, 255, .55) 0%, rgba(255, 255, 255, 0) 32%, rgba(255, 255, 255, 0) 68%, rgba(255, 255, 255, .25) 100%);
+  opacity: .55;
+  pointer-events: none;
+  transition: opacity .35s, transform .6s;
+}
+
+.product-card:hover::after,
+.bestseller-card:hover::after,
+.rail-card:hover::after,
+.combo-card:hover::after,
+.tcg-card:hover::after {
+  opacity: .9;
+}
+
+.product-card,
+.bestseller-card,
+.rail-card,
+.combo-card,
+.tcg-card {
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.product-card:hover,
+.bestseller-card:hover,
+.rail-card:hover,
+.combo-card:hover,
+.tcg-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(30, 60, 25, .16), inset 0 1px 0 rgba(255, 255, 255, .95);
+}
+
+/* Vùng ảnh trong thẻ hơi trong để thấy lớp kính */
+.product-image,
+.rail-image {
+  background: rgba(255, 255, 255, .45);
+}
+
+/* Header, menu đáy, nút nổi: kính đậm hơn */
+.site-header {
+  border-bottom: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, .62);
+  box-shadow: 0 6px 24px rgba(30, 60, 25, .06);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+
+.header-search,
+.header-cta {
+  border-color: var(--glass-border);
+  background: var(--glass-bg-strong);
+}
+
+.bottom-nav {
+  border-top: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, .7) !important;
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+
+.floating-contact a {
+  box-shadow: 0 8px 24px rgba(30, 60, 25, .18), inset 0 1px 0 rgba(255, 255, 255, .5);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+/* ===== Các khối nền đen cũ → kính sáng, chữ tối ===== */
+.home-community {
+  background: transparent;
+  color: var(--text);
+}
+
+.community-inner {
+  padding: 36px;
+  border-radius: 20px;
+}
+
+.community-copy p {
+  color: var(--muted);
+}
+
+.community-copy h2 span,
+.community-copy .eyebrow {
+  color: var(--green-text);
+}
+
+.community-copy .outline-button {
+  border-color: var(--green-dark);
+  color: var(--green-text);
+}
+
+.installment-result {
+  color: var(--text);
+}
+
+.installment-result > span,
+.installment-result dt,
+.installment-result p {
+  color: var(--muted);
+}
+
+.installment-result strong {
+  color: var(--green-text);
+}
+
+.installment-result dl div {
+  border-bottom-color: var(--line);
+}
+
+.installment-cta {
+  border-color: rgba(121, 193, 68, .55);
+  background: rgba(241, 248, 234, .6);
+}
+
+.compare-tips {
+  color: var(--text);
+}
+
+.compare-tips li {
+  border-bottom-color: var(--line);
+}
+
+.compare-tips li span {
+  color: var(--muted);
+}
+
+.compare-tips li b {
+  color: var(--green-text);
+}
+
+.compare-tips .outline-button {
+  border-color: var(--green-dark);
+  color: var(--green-text);
+}
+
+.compare-table,
+.compare-table th,
+.compare-table td {
+  background: transparent;
+}
+
+.compare-table .highlight {
+  background: rgba(121, 193, 68, .12);
+}
+
+/* Trang TCG: bỏ nền đen, dùng lại màu sáng */
+.tcg-section {
+  --bg: transparent;
+  --panel: rgba(255, 255, 255, .55);
+  --text: #16191a;
+  --muted: #5f6860;
+  --line: rgba(0, 0, 0, .1);
+  --green-text: #378440;
+  background: transparent;
+  color: var(--text);
+}
+
+.tcg-card {
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.tcg-photo {
+  background: rgba(255, 255, 255, .35);
+}
+
+.tcg-stats b {
+  color: var(--text);
+}
+
+/* Điện thoại: giảm độ mờ để cuộn mượt */
+@media (max-width: 720px) {
+  :root {
+    --glass-blur: blur(12px) saturate(160%);
+  }
+
+  .community-inner {
+    padding: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-card,
+  .bestseller-card,
+  .rail-card,
+  .combo-card,
+  .tcg-card {
+    transition: none;
+  }
+}
