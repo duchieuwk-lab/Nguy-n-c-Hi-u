@@ -67,6 +67,8 @@ export function trackPageView(title) {
 
 // Khách mở trang chi tiết một sản phẩm
 export function trackProductView(product, price) {
+  // Trang sản phẩm chạy trước phần khởi động ở App, nên tự khởi động nếu chưa có
+  initAnalytics();
   window.gtag?.("event", "view_item", {
     currency: "VND",
     value: price ?? undefined,
