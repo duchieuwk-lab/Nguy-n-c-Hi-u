@@ -41,7 +41,7 @@ export const newsPosts = [
     sources: [
       { name: "Nintendo – Switch 2 tech specs (chính thức)", url: "https://www.nintendo.com/us/gaming-systems/switch-2/tech-specs/" },
     ],
-    status: "draft",
+    status: "published",
   },
   {
     slug: "mua-pokemon-tcg-riftbound-o-dau-ha-noi",
@@ -62,7 +62,7 @@ export const newsPosts = [
     sources: [
       { name: "Riftbound – The Radiance Overview (chính thức)", url: "https://playriftbound.com/en-us/news/announcements/the-radiance-overview/" },
     ],
-    status: "draft",
+    status: "published",
   },
   {
     slug: "riftbound-radiance-ra-mat-23-10",
