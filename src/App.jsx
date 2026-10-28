@@ -5,6 +5,9 @@ import { isScheduled, newsCategories, visibleNews } from "./news";
 import { ComparePage, GoogleReviews, TradeInPage } from "./features";
 import Picture from "./Picture";
 import { initAnalytics, trackContact, trackPageView, trackProductView } from "./analytics";
+import { initTilt3d } from "./tilt3d";
+
+initTilt3d();
 
 const CONTACT_URL = "https://m.me/pixostation";
 // Zalo dùng chung số điện thoại cửa hàng (đổi 24/10/2026)
