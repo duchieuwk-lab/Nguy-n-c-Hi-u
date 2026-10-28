@@ -153,6 +153,10 @@ const consoles = [
     specs: [{ label: "Tình trạng", value: "Có máy mới (New) và máy like new: chọn ở mục Tình trạng" }, ...switch2Specs],
     notes: ["Switch 2 dùng thẻ microSD Express; thẻ microSD thường chỉ dùng để sao chép ảnh và video."],
     name: "Nintendo Switch 2",
+    // SEO: tiêu đề/mô tả theo cách khách tìm trên Google; {price} = giá thấp nhất hiện tại
+    seoTitle: "Mua Nintendo Switch 2 chính hãng tại Hà Nội – Giá từ {price}",
+    seoDescription:
+      "Nintendo Switch 2 mới và like new tại Pixo Station, 23 Lê Đại Hành, Hà Nội. Full box, bảo hành 6 tháng, trả góp qua thẻ tín dụng, thu cũ đổi mới, giao hỏa tốc 2 giờ nội thành.",
     // Ảnh: hộp → máy → dock, sau đó ảnh chụp thật tại Pixo
     image: "/products/switch-2-box.jpg",
     gallery: ["/products/switch-2.jpg", "/products/switch-2-dock.jpg", "/products/photos/switch-2-thuc-te-1.jpg", "/products/photos/switch-2-thuc-te-2.jpg"],
@@ -1498,18 +1502,33 @@ const pageDescriptions = {
 function pageDescription({ selected, newsView, page }) {
   if (selected) {
     const product = selected.product;
+    if (product.seoDescription) return product.seoDescription;
     return `${product.name} tại Pixo Station Hà Nội. ${product.description ?? ""}`.trim().slice(0, 300);
   }
   if (newsView?.post) return newsView.post.excerpt ?? DEFAULT_DESCRIPTION;
   return pageDescriptions[page] ?? DEFAULT_DESCRIPTION;
 }
 
+function lowestPrice(product) {
+  return product.variants ? Math.min(...product.variants.map((variant) => variant.price)) : product.price;
+}
+
 function pageTitle({ selected, newsView, page }) {
-  const extraTitles = { products: "Sản phẩm", compare: "So sánh máy Nintendo Switch", tradein: "Thu cũ đổi mới" };
-  if (selected) return `${selected.product.name} – Pixo Station`;
+  const extraTitles = {
+    products: "Mua máy Nintendo Switch, Switch 2, băng game, Pokémon TCG, Riftbound tại Hà Nội",
+    tcg: "Pokémon TCG & Riftbound tại Hà Nội – Booster box, ETB, Nexus Night",
+    compare: "So sánh máy Nintendo Switch",
+    tradein: "Thu cũ đổi mới",
+  };
+  if (selected) {
+    const product = selected.product;
+    if (product.seoTitle) return `${product.seoTitle.replace("{price}", money(lowestPrice(product)))} | Pixo Station`;
+    return `${product.name} – Mua tại Hà Nội | Pixo Station`;
+  }
   if (newsView?.post) return `${newsView.post.title} – Pixo Station`;
   if (newsView) return "Tin tức – Pixo Station";
   if (extraTitles[page]) return `${extraTitles[page]} – Pixo Station`;
+  if (page === "home") return "Pixo Station – Mua Nintendo Switch, Switch 2, Pokémon TCG, Riftbound tại Hà Nội";
   if (page !== "home") return `${navSections.find((section) => section.id === page)?.label} – Pixo Station`;
   return SITE_TITLE;
 }

@@ -22,6 +22,49 @@ export const newsCategories = {
 
 export const newsPosts = [
   {
+    slug: "mua-nintendo-switch-2-o-dau-ha-noi",
+    title: "Mua Nintendo Switch 2 ở đâu tại Hà Nội? Giá, phiên bản và những điều cần biết",
+    date: "2026-10-28",
+    category: "guide",
+    cover: "/products/switch-2.jpg",
+    excerpt:
+      "Switch 2 giá bao nhiêu, nên mua máy mới hay like new, bản kèm game có gì khác và cần kiểm tra gì khi nhận máy – tổng hợp cho người mua tại Hà Nội.",
+    body: [
+      "Nintendo Switch 2 là máy chơi game thế hệ mới của Nintendo: màn hình 7.9 inch 1080p tối đa 120Hz, xuất hình 4K qua dock và bộ nhớ trong 256GB. Đây cũng là máy duy nhất chơi được các game chỉ có trên Switch 2, trong khi vẫn chơi được phần lớn băng game Switch đời trước.",
+      "Giá Switch 2 tại Pixo Station: máy like new từ 13.500.000₫, máy mới từ 14.000.000₫. Các bản kèm game (Bundle chọn 1 trong 3 game, bản Pokopia, bản The Legend of Zelda) có giá thay đổi theo đợt hàng – nhắn Pixo để nhận giá mới nhất.",
+      "Máy mới hay like new? Máy mới nguyên seal phù hợp nếu bạn muốn trọn vẹn trải nghiệm đập hộp. Máy like new tiết kiệm hơn, vẫn full box, được Pixo kiểm tra kỹ trước khi bán và áp dụng cùng chính sách bảo hành 6 tháng.",
+      "Lưu ý về thẻ nhớ: Switch 2 dùng thẻ microSD Express để chứa game. Thẻ microSD thường chỉ dùng để sao chép ảnh và video, không chạy được game Switch 2.",
+      "Khi nhận máy, hãy kiểm tra: đủ phụ kiện trong hộp (máy, 2 Joy-Con 2, dây đeo, tay cầm Grip, dock, sạc, cáp HDMI), màn hình không điểm chết, Joy-Con gắn chắc và nhận nút đầy đủ, máy kết nối TV qua dock bình thường.",
+      "Mua Switch 2 tại Pixo Station, 23 Lê Đại Hành, Hai Bà Trưng, Hà Nội: bảo hành 6 tháng, đổi 1–1 trong 7 ngày, trả góp qua thẻ tín dụng, thu cũ đổi mới khi lên đời từ Switch đời trước, giao hỏa tốc 2 giờ nội thành.",
+    ],
+    cta: { label: "Xem giá Switch 2", href: "/san-pham/nintendo-switch-2" },
+    sources: [
+      { name: "Nintendo – Switch 2 tech specs (chính thức)", url: "https://www.nintendo.com/us/gaming-systems/switch-2/tech-specs/" },
+    ],
+    status: "draft",
+  },
+  {
+    slug: "mua-pokemon-tcg-riftbound-o-dau-ha-noi",
+    title: "Mua Pokémon TCG và Riftbound ở đâu tại Hà Nội? Hàng chính hãng, booster box, ETB",
+    date: "2026-10-28",
+    category: "guide",
+    cover: "/products/riftbound-set5-radiance.jpg",
+    excerpt:
+      "Nơi mua Pokémon TCG và Riftbound chính hãng ở Hà Nội, cách phân biệt booster box, ETB, booster bundle và chỗ chơi giao lưu mỗi tuần.",
+    body: [
+      "Pokémon TCG và Riftbound: League of Legends TCG là hai dòng thẻ bài đang được chơi và sưu tầm nhiều nhất tại Hà Nội. Điều người mua lo nhất là hàng thật, hàng nguyên seal và giá hợp lý.",
+      "Tại Pixo Station, 23 Lê Đại Hành, Hà Nội, bạn có thể mua Pokémon TCG (bản tiếng Anh, tiếng Nhật, tiếng Trung tùy đợt) và cả 5 set Riftbound, từ booster lẻ đến booster box nguyên seal.",
+      "Booster box, ETB hay booster bundle? Booster box là hộp nhiều gói nhất, hợp với người muốn mở nhiều hoặc săn lá hiếm. Elite Trainer Box (ETB) có ít gói hơn nhưng kèm phụ kiện chơi như sleeve, xúc xắc, hộp đựng. Booster bundle chỉ gồm vài gói, giá dễ tiếp cận để thử.",
+      "Riftbound: Radiance (set 5) ra mắt ngày 23/10/2026. Pixo nhận đặt trước booster box bản tiếng Anh, đặt cọc 1.000.000₫.",
+      "Ngoài mua bán, Pixo còn có Pixo Nexus Night – buổi giao lưu Riftbound lúc 19:00 thứ 4 hằng tuần tại showroom. Người mới được hướng dẫn luật chơi, mở pack cùng nhau và làm quen cộng đồng người chơi Hà Nội.",
+    ],
+    cta: { label: "Xem Pokémon TCG & Riftbound", href: "/tcg" },
+    sources: [
+      { name: "Riftbound – The Radiance Overview (chính thức)", url: "https://playriftbound.com/en-us/news/announcements/the-radiance-overview/" },
+    ],
+    status: "draft",
+  },
+  {
     slug: "riftbound-radiance-ra-mat-23-10",
     title: "Riftbound: Radiance ra mắt 23/10 – Set 5 có gì mới?",
     date: "2026-10-20",
