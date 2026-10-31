@@ -547,7 +547,7 @@ function BannerSlider() {
           return (
             <div className="banner-slide" key={banner.image} aria-hidden={i !== index}>
               {banner.link ? (
-                <a href={banner.link} target="_blank" rel="noreferrer" tabIndex={i === index ? 0 : -1}>
+                <a href={banner.link} rel="noreferrer" tabIndex={i === index ? 0 : -1}>
                   {image}
                 </a>
               ) : image}
@@ -1137,7 +1137,7 @@ function ProductDetail({
       : Promise.reject(new Error("Clipboard không khả dụng"));
 
     trackContact(appName, product.name);
-    window.open(url, "_blank", "noopener,noreferrer");
+    window.location.assign(url);
 
     try {
       await copying;
@@ -1410,7 +1410,7 @@ function NewsPost({ post, onOpen, onBack }) {
           <a
             className="primary-button news-cta"
             href={post.cta.href}
-            {...(post.cta.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
+            {...(post.cta.href.startsWith("http") ? { rel: "noreferrer" } : {})}
           >
             {post.cta.label} ↗
           </a>
@@ -1419,7 +1419,7 @@ function NewsPost({ post, onOpen, onBack }) {
           <div className="news-sources">
             <b>Nguồn tham khảo:</b>
             {post.sources.map((source) => (
-              <a key={source.url} href={source.url} target="_blank" rel="noreferrer nofollow">{source.name} ↗</a>
+              <a key={source.url} href={source.url} rel="noreferrer nofollow">{source.name} ↗</a>
             ))}
           </div>
         )}
@@ -1679,12 +1679,12 @@ function App() {
     const product = allProducts.find((entry) => entry.name === item.productName);
     if (product) openProduct(product, 0, item.editionIndex ?? 0);
     else if (item.category) shopCategory(item.category);
-    else window.open(CONTACT_URL, "_blank", "noopener,noreferrer");
+    else window.location.assign(CONTACT_URL);
   };
 
-  // Trang chi tiết sản phẩm luôn mở ở tab mới, trang đang xem giữ nguyên
+  // Mở trang chi tiết sản phẩm ngay trong tab hiện tại
   const openProduct = (product, variantIndex = 0, editionIndex = 0) => {
-    window.open(productPath(product, editionIndex, variantIndex), "_blank");
+    window.location.assign(productPath(product, editionIndex, variantIndex));
   };
 
   const current = selected ? "products" : newsView ? "news" : page;
@@ -1696,7 +1696,7 @@ function App() {
       <div className="floating-contact">
         <a
           href={CONTACT_URL}
-          target="_blank"
+         
           rel="noreferrer"
           aria-label="Nhắn tin cho Pixo Station qua Messenger"
         >
@@ -1705,7 +1705,7 @@ function App() {
         <a
           className="floating-zalo"
           href={ZALO_URL}
-          target="_blank"
+         
           rel="noreferrer"
           aria-label="Nhắn tin cho Pixo Station qua Zalo"
         >
@@ -1864,7 +1864,7 @@ function App() {
                         <span className="original-price">{money(combo.original)}</span>
                         <strong>{money(combo.price)}</strong>
                       </div>
-                      <a className="primary-button" href={CONTACT_URL} target="_blank" rel="noreferrer">
+                      <a className="primary-button" href={CONTACT_URL} rel="noreferrer">
                         Nhắn tin hỏi combo
                       </a>
                     </div>
@@ -1884,7 +1884,7 @@ function App() {
                     tại showroom 23 Lê Đại Hành. Người mới cũng được chào đón.
                   </p>
                   <div className="contact-actions">
-                    <a className="primary-button" href={CONTACT_URL} target="_blank" rel="noreferrer">
+                    <a className="primary-button" href={CONTACT_URL} rel="noreferrer">
                       Nhắn tin đăng ký
                     </a>
                     <button className="outline-button" onClick={() => goPage("tcg")}>
@@ -1938,7 +1938,7 @@ function App() {
                   <span className="eyebrow">TRẢ GÓP</span>
                   <h3>Trả trước 0đ.</h3>
                   <p>Trả góp qua thẻ tín dụng, thủ tục nhanh. Nhắn Pixo để chọn kỳ hạn.</p>
-                  <a className="outline-button" href={CONTACT_URL} target="_blank" rel="noreferrer">
+                  <a className="outline-button" href={CONTACT_URL} rel="noreferrer">
                     Tư vấn trả góp
                   </a>
                 </div>
@@ -2104,10 +2104,10 @@ function App() {
                   <ul>
                     <li><b>Địa chỉ</b>{SHOP.address}</li>
                     <li><b>Giờ mở cửa</b>{SHOP.hours}</li>
-                    <li><b>Điện thoại / Zalo</b><a href={ZALO_URL} target="_blank" rel="noreferrer">{SHOP.phone} ↗</a></li>
+                    <li><b>Điện thoại / Zalo</b><a href={ZALO_URL} rel="noreferrer">{SHOP.phone} ↗</a></li>
                   </ul>
                   <div className="contact-actions">
-                    <a className="primary-button" href={SHOP.mapsUrl} target="_blank" rel="noreferrer">Chỉ đường ↗</a>
+                    <a className="primary-button" href={SHOP.mapsUrl} rel="noreferrer">Chỉ đường ↗</a>
                     <a className="outline-button" href={SHOP.phoneUrl}>Gọi ngay</a>
                   </div>
                 </div>
@@ -2172,7 +2172,7 @@ function App() {
                     <span className="eyebrow">SỰ KIỆN</span>
                     <h3>Chơi cùng cộng đồng.</h3>
                   </div>
-                  <a href={CONTACT_URL} target="_blank" rel="noreferrer">
+                  <a href={CONTACT_URL} rel="noreferrer">
                     Theo dõi hoạt động ↗
                   </a>
                 </div>
@@ -2194,7 +2194,7 @@ function App() {
                       Hà Nội. Người mới cũng được chào đón.
                     </p>
                     <div className="contact-actions">
-                      <a className="primary-button" href={CONTACT_URL} target="_blank" rel="noreferrer">
+                      <a className="primary-button" href={CONTACT_URL} rel="noreferrer">
                         Nhắn tin hỏi lịch &amp; đăng ký
                       </a>
                     </div>
@@ -2213,7 +2213,7 @@ function App() {
                       <span>{event.tag}</span>
                       <h4>{event.title}</h4>
                       <p>{event.description}</p>
-                      <a href={CONTACT_URL} target="_blank" rel="noreferrer">
+                      <a href={CONTACT_URL} rel="noreferrer">
                         Hỏi lịch hoạt động ↗
                       </a>
                     </article>
@@ -2248,7 +2248,7 @@ function App() {
                     </div>
                     <h3>{service.title}</h3>
                     <p>{service.description}</p>
-                    <a href={CONTACT_URL} target="_blank" rel="noreferrer">
+                    <a href={CONTACT_URL} rel="noreferrer">
                       Liên hệ tư vấn ↗
                     </a>
                   </article>
@@ -2260,7 +2260,7 @@ function App() {
                   <span className="eyebrow">CẦN HỖ TRỢ?</span>
                   <h3>Hãy mô tả lỗi máy bạn đang gặp.</h3>
                 </div>
-                <a className="primary-button" href={CONTACT_URL} target="_blank" rel="noreferrer">
+                <a className="primary-button" href={CONTACT_URL} rel="noreferrer">
                   Trao đổi với Pixo ↗
                 </a>
               </div>
@@ -2313,7 +2313,7 @@ function App() {
                   ))}
                 </div>
 
-                <a className="policy-contact" href={CONTACT_URL} target="_blank" rel="noreferrer">
+                <a className="policy-contact" href={CONTACT_URL} rel="noreferrer">
                   Ghé chơi hoặc nhắn Pixo một câu ↗
                 </a>
               </div>
@@ -2399,7 +2399,7 @@ function App() {
                   </article>
                 </div>
 
-                <a className="policy-contact" href={CONTACT_URL} target="_blank" rel="noreferrer">
+                <a className="policy-contact" href={CONTACT_URL} rel="noreferrer">
                   Hỏi Pixo về chính sách ↗
                 </a>
               </div>
@@ -2440,10 +2440,10 @@ function App() {
                   <ul>
                     <li><b>Địa chỉ</b>{SHOP.address}</li>
                     <li><b>Giờ mở cửa</b>{SHOP.hours}</li>
-                    <li><b>Điện thoại / Zalo</b><a href={ZALO_URL} target="_blank" rel="noreferrer">{SHOP.phone} ↗</a></li>
+                    <li><b>Điện thoại / Zalo</b><a href={ZALO_URL} rel="noreferrer">{SHOP.phone} ↗</a></li>
                   </ul>
                   <div className="contact-actions">
-                    <a className="primary-button" href={SHOP.mapsUrl} target="_blank" rel="noreferrer">
+                    <a className="primary-button" href={SHOP.mapsUrl} rel="noreferrer">
                       Chỉ đường ↗
                     </a>
                     <a className="outline-button" href={SHOP.phoneUrl}>
@@ -2473,10 +2473,10 @@ function App() {
         <button className={current === "products" ? "active" : ""} onClick={() => shopCategory("all")}>
           <span aria-hidden="true">▦</span>Sản phẩm
         </button>
-        <a href={CONTACT_URL} target="_blank" rel="noreferrer">
+        <a href={CONTACT_URL} rel="noreferrer">
           <span aria-hidden="true">💬</span>Messenger
         </a>
-        <a href={ZALO_URL} target="_blank" rel="noreferrer">
+        <a href={ZALO_URL} rel="noreferrer">
           <span aria-hidden="true">Z</span>Zalo
         </a>
         <a href={SHOP.phoneUrl}>
@@ -2493,14 +2493,14 @@ function App() {
             <span>{SHOP.address}</span>
             <span>{SHOP.hours}</span>
             <span>
-              <a href={ZALO_URL} target="_blank" rel="noreferrer">☎ Điện thoại / Zalo {SHOP.phone} ↗</a>
+              <a href={ZALO_URL} rel="noreferrer">☎ Điện thoại / Zalo {SHOP.phone} ↗</a>
             </span>
           </div>
           <div className="footer-links">
             <button onClick={() => goPage("compare")}>So sánh máy</button>
             <button onClick={() => goPage("tradein")}>Thu cũ đổi mới</button>
-            <a href={SHOP.facebookUrl} target="_blank" rel="noreferrer">Facebook ↗</a>
-            <a href={SHOP.mapsUrl} target="_blank" rel="noreferrer">Google Maps ↗</a>
+            <a href={SHOP.facebookUrl} rel="noreferrer">Facebook ↗</a>
+            <a href={SHOP.mapsUrl} rel="noreferrer">Google Maps ↗</a>
           </div>
         </div>
         <div className="page-width footer-bottom">
