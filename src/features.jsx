@@ -14,7 +14,7 @@ async function sendMessage(url, appName, message) {
     ? navigator.clipboard.writeText(message)
     : Promise.reject(new Error("Clipboard không khả dụng"));
   trackContact(appName, "Thu cũ đổi mới");
-  window.location.assign(url);
+  window.open(url, "_blank", "noopener,noreferrer");
   try {
     await copying;
     alert(`Đã sao chép tin nhắn! Hãy dán vào ${appName} để gửi.`);
@@ -384,8 +384,8 @@ export function GoogleReviews({ mapsUrl }) {
         Khách hàng chấm Pixo 5 sao vì tư vấn thật, máy chuẩn và hỗ trợ sau bán. Đọc đánh giá thật hoặc để lại cảm nhận của bạn.
       </p>
       <div className="contact-actions">
-        <a className="primary-button" href={mapsUrl} rel="noreferrer">Xem đánh giá ↗</a>
-        <a className="outline-button" href={mapsUrl} rel="noreferrer">Viết đánh giá</a>
+        <a className="primary-button" href={mapsUrl} target="_blank" rel="noreferrer">Xem đánh giá ↗</a>
+        <a className="outline-button" href={mapsUrl} target="_blank" rel="noreferrer">Viết đánh giá</a>
       </div>
     </section>
   );
