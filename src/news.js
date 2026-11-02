@@ -22,6 +22,29 @@ export const newsCategories = {
 
 export const newsPosts = [
   {
+    slug: "mua-nintendo-switch-lite-o-dau-ha-noi",
+    title: "Mua Nintendo Switch Lite ở đâu tại Hà Nội? Giá, màu sắc và có nên mua",
+    date: "2026-11-02",
+    category: "guide",
+    cover: "/products/switch-lite.jpg",
+    excerpt:
+      "Switch Lite giá bao nhiêu, có những màu nào, khác gì Switch V2 và OLED, ai nên mua – tổng hợp cho người mua tại Hà Nội.",
+    body: [
+      "Nintendo Switch Lite là bản nhỏ gọn nhất của dòng Switch: màn hình 5.5 inch, nặng khoảng 275g, Joy-Con gắn liền thân máy. Đây là lựa chọn rẻ nhất để chơi kho game Switch như Pokémon, Mario, Zelda hay Animal Crossing.",
+      "Giá Switch Lite tại Pixo Station: máy like new bản zin từ 3.300.000₫. Bản kèm game có thẻ nhớ 128GB từ 4.550.000₫, ngoài ra có bản 256GB và 512GB cho ai muốn chứa nhiều game hơn.",
+      "Màu sắc: Xám, Vàng, Xanh ngọc, Hồng san hô, Xanh dương, cùng các bản giới hạn như Pokémon Zacian & Zamazenta, Pokémon Dialga & Palkia, Animal Crossing và Zelda Hyrule Edition (cộng thêm 500.000₫).",
+      "Switch Lite khác gì Switch V2 và OLED? Lite chỉ chơi cầm tay, không kết nối TV và Joy-Con không tháo rời được, nên chơi 2 người cần mua thêm tay cầm. Đổi lại máy nhẹ, bền, pin khoảng 3–7 giờ và giá thấp hơn nhiều.",
+      "Ai nên mua Switch Lite? Người chơi một mình, hay mang máy đi học, đi làm, đi du lịch; phụ huynh mua máy đầu tiên cho con; hoặc người đã có Switch khác muốn thêm máy phụ. Nếu bạn muốn chơi trên TV hoặc chơi cùng bạn bè, hãy cân nhắc Switch V2 hoặc OLED.",
+      "Khi nhận máy, hãy kiểm tra: màn hình không điểm chết, các nút và cần analog nhận đủ, cần analog không bị trôi, máy sạc vào điện bình thường và đọc được băng game.",
+      "Mua Switch Lite tại Pixo Station, 23 Lê Đại Hành, Hai Bà Trưng, Hà Nội: máy được kiểm tra kỹ trước khi bán, bảo hành 6 tháng, đổi 1–1 trong 7 ngày, thu cũ đổi mới khi muốn lên đời.",
+    ],
+    cta: { label: "Xem giá Switch Lite", href: "/san-pham/nintendo-switch-lite" },
+    sources: [
+      { name: "Nintendo – Switch Lite (chính thức)", url: "https://www.nintendo.com/us/gaming-systems/switch/switch-lite/" },
+    ],
+    status: "published",
+  },
+  {
     slug: "mua-nintendo-switch-2-o-dau-ha-noi",
     title: "Mua Nintendo Switch 2 ở đâu tại Hà Nội? Giá, phiên bản và những điều cần biết",
     date: "2026-10-28",

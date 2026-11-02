@@ -1732,34 +1732,6 @@ function App() {
             {page === "home" && (<>
             <BannerSlider />
 
-            <section className="trust-bar page-width" aria-label="Cam kết của Pixo">
-              {trustBadges.map((badge) => (
-                <div key={badge.title}>
-                  <b>✓ {badge.title}</b>
-                  <span>{badge.text}</span>
-                </div>
-              ))}
-            </section>
-
-            <section className="quick-categories page-width" aria-label="Danh mục">
-              {quickCategories.map((item) => (
-                <button
-                  key={item.label}
-                  onClick={() => {
-                    if (item.section) {
-                      goSection(item.section);
-                    } else {
-                      setCategory(item.category);
-                      goShop();
-                    }
-                  }}
-                >
-                  <span className="quick-icon" aria-hidden="true">{item.icon}</span>
-                  {item.label}
-                </button>
-              ))}
-            </section>
-
             <section className="bestsellers page-width">
               <div className="bestsellers-head">
                 <h2>Máy bán chạy</h2>
@@ -1795,6 +1767,34 @@ function App() {
                   </article>
                 ))}
               </div>
+            </section>
+
+            <section className="trust-bar page-width" aria-label="Cam kết của Pixo">
+              {trustBadges.map((badge) => (
+                <div key={badge.title}>
+                  <b>✓ {badge.title}</b>
+                  <span>{badge.text}</span>
+                </div>
+              ))}
+            </section>
+
+            <section className="quick-categories page-width" aria-label="Danh mục">
+              {quickCategories.map((item) => (
+                <button
+                  key={item.label}
+                  onClick={() => {
+                    if (item.section) {
+                      goSection(item.section);
+                    } else {
+                      setCategory(item.category);
+                      goShop();
+                    }
+                  }}
+                >
+                  <span className="quick-icon" aria-hidden="true">{item.icon}</span>
+                  {item.label}
+                </button>
+              ))}
             </section>
 
             {/* ĐẶT TRƯỚC & HÀNG MỚI VỀ */}

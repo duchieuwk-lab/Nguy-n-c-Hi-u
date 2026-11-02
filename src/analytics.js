@@ -14,9 +14,25 @@ function loadScript(src) {
   document.head.appendChild(script);
 }
 
+// Máy của shop: mở web một lần với ?noi-bo=1 thì máy đó không bị đếm nữa (?noi-bo=0 để bật lại)
+function isInternal() {
+  try {
+    const flag = new URLSearchParams(window.location.search).get("noi-bo");
+    if (flag === "1") localStorage.setItem("pixo-noi-bo", "1");
+    if (flag === "0") localStorage.removeItem("pixo-noi-bo");
+    return localStorage.getItem("pixo-noi-bo") === "1";
+  } catch {
+    return false;
+  }
+}
+
+// Đọc cờ ngay khi tải web, trước khi web đổi đường dẫn và làm mất ?noi-bo
+const internal = typeof window !== "undefined" && isInternal();
+
 export function initAnalytics() {
   if (started || typeof window === "undefined") return;
   started = true;
+  if (internal) return;
 
   if (GA_ID) {
     window.dataLayer = window.dataLayer || [];
