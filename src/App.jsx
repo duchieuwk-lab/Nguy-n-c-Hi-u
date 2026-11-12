@@ -6,6 +6,7 @@ import { ComparePage, GoogleReviews, TradeInPage } from "./features";
 import Picture from "./Picture";
 import { initAnalytics, trackContact, trackPageView, trackProductView } from "./analytics";
 import { initTilt3d } from "./tilt3d";
+import { loadSheet, sheetRows } from "./liveSheet";
 
 initTilt3d();
 
@@ -1577,6 +1578,9 @@ function setProductSchema(product) {
 const SITE_TITLE = "Pixo Station – Trạm Game của thế hệ bạn";
 
 function App() {
+  // Giá & tình trạng hàng từ Google Sheet: tải xong thì vẽ lại giao diện
+  const [, setSheetVersion] = useState(0);
+  useEffect(() => loadSheet(allProducts, slugify, () => setSheetVersion((v) => v + 1)), []);
   const [category, setCategory] = useState("all");
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("featured");
@@ -2514,6 +2518,11 @@ function App() {
 
 export default App;
 // Danh sách mọi đường dẫn của web, dùng để tạo sitemap.xml khi build (vite.config.js)
+// Bảng giá ban đầu để dán vào Google Sheet
+export function listPriceRows() {
+  return sheetRows(allProducts, slugify);
+}
+
 export function listSitePaths() {
   const publishedNews = visibleNews.filter((post) => post.status === "published" && !isScheduled(post));
   return [
@@ -2528,18 +2537,49 @@ export function listSitePaths() {
 // để Google, Facebook, Zalo đọc được ngay mà không cần chạy JavaScript (khung xem trước khi gửi link)
 export function listSitePages() {
   const publishedNews = visibleNews.filter((post) => post.status === "published" && !isScheduled(post));
-  const head = (path, view, image = "/home/showroom-trung-bay.jpg") => ({
+  // Nội dung chữ + liên kết viết sẵn vào HTML để Google đọc được ngay, không cần chạy JavaScript
+  const productLinks = allProducts.map((product) => ({ href: productPath(product).split("?")[0], label: product.name }));
+  const newsLinks = publishedNews.map((post) => ({ href: `/tin-tuc/${post.slug}`, label: post.title }));
+  const menuLinks = [
+    { href: "/", label: "Trang chủ" },
+    { href: "/san-pham", label: "Sản phẩm" },
+    { href: "/tcg", label: "Pokémon TCG & Riftbound" },
+    { href: "/so-sanh-may", label: "So sánh máy Switch" },
+    { href: "/thu-cu", label: "Thu cũ đổi mới" },
+    { href: "/tin-tuc", label: "Tin tức" },
+    { href: "/lien-he", label: "Liên hệ" },
+  ];
+  const head = (path, view, image = "/home/showroom-trung-bay.jpg", extra = {}) => ({
     path,
     title: pageTitle(view),
     description: pageDescription(view),
     image,
+    content: { heading: pageTitle(view).replace(/s+[|–]s+Pixo Station$/, ""), text: pageDescription(view), links: menuLinks, ...extra },
   });
+  const priceText = (product) => {
+    const price = lowestPrice(product);
+    return price ? `Giá từ ${money(price)} tại Pixo Station, 23 Lê Đại Hành, Hà Nội.` : "Liên hệ Pixo Station để nhận giá.";
+  };
   return [
-    ...Object.entries(pagePaths).map(([page, path]) => head(path, { page })),
-    head("/tin-tuc", { newsView: {} }),
-    ...publishedNews.map((post) => head(`/tin-tuc/${post.slug}`, { newsView: { post } }, post.cover)),
+    ...Object.entries(pagePaths).map(([page, path]) =>
+      head(path, { page }, undefined, page === "home" || page === "products" ? { links: [...menuLinks, ...productLinks, ...newsLinks] } : {}),
+    ),
+    head("/tin-tuc", { newsView: {} }, undefined, { links: [...menuLinks, ...newsLinks] }),
+    ...publishedNews.map((post) =>
+      head(`/tin-tuc/${post.slug}`, { newsView: { post } }, post.cover, {
+        paragraphs: post.body.filter((part) => typeof part === "string"),
+        links: [...(post.cta ? [{ href: post.cta.href, label: post.cta.label }] : []), ...menuLinks],
+      }),
+    ),
     ...allProducts.map((product) =>
-      head(productPath(product).split("?")[0], { selected: { product } }, product.image),
+      head(productPath(product).split("?")[0], { selected: { product } }, product.image, {
+        heading: product.name,
+        paragraphs: [priceText(product), ...(product.specs ?? []).map((spec) => `${spec.label}: ${spec.value}`)].filter(Boolean),
+        links: [
+          ...menuLinks,
+          ...productLinks.filter((link) => link.href !== productPath(product).split("?")[0] && allProducts.find((item) => item.name === link.label)?.category === product.category).slice(0, 12),
+        ],
+      }),
     ),
   ];
 }

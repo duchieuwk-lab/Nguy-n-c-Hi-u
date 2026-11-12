@@ -28,7 +28,20 @@ function sitemapPlugin() {
         `<meta property="og:image" content="${image}" />`,
         `<meta name="twitter:card" content="summary_large_image" />`,
       ].join('\n    ')
+      // Nội dung tạm trong #root: Google đọc được ngay; React vẽ giao diện thật đè lên khi tải xong
+      const content = page.content
+      const body = content
+        ? [
+            `<div class="seo-fallback">`,
+            `<h1>${escape(content.heading)}</h1>`,
+            `<p>${escape(content.text)}</p>`,
+            ...(content.paragraphs ?? []).map((text) => `<p>${escape(text)}</p>`),
+            `<nav><ul>${content.links.map((link) => `<li><a href="${encodeURI(link.href)}">${escape(link.label)}</a></li>`).join('')}</ul></nav>`,
+            `</div>`,
+          ].join('')
+        : ''
       const html = template
+        .replace('<div id="root"></div>', `<div id="root">${body}</div>`)
         .replace(/<title>[\s\S]*?<\/title>\s*/, '')
         .replace(/<meta\s+name="description"[\s\S]*?\/>\s*/, '')
         .replace(/<meta\s+property="og:title"[\s\S]*?\/>\s*/, '')
