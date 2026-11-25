@@ -45,7 +45,7 @@ export const newsPosts = [
       { name: "Nintendo – Switch 2 tech specs (chính thức)", url: "https://www.nintendo.com/us/gaming-systems/switch-2/tech-specs/" },
       { name: "Nintendo Life – So sánh Switch OLED / Switch / Lite", url: "https://nintendolife.com/guides/nintendo-switch-oled-model-vs-standard-switch-switch-lite-full-tech-specs-comparison" },
     ],
-    status: "draft",
+    status: "published",
   },
   {
     slug: "qua-giang-sinh-cho-game-thu-2026",
@@ -66,7 +66,7 @@ export const newsPosts = [
       "Pixo Station ở 23 Lê Đại Hành, Hà Nội, giao hỏa tốc 2 giờ nội thành – kịp cho những ai mua quà sát ngày. Nhắn Pixo để được tư vấn theo đúng ngân sách và sở thích người nhận.",
     ],
     cta: { label: "Xem tất cả sản phẩm", href: "/san-pham" },
-    status: "draft",
+    status: "published",
   },
   {
     slug: "mua-switch-cu-can-kiem-tra-gi",
@@ -90,7 +90,7 @@ export const newsPosts = [
       "Máy like new tại Pixo Station được kiểm tra kỹ trước khi bán, full box, bảo hành 6 tháng và đổi 1–1 trong 7 ngày. Bạn vẫn có thể tự kiểm tra lại theo 8 bước trên ngay tại cửa hàng ở 23 Lê Đại Hành, Hà Nội.",
     ],
     cta: { label: "Xem máy Switch like new", href: "/san-pham" },
-    status: "draft",
+    status: "published",
   },
   {
     slug: "switch-2-choi-duoc-game-switch-1-khong",
@@ -114,7 +114,7 @@ export const newsPosts = [
     sources: [
       { name: "Nintendo – Switch 2 (chính thức)", url: "https://www.nintendo.com/us/gaming-systems/switch-2/" },
     ],
-    status: "draft",
+    status: "published",
   },
   {
     slug: "mua-nintendo-switch-lite-o-dau-ha-noi",
